@@ -19,7 +19,6 @@
     <release.version>11</release.version>
     <micronaut.version>3.8.8</micronaut.version>
     <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
-    <micronaut.runtime>netty</micronaut.runtime>
     <micronaut.data.version>3.9.7</micronaut.data.version>
     <exec.mainClass>com.example.Application</exec.mainClass>
   </properties>
@@ -45,12 +44,7 @@
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-server-netty</artifactId>
-      <scope>compile</scope>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -60,6 +54,11 @@
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-mongodb</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.grpc</groupId>
+      <artifactId>micronaut-grpc-runtime</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -134,11 +133,6 @@
             </path>
             <path>
               <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-http-validation</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-            <path>
-              <groupId>io.micronaut</groupId>
               <artifactId>micronaut-validation</artifactId>
               <version>${micronaut.version}</version>
             </path>
@@ -153,6 +147,10 @@
             <arg>-Amicronaut.processing.module=inventoryService</arg>
           </compilerArgs>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

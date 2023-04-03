@@ -1,6 +1,6 @@
-applicationType: default
+applicationType: grpc
 defaultPackage: com.example
 testFramework: junit
 sourceLanguage: java
 buildTool: maven
-features: [annotation-api, app-name, data, data-mongodb, http-client, jackson-databind, java, java-application, junit, kafka, logback, maven, netty-server, readme, shade, test-resources, yaml]
+features: [annotation-api, app-name, data, data-mongodb, grpc, jackson-databind, java, java-application, junit, kafka, logback, maven, readme, shade, test-resources, yaml]
