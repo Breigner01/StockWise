@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logout } from "../../redux/actions/authActions";
 
 // MUI
 import {
@@ -21,9 +24,9 @@ const darkTheme = createTheme({
     },
   });
 
-const Header = () => {
+const Header = (props) => {
   const handleLogout = (e) => {
-    console.log("Logout");
+    props.logout();
   };
 
   return (
@@ -65,4 +68,13 @@ const Header = () => {
   );
 }
 
-export default Header;
+Header.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.authReducer,
+});
+
+export default connect(mapStateToProps, { logout })(Header);
