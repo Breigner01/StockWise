@@ -12,7 +12,7 @@ const Home = () => {
         <Header />
         <Box
           component="main"
-          sx={{ flex: 1, py: 6, px: 4, bgcolor: "#d7ccc8" }}
+          sx={{ flex: 1, py: 6, px: 4, bgcolor: "#f2f5fa" }}
         >
           <Outlet />
         </Box>

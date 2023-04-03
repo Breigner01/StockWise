@@ -15,9 +15,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const darkTheme = createTheme({
     palette: {
-      mode: 'dark',
       primary: {
-        main: '#1976d2',
+        main: '#140d01',
       },
     },
   });
@@ -51,7 +50,7 @@ const Header = () => {
             <Tooltip>
               <Button
                 variant="outlined"
-                color="error"
+                color="info"
                 startIcon={<LogoutIcon />}
                 onClick={handleLogout}
               >
