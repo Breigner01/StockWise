@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { loginUser } from "../redux/actions/authActions";
+import { loginUser } from "../../redux/actions/authActions";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
     Avatar,
     Button,
@@ -17,7 +17,7 @@ import {
     Container,
 } from "@mui/material";
 
-const PublicPage = (props) => {
+const LoginUser = (props) => {
 
     const emptyForm = {
         email: "",
@@ -63,14 +63,11 @@ const PublicPage = (props) => {
                 alignItems: "center",
                 }}
             >
-                <Typography component="h1" variant="h4">
-                    Public Access
-                </Typography>
                 <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                    <AccountCircleIcon />
+                    <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Sign In
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField
@@ -105,26 +102,21 @@ const PublicPage = (props) => {
                     >
                         Login
                     </Button>
-                    {/* <Grid container spacing={2}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Link href="/student/signup" variant="body2">
+                            <Link href="/register" variant="body2">
                                 Don't have an account? Sign Up
                             </Link>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Link href="/user-type" variant="body2">
-                                I am not a Student
-                            </Link>
-                        </Grid>
-                    </Grid> */}
+                    </Grid>
                 </Box>
             </Box>
         </Container>
     );
 }
 
-PublicPage.propTypes = {
+LoginUser.propTypes = {
     loginUser: PropTypes.func.isRequired,
 }
 
-export default connect(null, { loginUser })(PublicPage);
+export default connect(null, { loginUser })(LoginUser);
