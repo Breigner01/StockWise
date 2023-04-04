@@ -7,7 +7,8 @@ import PublicRoute from "./components/routers/PublicRoute";
 
 import Home from "./pages/Home";
 import PrivatePage from "./pages/PrivatePage";
-import PublicPage from "./pages/PublicPage";
+import LoginUser from "./pages/auth/LoginUser";
+import RegisterUser from "./pages/auth/RegisterUser";
 
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
         <Routes>
 
           {/* Private Pages for User*/} 
-          <Route path={homePath} element={<PrivateRoute redirect={"/public"} />} >
+          <Route path={homePath} element={<PrivateRoute redirect={"/login"} />} >
             <Route path="" element={<Home />}>
               <Route path="private" element={<PrivatePage />} />
             </Route>
@@ -26,7 +27,8 @@ const App = () => {
 
           {/* Public Pages for Auth*/}  
           <Route path={homePath} element={<PublicRoute redirect={"/private"} />} >
-            <Route path="public" element={<PublicPage />} />
+            <Route path="login" element={<LoginUser />} />
+            <Route path="register" element={<RegisterUser redirect={"/login"} />} />
           </Route>
 
         </Routes>
