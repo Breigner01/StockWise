@@ -3,17 +3,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { admin } = require("./firebaseConfig");
-const firebase = require('firebase');
-const firebaseui = require('firebaseui');
-const app = express();
 
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
     res.render("index");
+});
+
+app.get("/register", (req, res) => {
+    res.render("register");
 });
 
 app.post("/register", (req, res) => {
