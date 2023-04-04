@@ -9,9 +9,11 @@ app_name = "notif"
 
 router = DefaultRouter()
 router.register(r"api/notif", NotifView, basename="notif")
+router.register(r"api/owner", OwnerView, basename="owner")
 
 urlpatterns = [
-    path("api/xNotif/", ComplexNotifView.as_view(), name='xNotif'),
+    path("api/notify/<str:id>", NotifyOwnerView.as_view(), name='notifyOwner'),
+    path("api/notify/all/", NotifyAllView.as_view(), name='notifyAll'),
 ]
 
 urlpatterns += router.urls

@@ -6,6 +6,11 @@ class NotifSerializer(serializers.ModelSerializer):
         model = Notif
         fields = "__all__"
 
+class OwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Owner
+        fields = "__all__"
+
 class ComplexNotifSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notif
