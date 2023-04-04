@@ -13,6 +13,6 @@ func GetConfig(conf ProgramConfig) Config {
 	}
 
 	return Config{
-		sv: server.New(listener),
+		Sv: server.New(listener),
 	}
 }

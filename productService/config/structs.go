@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	sv *server.Server
+	Sv *server.Server
 }
 
 type ProgramConfig struct {

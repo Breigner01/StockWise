@@ -24,3 +24,11 @@ func New(listener net.Listener) *Server {
 		product.UnimplementedProductServiceServer{},
 	}
 }
+
+func (s *Server) Start() error {
+	return s.core.Serve(s.listener)
+}
+
+func (s *Server) Stop() {
+	s.core.Stop()
+}
