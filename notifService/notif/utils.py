@@ -1,9 +1,6 @@
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
+from django.core.exceptions import MessageSendingError
 from django.conf import settings
 
 def send_notif_email(owner, notif):
@@ -12,9 +9,13 @@ def send_notif_email(owner, notif):
         'body': notif.message,
     })
     
-    email = EmailMessage(subject=email_subject, body=email_body,
-        from_email=settings.EMAIL_FROM_USER,
-        to=[owner.email]
-        )
+    try:
+        email = EmailMessage(subject=email_subject, body=email_body,
+            from_email=settings.EMAIL_FROM_USER,
+            to=[owner.email]
+            )
 
-    email.send()
+        email.send()
+    except MessageSendingError as e:
+        # handle error
+        print(f"Error sending email: {e}")
