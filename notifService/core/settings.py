@@ -56,7 +56,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,6 +112,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+# EMAIL CONFIG
+EMAIL_FROM_USER = "delispeter19@gmail.com"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = "delispeter19@gmail.com"
+EMAIL_HOST_PASSWORD = 'qmpjifzkryajfdmq'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,19 +1,30 @@
 from rest_framework import viewsets, generics, permissions
 from rest_framework.response import Response
+from rest_framework import status
 from .serializers import *
+from .utils import send_notif_email
 
-# Generic view interaction (basically CRUD)
-class OwnerView(viewsets.ModelViewSet):
-    
+# Add Owner View
+class AddOwnerView(generics.GenericAPIView):
+
     permission_classes = [permissions.IsAdminUser]
 
     serializer_class = OwnerSerializer
-    
-    def get_queryset(self):
-        return Owner.objects.all()
 
-    def perform_create(self, serializer):
-        serializer.save()
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        owner = serializer.save()
+
+        return Response(
+            {
+                "owner": OwnerSerializer(
+                    owner, context=self.get_serializer_context()
+                ).data,
+                "msg": "Owner has been added to the Notification Service"
+            },
+            status=status.HTTP_201_CREATED
+        )
 
 # Generic view interaction (basically CRUD)
 class NotifView(viewsets.ModelViewSet):
@@ -31,47 +42,54 @@ class NotifView(viewsets.ModelViewSet):
         else:
             serializer.save()
 
-# This is just an example of how we can perform complex logic of different types of requests
-class ComplexNotifView(generics.GenericAPIView):
-
-    # Making my own custom get
-    def get(self, request, *args, **kwargs):
-        notifs = []
-
-        notif_query_set = Notif.objects.all()
-        for notif_model in notif_query_set:
-            notif = ComplexNotifSerializer(notif_model).data
-            notif['subject'] = "Complex Modification"
-            notifs.append(notif)
-
-        return Response(notifs)
-    
-# This is just an example of how we can perform complex logic of different types of requests
+# Notify Owner View
 class NotifyOwnerView(generics.GenericAPIView):
 
-    # Making my own custom get
-    def get(self, request, *args, **kwargs):
-        notifs = []
+    permission_classes = [permissions.IsAdminUser]
 
-        notif_query_set = Notif.objects.all()
-        for notif_model in notif_query_set:
-            notif = ComplexNotifSerializer(notif_model).data
-            notif['subject'] = "Complex Modification"
-            notifs.append(notif)
+    serializer_class = NotifSerializer
 
-        return Response(notifs)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        notif = serializer.save()
+
+        send_notif_email(
+            owner=Owner.objects.get(id=self.request.data["owner"]),
+            notif=notif,
+            )
+        
+        notif.delete() # Maybe we can keep this because we dont need the notif data at this point
+
+        return Response(
+            {
+                "msg": 'Notification sent to owner.'
+            },
+            status=status.HTTP_201_CREATED
+        )
     
-# This is just an example of how we can perform complex logic of different types of requests
+# Notify All Owners View
 class NotifyAllView(generics.GenericAPIView):
 
-    # Making my own custom get
-    def get(self, request, *args, **kwargs):
-        notifs = []
+    permission_classes = [permissions.IsAdminUser]
 
-        notif_query_set = Notif.objects.all()
-        for notif_model in notif_query_set:
-            notif = ComplexNotifSerializer(notif_model).data
-            notif['subject'] = "Complex Modification"
-            notifs.append(notif)
+    serializer_class = NotifSerializer
 
-        return Response(notifs)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        notif = serializer.save()
+
+        owners = Owner.objects.all()
+
+        for owner in owners:
+            send_notif_email(owner=owner, notif=notif)
+        
+        notif.delete() # Maybe we can keep this because we dont need the notif data at this point?
+
+        return Response(
+            {
+                "msg": 'Notification sent to all owners.'
+            },
+            status=status.HTTP_201_CREATED
+        )
