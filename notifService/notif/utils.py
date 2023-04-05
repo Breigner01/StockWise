@@ -1,6 +1,5 @@
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from django.core.exceptions import MessageSendingError
 from django.conf import settings
 
 def send_notif_email(owner, notif):
@@ -16,6 +15,6 @@ def send_notif_email(owner, notif):
             )
 
         email.send()
-    except MessageSendingError as e:
+    except Exception as e:
         # handle error
         print(f"Error sending email: {e}")
