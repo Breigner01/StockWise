@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import "../App.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import ProdcuctTable from "../components/tables/ProductsTable"
+import { loadProducts } from "../redux/actions/productActions";
+
 
 import {
     Button,
@@ -16,6 +19,12 @@ const PrivatePage = (props) => {
         e.preventDefault();
         console.log("Button Works");
       };
+
+      const { loadProducts } = props;
+        useEffect(() => {
+        loadProducts();
+        }, [loadProducts]);
+
 
     return (
         <Grid container spacing={1} >
@@ -35,9 +44,14 @@ const PrivatePage = (props) => {
                         >
                             Test Action
                         </Button>
+
+                        <Box ></Box>
                     </Box>
                 </header>
             </Grid>
+                    <Grid item xs={12}>
+                        <ProdcuctTable products={props.products}/>
+                    </Grid>
         </Grid>
     );
 }
@@ -48,6 +62,9 @@ PrivatePage.propTypes = {
 
 const mapStateToProps = (state) => ({
     auth: state.authReducer,
+    products: state.productReducer.products,
 });
 
-export default connect(mapStateToProps)(PrivatePage);
+
+
+export default connect(mapStateToProps,{ loadProducts })(PrivatePage);

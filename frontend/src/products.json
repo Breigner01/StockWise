@@ -1,0 +1,26 @@
+  
+[{
+    "id": 1,
+    "name": "Keyborads",
+    "price": 25,
+    "quantity": 50
+},
+{
+    "id": 2,
+    "name": "Screens",
+    "price": 150,
+    "quantity": 15
+},
+{
+    "id": 3,
+    "name": "CPUs",
+    "price": 500,
+    "quantity": 100
+},
+{
+    "id": 4,
+    "name": "Speakers",
+    "price": 30,
+    "quantity": 25
+}
+]
