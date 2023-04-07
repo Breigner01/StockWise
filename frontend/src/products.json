@@ -1,74 +1,62 @@
   
 [{
-    "id": 1,
-    "name": "Keyborads",
-    "price": 25,
+    "ownerId": 1,
+    "sku": "AER1231234",
     "quantity": 50
 },
 {
-    "id": 2,
-    "name": "Screens",
-    "price": 150,
+    "ownerId": 2,
+    "sku": "ASD1231234",
     "quantity": 15
 },
 {
-    "id": 3,
-    "name": "CPUs",
-    "price": 500,
+    "ownerId": 3,
+    "sku": "KER12123889",
     "quantity": 100
 },
 {
-    "id": 4,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 4,
+    "sku": "HHS17689978",
     "quantity": 25
 },
 {
-    "id": 5,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 5,
+    "sku": "AER1231234",
     "quantity": 25
 },
 {
-    "id": 6,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 6,
+    "sku": "AER1231234",
     "quantity": 25
 },
 {
-    "id": 7,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 7,
+    "sku": "AER1231234",
     "quantity": 25
 },
 {
-    "id": 8,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 8,
+    "sku": "AER1231234",
     "quantity": 25
 },
 {
-    "id": 9,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 9,
+    "sku": "KER12123889",
     "quantity": 25
 },
 {
-    "id": 10,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 10,
+    "sku": "HHS17689978",
     "quantity": 25
 },
 {
-    "id": 11,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 11,
+    "sku": "HHS17689978",
     "quantity": 25
 },
 {
-    "id": 12,
-    "name": "Speakers",
-    "price": 30,
+    "ownerId": 12,
+    "sku": "HHS17689978",
     "quantity": 25
 }
 ]
