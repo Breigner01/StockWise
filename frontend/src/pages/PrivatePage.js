@@ -49,7 +49,14 @@ const PrivatePage = (props) => {
                     </Box>
                 </header>
             </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} mt={5}>
+                        <Box sx={{
+                            bgcolor: 'background.paper',
+                            boxShadow: 1,
+                            borderRadius: 2,
+                            p: 2,
+                            minWidth: 300,
+                            }}></Box>
                         <ProdcuctTable products={props.products}/>
                     </Grid>
         </Grid>

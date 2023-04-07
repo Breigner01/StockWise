@@ -9,8 +9,13 @@ const initialState = {
           ...state,
           products: action.payload,
         };
-      default:
-        return state;
+        case "ADD_PRODUCT":
+          return {
+            ...state,
+            products: [...state.products, action.payload],
+          };
+        default:
+          return state;
     }
   };
   

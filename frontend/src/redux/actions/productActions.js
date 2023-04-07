@@ -6,3 +6,10 @@ export const loadProducts = () => {
       payload: productData,
     };
   };
+
+  export const addProduct = (newProduct) => {
+    return {
+      type: "ADD_PRODUCT",
+      payload: newProduct,
+    };
+  };
