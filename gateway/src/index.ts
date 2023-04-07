@@ -7,8 +7,8 @@ const app = express();
 const PORT = 8080;
 
 
-
-app.use('/graphql',authMiddleware, graphqlHTTP({
+app.use(authMiddleware);
+app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true
 }))
