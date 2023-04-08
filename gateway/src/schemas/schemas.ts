@@ -18,6 +18,9 @@ const Query = new GraphQLObjectType({
         getAllUsers: {
             type: new GraphQLList(UserType),
             resolve(parent,args){
+
+
+                
                 return myArray
             }
         },

@@ -1,17 +1,15 @@
-FROM node:12.18.2 as build
+FROM node:16
 
-ARG REACT_APP_SERVICES_HOST=/services/m
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-WORKDIR /app
-
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
-
-RUN yarn install
 COPY . .
-RUN yarn build
 
 
-FROM nginx
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/build /usr/share/nginx/html
+RUN npm install
+
+
+
+EXPOSE 8080
+CMD [ "node", "server.js" ]
