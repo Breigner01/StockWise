@@ -5,6 +5,7 @@ import React, { Fragment, useEffect, useState } from "react";
 // import { getProducts, deleteProduct } from "../../redux/actions/productActions";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {
     Table,
     TableBody,
@@ -94,14 +95,16 @@ const ProductsTable = (props) => {
                         <TableCell key={i + "2"}>{item["name"]}</TableCell>
                         <TableCell key={i + "3"}>{item["quantity"]}</TableCell>
                         <TableCell>
-                            <Button
-                            size="small"
-                            variant="contained"
-                            color="error"
-                            onClick={() => dropProduct(item["id"])}
+                            <Tooltip title="Remove Inventory">
+                            <IconButton 
+                                sx={{ ml: 1 }} 
+                                size="large" 
+                                color="error" 
+                                onClick={() => dropProduct(item["id"])}
                             >
-                            Drop
-                            </Button>
+                                <HighlightOffIcon />
+                            </IconButton>
+                        </Tooltip>
                         </TableCell>
                         </TableRow>
                     ))}

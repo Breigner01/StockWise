@@ -5,7 +5,7 @@ import React, { Fragment, useEffect, useState } from "react";
 // import { getInventories, deleteInventory } from "../../redux/actions/inventoryActions";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import GroupsIcon from '@mui/icons-material/Groups';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {
     Table,
@@ -112,7 +112,7 @@ const InventoryTable = (props) => {
                                 color="primary" 
                                 onClick={() => handleDialogOpen(item["inventory_id"])}
                             >
-                                <GroupsIcon />
+                                <Inventory2OutlinedIcon />
                             </IconButton>
                         </Tooltip>
                     </TableCell>

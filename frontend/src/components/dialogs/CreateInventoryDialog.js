@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Dialog,
@@ -39,7 +39,7 @@ const CreateInventoryDialog = (props) => {
           align="center"
         >
             <Avatar sx={{ mt: 3, bgcolor: "success.main" }}>
-                <LibraryAddIcon />
+                <InventoryIcon />
             </Avatar>
           
             <Typography component="div" align="center" variant="h5">

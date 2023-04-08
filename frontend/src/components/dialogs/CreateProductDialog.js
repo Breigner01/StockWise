@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Dialog,
@@ -39,7 +39,7 @@ const CreateProductDialog = (props) => {
           align="center"
         >
             <Avatar sx={{ mt: 3, bgcolor: "success.main" }}>
-                <LibraryAddIcon />
+                <AddIcon />
             </Avatar>
           
             <Typography component="div" align="center" variant="h5">
