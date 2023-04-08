@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import PrivatePage from "./pages/PrivatePage";
 import LoginUser from "./pages/auth/LoginUser";
 import RegisterUser from "./pages/auth/RegisterUser";
+import WarehouseManagement from "./pages/WarehouseManagement";
 
 
 const App = () => {
@@ -21,12 +22,14 @@ const App = () => {
           {/* Private Pages for User*/} 
           <Route path={homePath} element={<PrivateRoute redirect={"/login"} />} >
             <Route path="" element={<Home />}>
+              <Route index element={<WarehouseManagement />} />
+              <Route path="home" element={<WarehouseManagement />} />
               <Route path="private" element={<PrivatePage />} />
             </Route>
           </Route>
 
           {/* Public Pages for Auth*/}  
-          <Route path={homePath} element={<PublicRoute redirect={"/private"} />} >
+          <Route path={homePath} element={<PublicRoute redirect={"/home"} />} >
             <Route path="login" element={<LoginUser />} />
             <Route path="register" element={<RegisterUser redirect={"/login"} />} />
           </Route>
