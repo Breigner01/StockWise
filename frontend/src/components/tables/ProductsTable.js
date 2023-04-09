@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
-// To be uncommented when we integrate product redux
-// import { connect } from "react-redux";
-// import PropTypes from "prop-types";
-// import { getProducts, deleteProduct } from "../../redux/actions/productActions";
+
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getProducts } from "../../redux/actions/productActions";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -29,7 +29,7 @@ const ProductsTable = (props) => {
     const [openForm, setOpenForm] = useState(false);
 
     useEffect(() => {
-        // props.getProducts(inventory_id);
+        props.getProducts();
         console.log("GET PRODUCTS #" + inventory_id);
     }, []);
 
@@ -116,17 +116,14 @@ const ProductsTable = (props) => {
     }
 }
 
-// ProductsTable.propTypes = {
-//     products: PropTypes.array.isRequired,
-// };
+ProductsTable.propTypes = {
+    _products: PropTypes.array.isRequired,
+};
 
-// const mapStateToProps = (state) => ({
-//     products: state.productsReducer.products,
-// });
+const mapStateToProps = (state) => ({
+    _products: state.productReducer.products,
+});
 
-// export default connect(mapStateToProps, {
-//     getProducts,
-//     deleteProduct,
-// })(ProductsTable);
-
-export default ProductsTable;
+export default connect(mapStateToProps, {
+    getProducts,
+})(ProductsTable);
