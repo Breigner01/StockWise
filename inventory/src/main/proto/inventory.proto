@@ -18,7 +18,23 @@ message ItemReply {
   string message = 1;
 }
 
-
 service InventoryService {
   rpc decreaseInventory (ItemRequest) returns (ItemReply) {}
+}
+
+message LowInventoryErrorResponse {
+  string ownerId = 1;
+  string sku = 2;
+  uint32 quantity = 3;
+  uint32 available = 4;
+}
+
+message EmptyInventoryErrorResponse {
+  string ownerId = 1;
+  string sku = 2;
+}
+
+message NoProductErrorResponse {
+  string ownerId = 1;
+  string sku = 2;
 }

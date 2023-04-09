@@ -113,4 +113,9 @@ public class ItemDao {
     public void setInTransit(int inTransit) {
         this.inTransit = inTransit;
     }
+
+    public void decreaseInventory(int quantity) {
+        this.available -= quantity;
+        this.quantity -= quantity;
+    }
 }

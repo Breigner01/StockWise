@@ -9,4 +9,6 @@ import io.micronaut.data.repository.CrudRepository;
 public interface ItemRepository extends CrudRepository<ItemDao, ItemDao.ItemPK> {
     ItemDao findByItemPK(ItemDao.ItemPK itemPK);
 
+    void updateByItemPK(ItemDao.ItemPK itemPK, ItemDao itemDao);
+
 }
