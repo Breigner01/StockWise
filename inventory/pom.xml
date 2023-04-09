@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.example</groupId>
-  <artifactId>inventoryService</artifactId>
+  <artifactId>inventory</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
 
@@ -18,8 +18,8 @@
     <jdk.version>11</jdk.version>
     <release.version>11</release.version>
     <micronaut.version>3.8.8</micronaut.version>
-    <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
     <micronaut.data.version>3.9.7</micronaut.data.version>
+    <micronaut.test.resources.enabled>true</micronaut.test.resources.enabled>
     <exec.mainClass>com.example.Application</exec.mainClass>
   </properties>
 
@@ -48,12 +48,17 @@
     </dependency>
     <dependency>
       <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-jackson-databind</artifactId>
+      <artifactId>micronaut-runtime</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-mongodb</artifactId>
+      <artifactId>micronaut-data-jdbc</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.flyway</groupId>
+      <artifactId>micronaut-flyway</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -67,6 +72,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>io.micronaut.serde</groupId>
+      <artifactId>micronaut-serde-jackson</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.sql</groupId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>compile</scope>
@@ -77,8 +92,13 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.mongodb</groupId>
-      <artifactId>mongodb-driver-sync</artifactId>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-mysql</artifactId>
       <scope>runtime</scope>
     </dependency>
     <dependency>
@@ -137,14 +157,14 @@
               <version>${micronaut.version}</version>
             </path>
             <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-document-processor</artifactId>
-              <version>${micronaut.data.version}</version>
+              <groupId>io.micronaut.serde</groupId>
+              <artifactId>micronaut-serde-processor</artifactId>
+              <version>${micronaut.serialization.version}</version>
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=com.example</arg>
-            <arg>-Amicronaut.processing.module=inventoryService</arg>
+            <arg>-Amicronaut.processing.module=inventory</arg>
           </compilerArgs>
         </configuration>
       </plugin>
