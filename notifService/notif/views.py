@@ -54,19 +54,31 @@ class NotifyOwnerView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         notif = serializer.save()
 
-        send_notif_email(
-            owner=Owner.objects.get(id=self.request.data["owner"]),
-            notif=notif,
-            )
-        
-        notif.delete() # Maybe we can keep this because we dont need the notif data at this point
+        try:
 
-        return Response(
-            {
-                "msg": 'Notification sent to owner.'
-            },
-            status=status.HTTP_201_CREATED
-        )
+            send_notif_email(
+                owner=Owner.objects.get(id=self.request.data["owner"]),
+                notif=notif,
+                )
+            
+            notif.delete()
+
+            return Response(
+                {
+                    "msg": 'Notification sent to owner.'
+                },
+                status=status.HTTP_201_CREATED
+            )
+    
+        except Exception as e:
+            # handle error
+            return Response(
+                {
+                    "msg": "Something went wrong sending the email",
+                    "err": str(e)
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
     
 # Notify All Owners View
 class NotifyAllView(generics.GenericAPIView):
@@ -83,7 +95,17 @@ class NotifyAllView(generics.GenericAPIView):
         owners = Owner.objects.all()
 
         for owner in owners:
-            send_notif_email(owner=owner, notif=notif)
+            try: 
+                send_notif_email(owner=owner, notif=notif)
+            except Exception as e:
+                # handle error
+                return Response(
+                    {
+                        "msg": "Something went wrong when sending the email to owner " + owner.id,
+                        "err": str(e)
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
         
         notif.delete() # Maybe we can keep this because we dont need the notif data at this point?
 

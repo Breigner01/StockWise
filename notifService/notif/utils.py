@@ -3,18 +3,21 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 
 def send_notif_email(owner, notif):
-    email_subject = '['+notif.get_type_display()+'] -- ' + notif.subject
-    email_body = render_to_string('notifyEmail.html', {
-        'body': notif.message,
-    })
-    
-    try:
-        email = EmailMessage(subject=email_subject, body=email_body,
+    try: 
+        email_subject = '['+notif.get_type_display()+'] -- ' + notif.subject
+        email_body = render_to_string('notifyEmail.html', {
+            'body': notif.message,
+        })
+        
+        
+        email = EmailMessage(
+            subject=email_subject,
+            body=email_body,
             from_email=settings.EMAIL_FROM_USER,
             to=[owner.email]
-            )
+        )
 
         email.send()
-    except Exception as e:
-        # handle error
-        print(f"Error sending email: {e}")
+    except Exception:
+        raise
+    
