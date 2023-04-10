@@ -5,32 +5,23 @@ package product;
 option go_package = "./";
 
 service ProductService {
-    // TESTER METHOD
-    rpc Hello(NoParam) returns (HelloResponse); 
 
     rpc CreateProduct(Product) returns (Status);
 
     rpc GetProductById(Id) returns (Product);
     
-    // return list of products for these?
-    rpc SearchProductByName(Name) returns (Products); // note "s"
+    // returns list of products
+    rpc SearchProductByName(Name) returns (Products);
     rpc SearchProductByBrand(Brand) returns (Products);
     rpc SearchProductByPrice(Price) returns (Products);
 
     rpc UpdateProduct(Product) returns (Status);
-    //need to specify id
-    // tell frontend team to implement -> "are you sure u want to update?" (display before and after data)
+    // need to specify id
+    // frontend can implement -> "are you sure u want to update?" (display before and after data)
 
     rpc DeleteProduct(Id) returns (Status);
-    
 }
 
-// TESTER PARAMS
-message NoParam {
-}
-message HelloResponse {
-    string message = 1;
-}
 
 
 message Product {
@@ -74,6 +65,7 @@ message Price {
 
 // to create the 2 pb files, run cmd:
 // $ protoc --go_out=. --go-grpc_out=. product/product.proto
+
 // go_out and go-grpc_out create in current dir and location of proto file
 
 // then to get missing packages, run cmd:
