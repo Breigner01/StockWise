@@ -88,4 +88,32 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
             );
         }
     }
+
+    //Not tested because I don't know how XD
+    public void insertInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
+        final OwnerDto ownerDto = new OwnerDto(request.getOwnerId());
+        final ItemDto itemDto = new ItemDto(request.getSku(), request.getQuantity());
+
+        try {
+            final ItemDao itemDao = itemRepository.findByItemPK(new ItemDao.ItemPK(ownerDto.getId(), itemDto.getSku()));
+
+            itemDao.insertInTransit(itemDto.getQuantity());
+            itemRepository.updateByItemPK(itemDao.getItemPK(), itemDao);
+            messageBroker.createDeliveryNote(itemDao.getOwnerId(), itemDao.getSku());
+
+        }
+        catch (EmptyResultException e) {
+            final Metadata.Key<NoProductErrorResponse> errorResponseKey = ProtoUtils.keyForProto(NoProductErrorResponse.getDefaultInstance());
+            final NoProductErrorResponse errorResponse = NoProductErrorResponse.newBuilder()
+                    .setOwnerId(ownerDto.getId())
+                    .setSku(itemDto.getSku())
+                    .build();
+            final Metadata metadata = new Metadata();
+            metadata.put(errorResponseKey, errorResponse);
+            responseObserver.onError(Status.INVALID_ARGUMENT
+                    .withDescription("Product is not in inventory")
+                    .asException(metadata)
+            );
+        }
+    }
 }

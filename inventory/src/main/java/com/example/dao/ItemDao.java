@@ -118,4 +118,9 @@ public class ItemDao {
         this.available -= quantity;
         this.quantity -= quantity;
     }
+
+    public void insertInTransit(int quantity) {
+        this.inTransit += quantity;
+        this.quantity += quantity;
+    }
 }
