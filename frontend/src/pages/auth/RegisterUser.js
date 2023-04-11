@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 import { registerUser } from "../../redux/actions/authActions";
+import { createMessage } from "../../redux/actions/messageActions";
 
 // MUI
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -50,7 +51,7 @@ const RegisterUser = (props) => {
         } = state;
     
         if (password !== confirm_password) {
-          console.log("Passwords do not match");
+          props.createMessage({ passwordsDoNotMatch: 'Passwords do not match' });
         } else {
           const newUser = {
             email,
@@ -158,6 +159,7 @@ const RegisterUser = (props) => {
 
 RegisterUser.propTypes = {
     registerUser: PropTypes.func.isRequired,
+    createMessage: PropTypes.func.isRequired
 };
 
-export default connect(null, { registerUser })(RegisterUser);
+export default connect(null, { registerUser, createMessage })(RegisterUser);

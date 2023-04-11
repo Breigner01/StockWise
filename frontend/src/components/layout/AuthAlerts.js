@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { removeErrors } from "../../redux/actions/errorActions";
 import { removeMessages } from '../../redux/actions/messageActions';
 
-const Alerts = (props) => {
+const AuthAlerts = (props) => {
 
     const updateRef = useRef(true);
 
@@ -14,10 +14,13 @@ const Alerts = (props) => {
 
         // Avoid initial mount with this if stment
         if (updateRef.current){
-            // actual update code
+            if (props.error.code && (props.error.code == "auth/user-not-found" || props.error.code == "auth/wrong-password")) {
+                props.alert.error("incorrect email/password");
+            }
 
-            // Custom msgs per error returned
-
+            if (props.error.code && props.error.code == "auth/email-already-in-use") {
+                props.alert.error("email is taken");
+            }
             props.removeErrors();
         }
 
@@ -27,10 +30,8 @@ const Alerts = (props) => {
 
         // Avoid initial mount with this if stment
         if (updateRef.current){
-            if (props.message.createInventory) props.alert.success(props.message.createInventory);
-            if (props.message.deleteInventory) props.alert.error(props.message.deleteInventory);
-            if (props.message.createProduct) props.alert.success(props.message.createProduct);
-            if (props.message.deleteProduct) props.alert.error(props.message.deleteProduct);
+            if (props.message.userRegistered) props.alert.success(props.message.userRegistered);
+            if (props.message.passwordsDoNotMatch) props.alert.error(props.message.passwordsDoNotMatch);
 
             props.removeMessages();
         }
@@ -43,7 +44,7 @@ const Alerts = (props) => {
     );
 }
 
-Alerts.propTypes = {
+AuthAlerts.propTypes = {
     error: PropTypes.object.isRequired,
     message: PropTypes.object.isRequired
 }
@@ -53,4 +54,4 @@ const mapStateToProps = state => ({
     message: state.messageReducer
 });
 
-export default connect(mapStateToProps, { removeErrors, removeMessages })(withAlert()(Alerts));
+export default connect(mapStateToProps, { removeErrors, removeMessages })(withAlert()(AuthAlerts));

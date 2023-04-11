@@ -1,15 +1,14 @@
-import { GET_ERRORS, DELETE_ERRORS } from "../actions/types";
+import { CREATE_MESSAGE, DELETE_MESSAGE } from "../actions/types";
 
 const initialState = {};
 
 export default function(state=initialState, action){
     switch (action.type){
-        case GET_ERRORS:
+        case CREATE_MESSAGE:
             return action.payload;
-        case DELETE_ERRORS:
+        case DELETE_MESSAGE:
             return initialState;
         default:
             return state;
     }
-
 }

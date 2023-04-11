@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 
 import { returnErrors } from './errorActions';
+import { createMessage } from './messageActions';
 import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL } from './types';
 import { fbApp } from "../../Firebase";
 
@@ -45,6 +46,9 @@ export const registerUser = (user) => (dispatch) => {
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+            dispatch(createMessage({
+                userRegistered: 'Account Registered!'
+            }));
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: {

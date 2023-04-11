@@ -10,3 +10,5 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 
 export const GET_ERRORS = "GET_ERRORS";
 export const DELETE_ERRORS = "DELETE_ERRORS";
+export const CREATE_MESSAGE = "CREATE_MESSAGE";
+export const DELETE_MESSAGE = "DELETE_MESSAGE";
