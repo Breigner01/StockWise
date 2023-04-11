@@ -11,4 +11,5 @@ public interface ItemRepository extends CrudRepository<ItemDao, ItemDao.ItemPK> 
 
     void updateByItemPK(ItemDao.ItemPK itemPK, ItemDao itemDao);
 
+    Iterable<ItemDao> findAllBySku(String sku);
 }

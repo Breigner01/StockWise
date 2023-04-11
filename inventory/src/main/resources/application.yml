@@ -15,4 +15,4 @@ flyway:
       enabled: true
 kafka:
   bootstrap:
-    servers: broker:9092
+    servers: 'broker:9092'

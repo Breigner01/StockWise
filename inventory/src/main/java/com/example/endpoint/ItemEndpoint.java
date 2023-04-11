@@ -13,6 +13,9 @@ import io.grpc.stub.StreamObserver;
 import io.micronaut.data.exceptions.EmptyResultException;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
 public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase {
 
     @Inject
@@ -20,6 +23,20 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
 
     @Inject
     MessageBroker messageBroker;
+
+    @Override
+    public void viewInventory(InventoryRequest request, StreamObserver<InventoryReply> responseObserver) {
+        final String sku = request.getSku();
+        final ArrayList<Item> items = new ArrayList<>();
+        itemRepository.findAllBySku(sku).forEach(itemDao -> items.add(itemDao.toItem()));
+
+        final InventoryReply response = InventoryReply.newBuilder()
+                .addAllItems(items)
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 
     @Override
     public void decreaseInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
