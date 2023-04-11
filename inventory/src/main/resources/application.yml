@@ -6,7 +6,7 @@ datasources:
     driver-class-name: com.mysql.cj.jdbc.Driver
     db-type: mysql
     dialect: MYSQL
-    url: 'jdbc:mysql://localhost:3306/db'
+    url: 'jdbc:mysql://mysql:3306/db'
     username: 'sherlock'
     password: 'elementary'
 flyway:
@@ -15,4 +15,4 @@ flyway:
       enabled: true
 kafka:
   bootstrap:
-    servers: localhost:9092
+    servers: broker:9092
