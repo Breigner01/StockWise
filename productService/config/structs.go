@@ -1,13 +1,25 @@
 package config
 
 import (
+	"github.com/Breigner01/SOEN487-Project3/productService/ent"
 	"github.com/Breigner01/SOEN487-Project3/productService/server"
 )
 
-type Config struct {
-	Sv *server.Server
+type PostgresConfig struct {
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	Host     string `mapstructure:"host"`
+	Database string `mapstructure:"database"`
+	Port     string `mapstructure:"port"`
+	SSLMode  string `mapstructure:"sslmode"`
 }
 
 type ProgramConfig struct {
-	Port string
+	Port     string         `mapstructure:"port"`
+	Postgres PostgresConfig `mapstructure:"postgres"`
+}
+
+type Config struct {
+	Sv *server.Server
+	DB *ent.Client
 }
