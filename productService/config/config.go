@@ -14,5 +14,6 @@ func GetConfig(conf ProgramConfig) Config {
 
 	return Config{
 		Sv: server.New(listener),
+		DB: ConnectToDatabase(conf.Postgres),
 	}
 }
