@@ -13,6 +13,7 @@ router.register(r"api/notif", NotifView, basename="notif")
 urlpatterns = [
     path("api/addOwner", AddOwnerView.as_view(), name='addOwner'),
     path("api/notify/", NotifyOwnerView.as_view(), name='notifyOwner'),
+    path("api/notify/set/", NotifySetView.as_view(), name='notifySet'),
     path("api/notify/all/", NotifyAllView.as_view(), name='notifyAll'),
 ]
 

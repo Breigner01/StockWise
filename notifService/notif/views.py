@@ -79,6 +79,40 @@ class NotifyOwnerView(generics.GenericAPIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
+# Notify Set of Owners View
+class NotifySetView(generics.GenericAPIView):
+
+    permission_classes = [permissions.IsAdminUser]
+
+    serializer_class = NotifOwnersSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        notif, owners = serializer.save()
+
+        for owner in owners:
+            try: 
+                send_notif_email(owner=owner, notif=notif)
+            except Exception as e:
+                # handle error
+                return Response(
+                    {
+                        "msg": "Something went wrong when sending the email to owner " + owner.id,
+                        "err": str(e)
+                    },
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+        
+        notif.delete() # Maybe we can keep this because we dont need the notif data at this point?
+
+        return Response(
+            {
+                "msg": 'Notification sent to specified set of owners.'
+            },
+            status=status.HTTP_201_CREATED
+        )
     
 # Notify All Owners View
 class NotifyAllView(generics.GenericAPIView):
