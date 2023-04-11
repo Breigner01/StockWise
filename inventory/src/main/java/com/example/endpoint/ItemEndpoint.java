@@ -14,7 +14,6 @@ import io.micronaut.data.exceptions.EmptyResultException;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase {
 
