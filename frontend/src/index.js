@@ -4,22 +4,34 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import store from "./redux/store";
+
+import { Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+import Alerts from './components/layout/Alerts';
 
 import { loadUser } from "./redux/actions/authActions";
 
 const Root = () => {
+    const alertOptions = {
+      timeout: 3000,
+      position: "top center"
+    };
+
     useEffect(() => {
       store.dispatch(loadUser());
     }, []);
 
     return (
-      <Provider store={store}>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </Provider>
+      <ReduxProvider store={store}>
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <React.StrictMode>
+            <Alerts />
+            <App />
+          </React.StrictMode>
+        </AlertProvider>
+      </ReduxProvider>
     );
 };
 

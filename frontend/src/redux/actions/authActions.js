@@ -6,6 +6,7 @@ import {
     signOut,
 } from "firebase/auth";
 
+import { returnErrors } from './errorActions';
 import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL } from './types';
 import { fbApp } from "../../Firebase";
 
@@ -54,14 +55,15 @@ export const registerUser = (user) => (dispatch) => {
                     }
                 },
             });
+            return true;
         }).catch((err) => {
             if (err){
-                console.log(err.code);
-                console.log(err.message);
+                dispatch(returnErrors(err));
             }
             dispatch({
                 type: REGISTER_FAIL
             })
+            return false;
         });
 }
 
@@ -84,8 +86,7 @@ export const loginUser = (email, password) => dispatch => {
             });
         }).catch((err) => {
             if (err){
-                console.log(err.code);
-                console.log(err.message);
+                dispatch(returnErrors(err));
             }
             dispatch({
                 type: LOGIN_FAIL
@@ -105,8 +106,7 @@ export const logout = () => (dispatch) => {
             });
         }).catch((err) => {
             if (err){
-                console.log(err.code);
-                console.log(err.message);
+                dispatch(returnErrors(err));
             }
         });
 }

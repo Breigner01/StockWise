@@ -56,8 +56,10 @@ const RegisterUser = (props) => {
             email,
             password,
           };
-          props.registerUser(newUser);
-          navigate(`${redirect}`);
+          if (props.registerUser(newUser)){
+            navigate(`${redirect}`);
+          }
+          
         }
     }
   };
