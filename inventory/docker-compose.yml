@@ -47,6 +47,7 @@ services:
     ports:
       - "8080:8080"
       - "50051:50051"
+    restart: on-failure
     networks:
       - unicef
     depends_on:
