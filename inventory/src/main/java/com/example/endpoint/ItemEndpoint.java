@@ -89,8 +89,9 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
         }
     }
 
+    @Override
     //Not tested because I don't know how XD
-    public void insertInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
+    public void addInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
         final OwnerDto ownerDto = new OwnerDto(request.getOwnerId());
         final ItemDto itemDto = new ItemDto(request.getSku(), request.getQuantity());
 
@@ -101,8 +102,13 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
             itemRepository.updateByItemPK(itemDao.getItemPK(), itemDao);
             messageBroker.createDeliveryNote(itemDao.getOwnerId(), itemDao.getSku());
 
-        }
-        catch (EmptyResultException e) {
+            final ItemReply response = ItemReply.newBuilder()
+                    .setMessage("success")
+                    .build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (EmptyResultException e) {
             final Metadata.Key<NoProductErrorResponse> errorResponseKey = ProtoUtils.keyForProto(NoProductErrorResponse.getDefaultInstance());
             final NoProductErrorResponse errorResponse = NoProductErrorResponse.newBuilder()
                     .setOwnerId(ownerDto.getId())
