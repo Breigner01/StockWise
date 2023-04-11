@@ -31,9 +31,43 @@ services:
         networks:
             - product-service-db
 
+    notif-service:
+        image: soen487-project3/notif-service
+        build: notifService
+        restart: always
+        environment:
+            EMAIL_USER: ${NOTIF_SERVICE_EMAIL_USER}
+            EMAIL_PASS: ${NOTIF_SERVICE_EMAIL_PASS}
+            POSTGRES_USER: ${NOTIF_SERVICE_POSTGRES_USER}
+            POSTGRES_PASSWORD: ${NOTIF_SERVICE_POSTGRES_PASSWORD}
+            POSTGRES_NAME: ${NOTIF_SERVICE_POSTGRES_DB}
+            POSTGRES_HOST: notif-service-database
+            POSTGRES_PORT: ${NOTIF_SERVICE_POSTGRES_PORT}
+            PORT: ${NOTIF_SERVICE_PORT}
+        ports:
+            - "${NOTIF_SERVICE_PORT}:${NOTIF_SERVICE_PORT}"
+        networks:
+            - broker-notif-service
+            - notif-service-db
+
+    notif-service-database:
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_USER: ${NOTIF_SERVICE_POSTGRES_USER}
+            POSTGRES_PASSWORD: ${NOTIF_SERVICE_POSTGRES_PASSWORD}
+            POSTGRES_DB: ${NOTIF_SERVICE_POSTGRES_DB}
+        volumes:
+            - notif-service-database-data:/var/lib/postgresql/data
+        networks:
+            - notif-service-db
+
 volumes:
     product-service-database-data:
+    notif-service-database-data:
 
 networks:
     gateway-product-service:
     product-service-db:
+    broker-notif-service:
+    notif-service-db:
