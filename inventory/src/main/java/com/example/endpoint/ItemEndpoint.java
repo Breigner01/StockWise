@@ -38,6 +38,41 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
     }
 
     @Override
+    public void storeInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
+        final OwnerDto ownerDto = new OwnerDto(request.getOwnerId());
+        final ItemDto itemDto = new ItemDto(request.getSku(), request.getQuantity());
+
+        try {
+            final ItemDao itemDao = itemRepository.findByItemPK(new ItemDao.ItemPK(ownerDto.getId(), itemDto.getSku()));
+
+            itemDao.storeInventory(itemDto.getQuantity());
+
+            messageBroker.itemStoredMessage(itemDao.getOwnerId(), itemDao.getSku(), Integer.toString(itemDao.getAvailable()));
+
+            itemRepository.update(itemDao);
+
+            final ItemReply response = ItemReply.newBuilder()
+                    .setMessage("success")
+                    .build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (EmptyResultException e) {
+            final Metadata.Key<NoProductErrorResponse> errorResponseKey = ProtoUtils.keyForProto(NoProductErrorResponse.getDefaultInstance());
+            final NoProductErrorResponse errorResponse = NoProductErrorResponse.newBuilder()
+                    .setOwnerId(ownerDto.getId())
+                    .setSku(itemDto.getSku())
+                    .build();
+            final Metadata metadata = new Metadata();
+            metadata.put(errorResponseKey, errorResponse);
+            responseObserver.onError(Status.INVALID_ARGUMENT
+                    .withDescription("Product is not in inventory")
+                    .asException(metadata)
+            );
+        }
+    }
+
+    @Override
     public void decreaseInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
         final OwnerDto ownerDto = new OwnerDto(request.getOwnerId());
         final ItemDto itemDto = new ItemDto(request.getSku(), request.getQuantity());

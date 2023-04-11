@@ -120,6 +120,11 @@ public class ItemDao {
         this.quantity -= quantity;
     }
 
+    public void storeInventory(int quantity) {
+        this.available += quantity;
+        this.inTransit -= quantity;
+    }
+
     public Item toItem() {
         return Item.newBuilder()
                 .setOwnerId(this.getOwnerId())
