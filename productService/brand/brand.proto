@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-package brand;
-
-option go_package = "./";
-

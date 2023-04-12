@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-package category;
-
-option go_package = "./";
-
