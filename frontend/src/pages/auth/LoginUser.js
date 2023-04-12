@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { loginUser } from "../../redux/actions/authActions";
+import { loginUser, googleLogin } from "../../redux/actions/authActions";
 
+import GoogleButton from 'react-google-button'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
     Avatar,
@@ -15,6 +16,7 @@ import {
     Box,
     Typography,
     Container,
+    IconButton
 } from "@mui/material";
 
 const LoginUser = (props) => {
@@ -39,6 +41,10 @@ const LoginUser = (props) => {
         if (validLogin()) {
             props.loginUser(state.email, state.password);
         }
+    };
+
+    const handleGoogleLogin = () => {
+        props.googleLogin();
     };
 
     const validLogin = () => {
@@ -111,12 +117,24 @@ const LoginUser = (props) => {
                     </Grid>
                 </Box>
             </Box>
+            <Box
+                sx={{
+                marginTop: 3,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                }}
+            >
+                 <GoogleButton onClick={handleGoogleLogin} />
+            </Box>
+           
         </Container>
     );
 }
 
 LoginUser.propTypes = {
     loginUser: PropTypes.func.isRequired,
+    googleLogin: PropTypes.func.isRequired,
 }
 
-export default connect(null, { loginUser })(LoginUser);
+export default connect(null, { loginUser, googleLogin })(LoginUser);
