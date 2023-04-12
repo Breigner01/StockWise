@@ -3,10 +3,10 @@ package product
 import (
 	"fmt"
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
-	brandDB "github.com/Breigner01/SOEN487-Project3/productService/database/brand"
-	categoryDB "github.com/Breigner01/SOEN487-Project3/productService/database/category"
-	productDB "github.com/Breigner01/SOEN487-Project3/productService/database/product"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
+	brandDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/brand"
+	categoryDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/category"
+	productDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/product"
 	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 )
 

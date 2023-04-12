@@ -2,14 +2,15 @@ package brand
 
 import (
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
-	brandDB "github.com/Breigner01/SOEN487-Project3/productService/database/brand"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
+	brandDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/brand"
 	brand "github.com/Breigner01/SOEN487-Project3/productService/pb/brand"
 )
 
-func CreateBrand(conf config.Config, b *brand.Brand) error {
+func UpdateBrand(conf config.Config, b *brand.Brand) error {
 
-	_, err := brandDB.CreateBrand(conf.DB, &ent.Brand{
+	_, err := brandDB.UpdateBrand(conf.DB, &ent.Brand{
+		ID:   int(b.Id),
 		Name: b.Name,
 	})
 

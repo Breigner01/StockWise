@@ -2,8 +2,8 @@ package product
 
 import (
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
-	productDB "github.com/Breigner01/SOEN487-Project3/productService/database/product"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
+	productDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/product"
 	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 )
 
