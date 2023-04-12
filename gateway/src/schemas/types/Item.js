@@ -3,6 +3,7 @@ import {
   GraphQLInt,
   GraphQLString,
   GraphQLFloat,
+  GraphQLInputObjectType,
 } from "graphql";
 
 export const ItemType = new GraphQLObjectType({
@@ -16,7 +17,7 @@ export const ItemType = new GraphQLObjectType({
   }),
 });
 
-export const ItemRequestType = new GraphQLObjectType({
+export const ItemRequestType = new GraphQLInputObjectType({
   name: "ItemRequest",
   fields: () => ({
     ownerId: { type: GraphQLString },

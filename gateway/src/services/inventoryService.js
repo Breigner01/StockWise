@@ -10,6 +10,9 @@ let grpcObject = protoLoader.loadSync(
   {}
 );
 
+
+
+
 let InventoryService = grpc.loadPackageDefinition(grpcObject).InventoryService;
 
 export const inventoryClient = new InventoryService(
@@ -19,7 +22,7 @@ export const inventoryClient = new InventoryService(
 
 export const getInventory = (sku) => {
   return new Promise((resolve, reject) => {
-    inventoryClient.viewInventory({}, (err, inventory) => {
+    inventoryClient.viewInventory({sku}, (err, inventory) => {
       !err ? resolve(inventory) : resolve(null);
     });
   });
@@ -27,7 +30,7 @@ export const getInventory = (sku) => {
 
 export const addInventory = (itemRequest) => {
   return new Promise((resolve, reject) => {
-    inventoryClient.addInventory({}, (err, result) => {
+    inventoryClient.addInventory(itemRequest, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
@@ -35,7 +38,7 @@ export const addInventory = (itemRequest) => {
 
 export const decreaseInventory = (itemRequest) => {
   return new Promise((resolve, reject) => {
-    inventoryClient.decreaseInventory({}, (err, result) => {
+    inventoryClient.decreaseInventory(itemRequest, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
@@ -43,7 +46,7 @@ export const decreaseInventory = (itemRequest) => {
 
 export const storeInventory = (itemRequest) => {
   return new Promise((resolve, reject) => {
-    inventoryClient.storeInventory({}, (err, result) => {
+    inventoryClient.storeInventory(itemRequest, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });

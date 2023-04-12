@@ -13,13 +13,14 @@ import {
   storeInventory,
 } from "../services/inventoryService.js";
 import {
-  getProductByBrand,
+  getProductsByBrand,
   getProductById,
-  getProductByName,
-  getProductByPrice,
+  getProductsByName,
+  getProductsByPrice,
   createProduct,
   deleteProduct,
   updateProduct,
+  getProducts,
 } from "../services/productService.js";
 
 import { InputProductType, ProductType } from "./types/Product.js";
@@ -79,10 +80,12 @@ const Query = new GraphQLObjectType({
     getProducts: {
       type: GraphQLList(ProductType),
       args: {
-        userId: { type: GraphQLInt },
-        inventoryId: { type: GraphQLString },
+        userId: { type: GraphQLString },
       },
-      resolve(parent, args) {},
+      async resolve(parent, args) {
+        const data = await getProducts();
+        return data.productsFound
+      },
     },
     getProductById: {
       type: ProductType,
@@ -95,8 +98,29 @@ const Query = new GraphQLObjectType({
         return data;
       },
     },
-    getProductsbyName: {},
-    getProductsbyBrand: {},
+    getProductsbyName: {
+        type: GraphQLList(ProductType),
+        args: {
+          userId: { type: GraphQLString },
+          productName: { type: GraphQLString },
+        },
+        async resolve(parent, args) {
+          const data = await getProductsByName(args.productId);
+          return data.productsFound;
+        },
+    },
+    getProductsbyBrand: {
+        type: GraphQLList(ProductType),
+        args: {
+          userId: { type: GraphQLString },
+          productBrand: { type: GraphQLString },
+        },
+        async resolve(parent, args) {
+          const data = await getProductsByBrand(args.productBrand);
+          console.log(data)
+          return data.productsFound;
+        },
+    },
 
     // INVENTORY QUERIES
     viewInventory: {
@@ -107,7 +131,7 @@ const Query = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const data = await getInventory(args.sku);
-        return data;
+        return data.items;
       },
     },
   },
@@ -123,8 +147,10 @@ const Mutation = new GraphQLObjectType({
         product: { type: InputProductType },
       },
       async resolve(parent, args) {
+        
         const result = await createProduct(args.product);
-        return result;
+        
+        return result.statusMessage;
       },
     },
 
@@ -136,7 +162,7 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const result = await deleteProduct(args.productId);
-        return result;
+        return result.statusMessage;
       },
     },
     updateProduct: {
@@ -147,7 +173,7 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const result = await updateProduct(args.product);
-        return result;
+        return result.statusMessage;
       },
     },
     //INVENTORY MUTATIONS
@@ -159,7 +185,7 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const result = await addInventory(args.itemRequest);
-        return result;
+        return result.message;
       },
     },
     decreaseInventory: {
@@ -170,7 +196,7 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const result = await decreaseInventory(args.itemRequest);
-        return result;
+        return result.message;
       },
     },
     storeInventory: {
@@ -181,7 +207,7 @@ const Mutation = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const result = await storeInventory(args.itemRequest);
-        return result;
+        return result.message;
       },
     },
   },

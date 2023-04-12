@@ -13,13 +13,26 @@ let grpcObject = protoLoader.loadSync(
 let ProductService = grpc.loadPackageDefinition(grpcObject).ProductService;
 
 export const productClient = new ProductService(
-  "localhost:50051",
+  "localhost:50052",
   grpc.credentials.createInsecure()
 );
 
+export const getProducts = () => {
+  return new Promise((resolve, reject) => {
+    productClient.SearchProductByName({name: ""}, (err, result) => {
+      console.log(err)
+      console.log(result)
+      if (!err) {
+        resolve(result);
+      }
+    });
+  });
+};
+
 export const getProductById = (id) => {
   return new Promise((resolve, reject) => {
-    productClient.GetProductById({}, (error, result) => {
+    productClient.GetProductById({id}, (err, result) => {
+      console.log(err)
       if (!err) {
         resolve(result);
       }
@@ -29,31 +42,32 @@ export const getProductById = (id) => {
 
 export const createProduct = (product) => {
   return new Promise((resolve, reject) => {
-    productClient.CreateProduct({}, (error, result) => {
+    productClient.CreateProduct(product, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
 };
 
-export const getProductByName = (name) => {
+export const getProductsByName = (name) => {
   return new Promise((resolve, reject) => {
-    productClient.SearchProductByName({}, (error, result) => {
+    productClient.SearchProductByName({name}, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
 };
 
-export const getProductByBrand = (brand) => {
+export const getProductsByBrand = (brand) => {
   return new Promise((resolve, reject) => {
-    productClient.SearchProductByBrand({}, (error, result) => {
+    console.log(brand)
+    productClient.SearchProductByBrand({brand}, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
 };
 
-export const getProductByPrice = (price) => {
+export const getProductsByPrice = (price) => {
   return new Promise((resolve, reject) => {
-    productClient.SearchProductByPrice({}, (error, result) => {
+    productClient.SearchProductByPrice({price}, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
@@ -61,7 +75,7 @@ export const getProductByPrice = (price) => {
 
 export const updateProduct = (product) => {
   return new Promise((resolve, reject) => {
-    productClient.updateProduct({}, (error, result) => {
+    productClient.updateProduct(product, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
@@ -69,7 +83,7 @@ export const updateProduct = (product) => {
 
 export const deleteProduct = (id) => {
   return new Promise((resolve, reject) => {
-    productClient.DeleteProduct({}, (error, result) => {
+    productClient.DeleteProduct({id}, (err, result) => {
       !err ? resolve(result) : resolve(null);
     });
   });
