@@ -4,12 +4,14 @@ import { graphqlHTTP } from "express-graphql";
 import { Schema } from "./schemas/schemas.js";
 const app = express();
 
+
 //app.use(authMiddleware);
 app.use(
     "/graphql",
     graphqlHTTP({
         schema: Schema,
-        graphiql: true,
+        graphiql: true
+       
     })
 );
 
