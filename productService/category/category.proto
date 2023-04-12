@@ -4,13 +4,14 @@ package category;
 
 option go_package = "./";
 
+// we use this 
 service CategoryService {
 
     rpc CreateCategory(Name) returns (Status);
 
-    rpc UpdateCategory(Name) returns (Status);
+    rpc UpdateCategory(NameId) returns (Status);
     
-    rpc DeleteCategory(Name) returns (Status);
+    rpc DeleteCategory(NameId) returns (Status);
 
     rpc GetAllCategories(NoParam) returns (Categories);
 }
@@ -19,6 +20,11 @@ service CategoryService {
 
 message Name {
     string name = 1;
+}
+
+message NameId {
+    string name = 1;
+    int64 id = 2;
 }
 
 message Status {

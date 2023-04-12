@@ -4,6 +4,7 @@ package brand;
 
 option go_package = "./";
 
+// we use this 
 service BrandService {
 
     rpc CreateBrand(Name) returns (Status);
