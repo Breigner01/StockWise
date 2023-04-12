@@ -109,17 +109,29 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         } catch (EmptyResultException e) {
-            final Metadata.Key<NoProductErrorResponse> errorResponseKey = ProtoUtils.keyForProto(NoProductErrorResponse.getDefaultInstance());
-            final NoProductErrorResponse errorResponse = NoProductErrorResponse.newBuilder()
-                    .setOwnerId(ownerDto.getId())
-                    .setSku(itemDto.getSku())
+            final ItemDao newItem = new ItemDao(ownerDto.getId(), itemDto.getSku());
+            newItem.setQuantity(itemDto.getQuantity());
+            newItem.setInTransit(itemDto.getQuantity());
+
+            itemRepository.save(newItem);
+
+            final ItemReply response = ItemReply.newBuilder()
+                    .setMessage("success")
                     .build();
-            final Metadata metadata = new Metadata();
-            metadata.put(errorResponseKey, errorResponse);
-            responseObserver.onError(Status.INVALID_ARGUMENT
-                    .withDescription("Product is not in inventory")
-                    .asException(metadata)
-            );
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+//            final Metadata.Key<NoProductErrorResponse> errorResponseKey = ProtoUtils.keyForProto(NoProductErrorResponse.getDefaultInstance());
+//            final NoProductErrorResponse errorResponse = NoProductErrorResponse.newBuilder()
+//                    .setOwnerId(ownerDto.getId())
+//                    .setSku(itemDto.getSku())
+//                    .build();
+//            final Metadata metadata = new Metadata();
+//            metadata.put(errorResponseKey, errorResponse);
+//            responseObserver.onError(Status.INVALID_ARGUMENT
+//                    .withDescription("Product is not in inventory")
+//                    .asException(metadata)
+//            );
         }
     }
 }
