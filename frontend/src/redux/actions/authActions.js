@@ -1,6 +1,7 @@
 import { 
     signInWithPopup,
     GoogleAuthProvider,
+    FacebookAuthProvider,
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -11,14 +12,14 @@ import {
 import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL } from './types';
 import { fbApp } from "../../Firebase";
 
+// GOOGLE LOGIN
 export const googleLogin = () => () => {
-    const auth = getAuth();
+    const auth = getAuth(fbApp);
 
     const provider = new GoogleAuthProvider();
     
     signInWithPopup(auth, provider)
         .then((result) => {
-            console.log(result);
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             const token = credential.accessToken;
@@ -27,7 +28,6 @@ export const googleLogin = () => () => {
             // IdP data available using getAdditionalUserInfo(result)
             // ...
         }).catch((error) => {
-            console.log(error);
             // Handle Errors here.
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -126,7 +126,7 @@ export const loginUser = (email, password) => dispatch => {
 // LOGOUT USER
 export const logout = () => (dispatch) => {
 
-    const auth = getAuth();
+    const auth = getAuth(fbApp);
 
     signOut(auth)
         .then(() => {

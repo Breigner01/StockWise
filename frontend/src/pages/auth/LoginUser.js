@@ -7,7 +7,6 @@ import { loginUser, googleLogin } from "../../redux/actions/authActions";
 
 import GoogleButton from 'react-google-button'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import GoogleIcon from '@mui/icons-material/Google';
 import {
     Avatar,
     Button,
@@ -135,7 +134,7 @@ const LoginUser = (props) => {
 
 LoginUser.propTypes = {
     loginUser: PropTypes.func.isRequired,
-    googleLogin: PropTypes.func.isRequired
+    googleLogin: PropTypes.func.isRequired,
 }
 
 export default connect(null, { loginUser, googleLogin })(LoginUser);
