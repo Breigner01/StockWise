@@ -68,13 +68,24 @@ const sendMultipleOwnerMessage = async (message) => {
   }).catch((e) => console.log(e.message));
 };
 
+const sendAllOwnerMessage = async (message) => {
+  await fetch("http://127.0.0.1:8000/api/notify/all/", {
+    method: "post",
+    body: message,
+    headers: new Headers({
+      Authorization: "Basic cGhpbGlwcGU6MTIzNDU2",
+      "Content-Type": "application/json",
+    }),
+  }).catch((e) => console.log(e.message));
+};
+
 const createLowInventoryMessage = (ownerId, message) => {
   const inventory = JSON.parse(message);
   return JSON.stringify({
     type: "NewProduct",
     owner: `${ownerId}`,
     subject: `Product ${inventory.sku} - Low inventory`,
-    message: `Hi Mr Owner, Product ${inventory.sku} has ${inventory.available} unit left.`,
+    message: `Product ${inventory.sku} has ${inventory.available} unit left.`,
   });
 };
 
@@ -84,7 +95,7 @@ const createItemStoredMessage = (ownerId, message) => {
     type: "NewProduct",
     owner: `${ownerId}`,
     subject: `Product ${inventory.sku} - In storage`,
-    message: `Hi Mr Owner, ${inventory.quantity} unit${
+    message: `${inventory.quantity} unit${
       inventory.quantity == 1 ? "" : "s"
     } of product ${inventory.sku} ${
       inventory.quantity == 1 ? "has" : "have"
@@ -100,7 +111,7 @@ const createItemDeletedMessage = (sku, message) => {
     type: "NewProduct",
     owner_ids: ownerIds,
     subject: `Product ${sku} - Removed`,
-    message: `Hi, Mr Owner! Product ${sku} will be discontinued please pickup your inventory left.`,
+    message: `Product ${sku} will be discontinued please pickup your inventory left.`,
   });
 };
 
