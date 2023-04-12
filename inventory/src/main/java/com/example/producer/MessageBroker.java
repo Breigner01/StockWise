@@ -9,4 +9,7 @@ public interface MessageBroker {
 
     @Topic("low-inventory")
     void sendLowInventoryMessage(String ownerId, @MessageHeader("sku") String sku, @MessageHeader("quantity") String quantity);
+
+    @Topic("delivery-note")
+    void createDeliveryNote(String ownerID, @MessageHeader("sku") String sku);
 }
