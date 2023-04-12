@@ -2,17 +2,17 @@ package product
 
 import (
 	"context"
+
+	productService "github.com/Breigner01/SOEN487-Project3/productService/methods_services/product"
 	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 	// "google.golang.org/grpc"
 )
 
-func (s *ProductServiceServer) GetProductById(ctx context.Context, in *product.Id) (*product.Product, error) {
+func (s *Server) GetProductById(ctx context.Context, input *product.Id) (*product.Product, error) {
+	p, err := productService.GetProductByID(s.conf, int(input.GetId()))
 
-	// call service method
-	// pass in -> in.GetId()
-	// returns -> product obj
-
-	var p *product.Product
-
+	if err != nil {
+		return nil, err
+	}
 	return p, nil
 }

@@ -2,39 +2,32 @@ package product
 
 import (
 	"context"
+
+	productService "github.com/Breigner01/SOEN487-Project3/productService/methods_services/product"
 	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 	// "google.golang.org/grpc"
 )
 
-func (s *ProductServiceServer) SearchProductByName(ctx context.Context, in *product.Name) (*product.Products, error) {
-
-	// call service method
-	// pass in -> in.GetId()
-	// returns -> product obj
-
-	var p *product.Products
-
-	return p, nil
+func (s *Server) SearchProductByName(ctx context.Context, input *product.Name) (*product.Products, error) {
+	p, err := productService.SearchProductsByName(s.conf, input.GetName())
+	if err != nil {
+		return nil, err
+	}
+	return &product.Products{ProductsFound: p}, nil
 }
 
-func (s *ProductServiceServer) SearchProductByPrice(ctx context.Context, in *product.Price) (*product.Products, error) {
-
-	// call service method
-	// pass in -> in.GetId()
-	// returns -> product obj
-
-	var p *product.Products
-
-	return p, nil
+func (s *Server) SearchProductByBrand(ctx context.Context, input *product.Brand) (*product.Products, error) {
+	p, err := productService.SearchProductsByBrand(s.conf, input.GetBrand())
+	if err != nil {
+		return nil, err
+	}
+	return &product.Products{ProductsFound: p}, nil
 }
 
-func (s *ProductServiceServer) SearchProductByBrand(ctx context.Context, in *product.Brand) (*product.Products, error) {
-
-	// call service method
-	// pass in -> in.GetId()
-	// returns -> product obj
-
-	var p *product.Products
-
-	return p, nil
+func (s *Server) SearchProductByCategory(ctx context.Context, input *product.Category) (*product.Products, error) {
+	p, err := productService.SearchProductsByCategory(s.conf, input.GetCategory())
+	if err != nil {
+		return nil, err
+	}
+	return &product.Products{ProductsFound: p}, nil
 }

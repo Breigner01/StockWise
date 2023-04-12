@@ -1,16 +1,15 @@
-package product
+package brand
 
 import (
 	"context"
 	"net"
-	productService "github.com/Breigner01/SOEN487-Project3/productService/methods_services/product"
 
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
+	brandService "github.com/Breigner01/SOEN487-Project3/productService/methods_services/brand"
 	brand "github.com/Breigner01/SOEN487-Project3/productService/pb/brand"
 	category "github.com/Breigner01/SOEN487-Project3/productService/pb/category"
 	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 	"google.golang.org/grpc"
-	// "google.golang.org/grpc"
 )
 
 type Server struct {
@@ -22,12 +21,12 @@ type Server struct {
 	category.UnimplementedCategoryServiceServer
 }
 
-func (s *Server) CreateProduct(ctx context.Context, input *product.Product) (*product.Status, error) {
-	
-	err := productService.CreateProduct(s.conf, input)
+func (s *Server) CreateBrand(ctx context.Context, input *brand.Name) (*brand.Status, error) {
+
+	err := brandService.CreateBrand(s.conf, &brand.Brand{Name: input.GetName()})
 
 	if err != nil {
-		return &product.Status{StatusMessage: "Failed to create product"}, err
+		return &brand.Status{StatusMessage: "Failed to create brand"}, err
 	}
-	return &product.Status{StatusMessage: "Created"}, nil
+	return &brand.Status{StatusMessage: "Created"}, nil
 }

@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v4.22.2
-// source: product.proto
+// source: pb/product/product.proto
 
 package __
 
@@ -27,7 +27,7 @@ type ProductServiceClient interface {
 	// returns list of products
 	SearchProductByName(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Products, error)
 	SearchProductByBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Products, error)
-	SearchProductByPrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Products, error)
+	SearchProductByCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Products, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Status, error)
 	DeleteProduct(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Status, error)
 }
@@ -76,9 +76,9 @@ func (c *productServiceClient) SearchProductByBrand(ctx context.Context, in *Bra
 	return out, nil
 }
 
-func (c *productServiceClient) SearchProductByPrice(ctx context.Context, in *Price, opts ...grpc.CallOption) (*Products, error) {
+func (c *productServiceClient) SearchProductByCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*Products, error) {
 	out := new(Products)
-	err := c.cc.Invoke(ctx, "/product.ProductService/SearchProductByPrice", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/product.ProductService/SearchProductByCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ type ProductServiceServer interface {
 	// returns list of products
 	SearchProductByName(context.Context, *Name) (*Products, error)
 	SearchProductByBrand(context.Context, *Brand) (*Products, error)
-	SearchProductByPrice(context.Context, *Price) (*Products, error)
+	SearchProductByCategory(context.Context, *Category) (*Products, error)
 	UpdateProduct(context.Context, *Product) (*Status, error)
 	DeleteProduct(context.Context, *Id) (*Status, error)
 	mustEmbedUnimplementedProductServiceServer()
@@ -134,8 +134,8 @@ func (UnimplementedProductServiceServer) SearchProductByName(context.Context, *N
 func (UnimplementedProductServiceServer) SearchProductByBrand(context.Context, *Brand) (*Products, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchProductByBrand not implemented")
 }
-func (UnimplementedProductServiceServer) SearchProductByPrice(context.Context, *Price) (*Products, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchProductByPrice not implemented")
+func (UnimplementedProductServiceServer) SearchProductByCategory(context.Context, *Category) (*Products, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchProductByCategory not implemented")
 }
 func (UnimplementedProductServiceServer) UpdateProduct(context.Context, *Product) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
@@ -228,20 +228,20 @@ func _ProductService_SearchProductByBrand_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProductService_SearchProductByPrice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Price)
+func _ProductService_SearchProductByCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Category)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServiceServer).SearchProductByPrice(ctx, in)
+		return srv.(ProductServiceServer).SearchProductByCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.ProductService/SearchProductByPrice",
+		FullMethod: "/product.ProductService/SearchProductByCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServiceServer).SearchProductByPrice(ctx, req.(*Price))
+		return srv.(ProductServiceServer).SearchProductByCategory(ctx, req.(*Category))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -306,8 +306,8 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ProductService_SearchProductByBrand_Handler,
 		},
 		{
-			MethodName: "SearchProductByPrice",
-			Handler:    _ProductService_SearchProductByPrice_Handler,
+			MethodName: "SearchProductByCategory",
+			Handler:    _ProductService_SearchProductByCategory_Handler,
 		},
 		{
 			MethodName: "UpdateProduct",
@@ -319,5 +319,5 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "product.proto",
+	Metadata: "pb/product/product.proto",
 }
