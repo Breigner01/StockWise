@@ -1,7 +1,7 @@
-package server
+package methods_handlers
 
 import (
-	product "github.com/Breigner01/SOEN487-Project3/productService/product"
+	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 	"google.golang.org/grpc"
 	"net"
 )

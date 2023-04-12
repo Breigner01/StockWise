@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/Breigner01/SOEN487-Project3/productService/server"
+	"github.com/Breigner01/SOEN487-Project3/productService/methods_handlers"
 	"net"
 )
 
@@ -13,7 +13,7 @@ func GetConfig(conf ProgramConfig) Config {
 	}
 
 	return Config{
-		Sv: server.New(listener),
+		Sv: methods_handlers.New(listener),
 		DB: ConnectToDatabase(conf.Postgres),
 	}
 }
