@@ -1,6 +1,42 @@
 syntax = "proto3";
 
-package category;
+package product;
 
 option go_package = "./";
 
+service CategoryService {
+
+    rpc CreateBrand(Name) returns (Status);
+
+    rpc UpdateBrand(Name) returns (Status);
+    
+    rpc DeleteProduct(Name) returns (Status);
+
+    rpc GetAllCategories(NoParam) returns (Categories);
+}
+
+
+
+message Name {
+    string name = 1;
+}
+
+message Status {
+    string statusMessage = 1;
+}
+
+message NoParam {
+
+}
+
+message Category {
+    string name = 1;
+}
+
+message Categories{
+    repeated Category Categories = 1;
+}
+
+
+// protoc --go_out=. --go-grpc_out=. category.proto
+// go mod tidy
