@@ -129,4 +129,9 @@ public class ItemDao {
                 .setInTransit(this.inTransit)
                 .build();
     }
+
+    public void insertInTransit(int quantity) {
+        this.inTransit += quantity;
+        this.quantity += quantity;
+    }
 }
