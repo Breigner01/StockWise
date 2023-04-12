@@ -38,7 +38,7 @@ See: [config](config)
 
 The product package contains the gRPC server and the gRPC client.
 
-See: [product](product)
+See: [product](pb/product)
 
 ### server
 

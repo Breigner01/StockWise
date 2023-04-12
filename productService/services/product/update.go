@@ -4,7 +4,7 @@ import (
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
 	productDB "github.com/Breigner01/SOEN487-Project3/productService/database/product"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
-	product "github.com/Breigner01/SOEN487-Project3/productService/product"
+	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 )
 
 func UpdateProduct(conf config.Config, p *product.Product) error {

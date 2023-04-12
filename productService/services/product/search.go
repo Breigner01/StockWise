@@ -3,7 +3,7 @@ package product
 import (
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
 	productDB "github.com/Breigner01/SOEN487-Project3/productService/database/product"
-	product "github.com/Breigner01/SOEN487-Project3/productService/product"
+	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 )
 
 func SearchProductsByName(conf config.Config, name string) ([]*product.Product, error) {

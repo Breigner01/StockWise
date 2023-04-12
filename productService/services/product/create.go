@@ -7,7 +7,7 @@ import (
 	categoryDB "github.com/Breigner01/SOEN487-Project3/productService/database/category"
 	productDB "github.com/Breigner01/SOEN487-Project3/productService/database/product"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
-	product "github.com/Breigner01/SOEN487-Project3/productService/product"
+	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 )
 
 func CreateProduct(conf config.Config, p *product.Product) error {
