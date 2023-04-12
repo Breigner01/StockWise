@@ -1,21 +1,16 @@
-// import * as express from 'express';
-// import {graphqlHTTP} from 'express-graphql'
-// // const authMiddleware =  require('./firebaseAuth/authMiddleware');
-// const schema = require('./schemas/schemas')
-// const app = express();
+import express from "express";
+import { graphqlHTTP } from "express-graphql";
+//import authMiddleware from './firebaseAuth/authMiddleware.js';
+import { Schema } from "./schemas/schemas.js";
+const app = express();
 
+//app.use(authMiddleware);
+app.use(
+    "/graphql",
+    graphqlHTTP({
+        schema: Schema,
+        graphiql: true,
+    })
+);
 
-// // app.use(authMiddleware);
-// app.use('/graphql', graphqlHTTP({
-//     schema,
-//     graphiql: true
-// }))
-
-
-// const PORT = 8080;
-
-// app.listen(PORT, () => {
-//   console.log("Server Running on Port ", PORT);
-// });
-
-
+export default app;

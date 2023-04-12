@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import app from '../src/index';
+import request from 'supertest';
+import app from '../src/index.js';
 
 describe('GraphQL API Gateway', () => {
   // Test cases for the authMiddleware

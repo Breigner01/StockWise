@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { admin } from './firebaseConfig';
+import { admin } from './firebaseConfig.js';
 
-const authMiddleware = (req: Request, res: Response, next: NextFunction): Response | void => {
+const authMiddleware = (req, res, next) => {
   const token =
     req.headers.authorization && req.headers.authorization.split(' ')[1];
   if (!token) return res.status(401).send('Unauthorized');
@@ -17,4 +16,4 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction): Respon
     });
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;
