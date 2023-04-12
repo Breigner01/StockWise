@@ -1,0 +1,6 @@
+applicationType: grpc
+defaultPackage: com.example
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, data, data-jdbc, flyway, graalvm, grpc, java, java-application, jdbc-hikari, junit, kafka, logback, maven, mysql, readme, serialization-jackson, shade, test-resources, yaml]

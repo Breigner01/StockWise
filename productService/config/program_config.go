@@ -10,6 +10,12 @@ func GetProgramConfig() ProgramConfig {
 	viper.SetDefault("port", "5001")
 
 	viper.BindEnv("port", "PORT", "PRODUCT_SERVICE_PORT")
+	viper.BindEnv("postgres.username", "POSTGRES_USER")
+	viper.BindEnv("postgres.password", "POSTGRES_PASSWORD")
+	viper.BindEnv("postgres.host", "POSTGRES_HOST")
+	viper.BindEnv("postgres.database", "POSTGRES_DB")
+	viper.BindEnv("postgres.port", "POSTGRES_PORT")
+	viper.BindEnv("postgres.sslmode", "POSTGRES_SSLMODE")
 
 	var config ProgramConfig
 

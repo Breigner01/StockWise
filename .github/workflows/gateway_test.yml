@@ -1,0 +1,35 @@
+name: API gateway authorization tests
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/gateway_test.yml'
+      - 'gateway/**'
+  push:
+    paths:
+      - '.github/workflows/gateway_test.yml'
+      - 'gateway/**'
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+    working-directory: gateway
+
+jobs:
+  build:
+    name: Test API Gateway authorization
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+
+      - name: Run tests
+        env:
+            FIREBASE_AUTH: ${{ secrets.FIREBASE_AUTH }}
+        run: npm test
