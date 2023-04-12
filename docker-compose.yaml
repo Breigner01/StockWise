@@ -61,6 +61,17 @@ services:
             - notif-service-database-data:/var/lib/postgresql/data
         networks:
             - notif-service-db
+    gateway:
+        image: soen487-project3/gateway
+        build: gateway
+        restart: always
+        environment:
+            NODE_ENV: production
+            FIREBASE_AUTH: ${FIREBASE_AUTH}
+        ports:
+            - "8080:8080"
+        networks:
+            - gateway-network
 
 volumes:
     product-service-database-data:
@@ -71,3 +82,4 @@ networks:
     product-service-db:
     broker-notif-service:
     notif-service-db:
+    gateway-network:
