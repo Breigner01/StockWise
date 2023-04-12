@@ -74,7 +74,16 @@ message Price {
 
 
 
-
 // proto file is in proto folder so tell protoc to look for it there
 //                                          with go_out param, tell protoc to use grpc plugins to generate go code and store in proto folder
 // $ protoc --proto_path=proto proto/*.proto --go_out=plugins=grpc:proto
+
+
+
+// from gRPC.io
+// $ go get github.com/golang/protobuf/
+// $ go get github.com/golang/protobuf/proto
+// $ export PATH="$PATH:$(go env GOPATH)/bin"
+
+
+//  go get -u google.golang.org\grpc
