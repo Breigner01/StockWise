@@ -23,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BrandServiceClient interface {
 	CreateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
-	UpdateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
-	DeleteBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
+	UpdateBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Status, error)
+	DeleteBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Status, error)
 }
 
 type brandServiceClient struct {
@@ -44,7 +44,7 @@ func (c *brandServiceClient) CreateBrand(ctx context.Context, in *Name, opts ...
 	return out, nil
 }
 
-func (c *brandServiceClient) UpdateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
+func (c *brandServiceClient) UpdateBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, "/brand.BrandService/UpdateBrand", in, out, opts...)
 	if err != nil {
@@ -53,7 +53,7 @@ func (c *brandServiceClient) UpdateBrand(ctx context.Context, in *Name, opts ...
 	return out, nil
 }
 
-func (c *brandServiceClient) DeleteBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
+func (c *brandServiceClient) DeleteBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, "/brand.BrandService/DeleteBrand", in, out, opts...)
 	if err != nil {
@@ -67,8 +67,8 @@ func (c *brandServiceClient) DeleteBrand(ctx context.Context, in *Name, opts ...
 // for forward compatibility
 type BrandServiceServer interface {
 	CreateBrand(context.Context, *Name) (*Status, error)
-	UpdateBrand(context.Context, *Name) (*Status, error)
-	DeleteBrand(context.Context, *Name) (*Status, error)
+	UpdateBrand(context.Context, *Brand) (*Status, error)
+	DeleteBrand(context.Context, *Brand) (*Status, error)
 	mustEmbedUnimplementedBrandServiceServer()
 }
 
@@ -79,10 +79,10 @@ type UnimplementedBrandServiceServer struct {
 func (UnimplementedBrandServiceServer) CreateBrand(context.Context, *Name) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBrand not implemented")
 }
-func (UnimplementedBrandServiceServer) UpdateBrand(context.Context, *Name) (*Status, error) {
+func (UnimplementedBrandServiceServer) UpdateBrand(context.Context, *Brand) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBrand not implemented")
 }
-func (UnimplementedBrandServiceServer) DeleteBrand(context.Context, *Name) (*Status, error) {
+func (UnimplementedBrandServiceServer) DeleteBrand(context.Context, *Brand) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBrand not implemented")
 }
 func (UnimplementedBrandServiceServer) mustEmbedUnimplementedBrandServiceServer() {}
@@ -117,7 +117,7 @@ func _BrandService_CreateBrand_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _BrandService_UpdateBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Name)
+	in := new(Brand)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -129,13 +129,13 @@ func _BrandService_UpdateBrand_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/brand.BrandService/UpdateBrand",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BrandServiceServer).UpdateBrand(ctx, req.(*Name))
+		return srv.(BrandServiceServer).UpdateBrand(ctx, req.(*Brand))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _BrandService_DeleteBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Name)
+	in := new(Brand)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,7 +147,7 @@ func _BrandService_DeleteBrand_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/brand.BrandService/DeleteBrand",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BrandServiceServer).DeleteBrand(ctx, req.(*Name))
+		return srv.(BrandServiceServer).DeleteBrand(ctx, req.(*Brand))
 	}
 	return interceptor(ctx, in, info, handler)
 }

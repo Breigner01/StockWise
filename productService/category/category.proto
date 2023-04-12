@@ -8,14 +8,12 @@ service CategoryService {
 
     rpc CreateCategory(Name) returns (Status);
 
-    rpc UpdateCategory(Name) returns (Status);
+    rpc UpdateCategory(Category) returns (Status);
     
-    rpc DeleteCategory(Name) returns (Status);
+    rpc DeleteCategory(Category) returns (Status);
 
     rpc GetAllCategories(NoParam) returns (Categories);
 }
-
-
 
 message Name {
     string name = 1;
@@ -30,7 +28,8 @@ message NoParam {
 }
 
 message Category {
-    string name = 1;
+    int64 id = 1;
+    string name = 2;
 }
 
 message Categories{
