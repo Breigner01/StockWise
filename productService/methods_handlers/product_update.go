@@ -1,4 +1,4 @@
-package product
+package methods_handlers
 
 import (
 	"context"

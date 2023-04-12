@@ -1,4 +1,4 @@
-package brand
+package methods_handlers
 
 import (
 	"context"

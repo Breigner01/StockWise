@@ -1,4 +1,4 @@
-package category
+package methods_handlers
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	category "github.com/Breigner01/SOEN487-Project3/productService/pb/category"
 )
 
-func (s *Server) GetAllCategories(ctx context.Context) (*category.Categories, error) {
+func (s *Server) GetAllCategories(ctx context.Context, param *category.NoParam) (*category.Categories, error) {
 
 	categories, err := categoryService.GetAllCategories(s.conf)
 

@@ -1,4 +1,4 @@
-package category
+package methods_handlers
 
 import (
 	"context"
