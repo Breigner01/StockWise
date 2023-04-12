@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
+	_ "github.com/lib/pq"
 )
 
 func ConnectToDatabase(conf PostgresConfig) *ent.Client {
