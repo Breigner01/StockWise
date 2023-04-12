@@ -6,14 +6,23 @@ import {
   GraphQLSchema,
 } from "graphql";
 import { ItemRequestType, ItemType } from "./types/Item.js";
-import {  addInventory, decreaseInventory, getInventory, storeInventory } from "../services/inventoryService.js";
-import { getProductByBrand,getProductById,getProductByName,getProductByPrice,createProduct,deleteProduct,updateProduct} from "../services/productService.js";
-
 import {
-  InputProductType,
-  ProductType,
-} from "./types/Product.js";
+  addInventory,
+  decreaseInventory,
+  getInventory,
+  storeInventory,
+} from "../services/inventoryService.js";
+import {
+  getProductByBrand,
+  getProductById,
+  getProductByName,
+  getProductByPrice,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+} from "../services/productService.js";
 
+import { InputProductType, ProductType } from "./types/Product.js";
 
 const myArray = [
   { id: 1, firstName: "Mark", lastName: "O'Shaughnessy", age: 25 },
@@ -91,17 +100,16 @@ const Query = new GraphQLObjectType({
 
     // INVENTORY QUERIES
     viewInventory: {
-        type: new GraphQLList(ItemType),
-        args: {
-            userId: {type: GraphQLString},
-            sku: {type: GraphQLString}
-        },
-        async resolve(parent,args){
-            const data = await getInventory(args.sku);
-            return data;
-        }
-    }
-
+      type: new GraphQLList(ItemType),
+      args: {
+        userId: { type: GraphQLString },
+        sku: { type: GraphQLString },
+      },
+      async resolve(parent, args) {
+        const data = await getInventory(args.sku);
+        return data;
+      },
+    },
   },
 });
 const Mutation = new GraphQLObjectType({
@@ -144,39 +152,38 @@ const Mutation = new GraphQLObjectType({
     },
     //INVENTORY MUTATIONS
     addInventory: {
-        type: GraphQLString,
-        args: {
-            userId: {type: GraphQLString},
-            itemRequest: {type: ItemRequestType}
-        },
-        async resolve(parent,args){
-            const result = await addInventory(args.itemRequest);
-            return result
-        }
+      type: GraphQLString,
+      args: {
+        userId: { type: GraphQLString },
+        itemRequest: { type: ItemRequestType },
+      },
+      async resolve(parent, args) {
+        const result = await addInventory(args.itemRequest);
+        return result;
+      },
     },
     decreaseInventory: {
-        type: GraphQLString,
-        args: {
-            userId: {type: GraphQLString},
-            itemRequest: {type: ItemRequestType}
-        },
-        async resolve(parent,args){
-            const result = await decreaseInventory(args.itemRequest);
-            return result;
-            
-        }
+      type: GraphQLString,
+      args: {
+        userId: { type: GraphQLString },
+        itemRequest: { type: ItemRequestType },
+      },
+      async resolve(parent, args) {
+        const result = await decreaseInventory(args.itemRequest);
+        return result;
+      },
     },
     storeInventory: {
-        type: GraphQLString,
-        args:{
-            userId: {type: GraphQLString},
-            itemRequest: {type: ItemRequestType}
-        },
-        async resolve(parent, args){
-           const result = await storeInventory(args.itemRequest);
-           return result;
-        }
-    }
+      type: GraphQLString,
+      args: {
+        userId: { type: GraphQLString },
+        itemRequest: { type: ItemRequestType },
+      },
+      async resolve(parent, args) {
+        const result = await storeInventory(args.itemRequest);
+        return result;
+      },
+    },
   },
 });
 
