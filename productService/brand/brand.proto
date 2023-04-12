@@ -4,16 +4,14 @@ package brand;
 
 option go_package = "./";
 
-// we use this 
 service BrandService {
 
     rpc CreateBrand(Name) returns (Status);
 
-    rpc UpdateBrand(Name) returns (Status);
+    rpc UpdateBrand(Brand) returns (Status);
     
-    rpc DeleteBrand(Name) returns (Status);
+    rpc DeleteBrand(Brand) returns (Status);
 }
-
 
 message Name {
     string name = 1;
@@ -21,6 +19,11 @@ message Name {
 
 message Status {
     string statusMessage = 1;
+}
+
+message Brand {
+    int64 id = 1;
+    string name = 2;
 }
 
 
