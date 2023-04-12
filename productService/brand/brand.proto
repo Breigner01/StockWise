@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package brand;
+
+option go_package = "./";
+
+service BrandService {
+
+    rpc CreateBrand(Name) returns (Status);
+
+    rpc UpdateBrand(Name) returns (Status);
+    
+    rpc DeleteBrand(Name) returns (Status);
+}
+
+
+message Name {
+    string name = 1;
+}
+
+message Status {
+    string statusMessage = 1;
+}
+
+
+// protoc --go_out=. --go-grpc_out=. brand.proto
+// go mod tidy
