@@ -47,9 +47,10 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
 
             itemDao.storeInventory(itemDto.getQuantity());
 
-            messageBroker.itemStoredMessage(itemDao.getOwnerId(), itemDao.getSku(), Integer.toString(itemDao.getAvailable()));
-
             itemRepository.update(itemDao);
+            messageBroker.sendItemStoredMessage(
+                    itemDao.getOwnerId(),
+                    MessageBroker.createStoreItemMessage(itemDto));
 
             final ItemReply response = ItemReply.newBuilder()
                     .setMessage("success")
@@ -116,7 +117,10 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
             itemRepository.updateByItemPK(itemDao.getItemPK(), itemDao);
 
             if (itemDao.getAvailable() < 5) {
-                messageBroker.sendLowInventoryMessage(itemDao.getOwnerId(), itemDao.getSku(), Integer.toString(itemDao.getAvailable()));
+                messageBroker.sendLowInventoryMessage(
+                        itemDao.getOwnerId(),
+                        MessageBroker.createLowInventoryMessage(itemDao)
+                );
             }
 
             final ItemReply response = ItemReply.newBuilder()
