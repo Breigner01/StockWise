@@ -41,6 +41,10 @@ const run = async () => {
             createItemDeletedMessage(message.key, message.value)
           );
           break;
+        case "product-created":
+          await sendAllOwnerMessage(
+            createNewProductMessage(message.key, message.value)
+          );
       }
     },
   });
@@ -77,6 +81,15 @@ const sendAllOwnerMessage = async (message) => {
       "Content-Type": "application/json",
     }),
   }).catch((e) => console.log(e.message));
+};
+
+const createNewProductMessage = (sku, message) => {
+  const product = JSON.parse(message);
+  return JSON.stringify({
+    type: "NewProduct",
+    subject: `Product ${product.name} - Prodcut Added`,
+    message: `Product ${product.name} has been added to the inventory at price ${product.price}.`,
+  });
 };
 
 const createLowInventoryMessage = (ownerId, message) => {
