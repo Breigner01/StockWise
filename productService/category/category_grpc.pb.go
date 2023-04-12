@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CategoryServiceClient interface {
-	CreateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
-	UpdateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
-	DeleteProduct(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
+	CreateCategory(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
+	UpdateCategory(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
+	DeleteCategory(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error)
 	GetAllCategories(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*Categories, error)
 }
 
@@ -36,27 +36,27 @@ func NewCategoryServiceClient(cc grpc.ClientConnInterface) CategoryServiceClient
 	return &categoryServiceClient{cc}
 }
 
-func (c *categoryServiceClient) CreateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
+func (c *categoryServiceClient) CreateCategory(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
-	err := c.cc.Invoke(ctx, "/product.CategoryService/CreateBrand", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/category.CategoryService/CreateCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *categoryServiceClient) UpdateBrand(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
+func (c *categoryServiceClient) UpdateCategory(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
-	err := c.cc.Invoke(ctx, "/product.CategoryService/UpdateBrand", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/category.CategoryService/UpdateCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *categoryServiceClient) DeleteProduct(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
+func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
-	err := c.cc.Invoke(ctx, "/product.CategoryService/DeleteProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/category.CategoryService/DeleteCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (c *categoryServiceClient) DeleteProduct(ctx context.Context, in *Name, opt
 
 func (c *categoryServiceClient) GetAllCategories(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*Categories, error) {
 	out := new(Categories)
-	err := c.cc.Invoke(ctx, "/product.CategoryService/GetAllCategories", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/category.CategoryService/GetAllCategories", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,9 +76,9 @@ func (c *categoryServiceClient) GetAllCategories(ctx context.Context, in *NoPara
 // All implementations must embed UnimplementedCategoryServiceServer
 // for forward compatibility
 type CategoryServiceServer interface {
-	CreateBrand(context.Context, *Name) (*Status, error)
-	UpdateBrand(context.Context, *Name) (*Status, error)
-	DeleteProduct(context.Context, *Name) (*Status, error)
+	CreateCategory(context.Context, *Name) (*Status, error)
+	UpdateCategory(context.Context, *Name) (*Status, error)
+	DeleteCategory(context.Context, *Name) (*Status, error)
 	GetAllCategories(context.Context, *NoParam) (*Categories, error)
 	mustEmbedUnimplementedCategoryServiceServer()
 }
@@ -87,14 +87,14 @@ type CategoryServiceServer interface {
 type UnimplementedCategoryServiceServer struct {
 }
 
-func (UnimplementedCategoryServiceServer) CreateBrand(context.Context, *Name) (*Status, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateBrand not implemented")
+func (UnimplementedCategoryServiceServer) CreateCategory(context.Context, *Name) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) UpdateBrand(context.Context, *Name) (*Status, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateBrand not implemented")
+func (UnimplementedCategoryServiceServer) UpdateCategory(context.Context, *Name) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) DeleteProduct(context.Context, *Name) (*Status, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+func (UnimplementedCategoryServiceServer) DeleteCategory(context.Context, *Name) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
 }
 func (UnimplementedCategoryServiceServer) GetAllCategories(context.Context, *NoParam) (*Categories, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllCategories not implemented")
@@ -112,56 +112,56 @@ func RegisterCategoryServiceServer(s grpc.ServiceRegistrar, srv CategoryServiceS
 	s.RegisterService(&CategoryService_ServiceDesc, srv)
 }
 
-func _CategoryService_CreateBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CategoryService_CreateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Name)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).CreateBrand(ctx, in)
+		return srv.(CategoryServiceServer).CreateCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.CategoryService/CreateBrand",
+		FullMethod: "/category.CategoryService/CreateCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).CreateBrand(ctx, req.(*Name))
+		return srv.(CategoryServiceServer).CreateCategory(ctx, req.(*Name))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CategoryService_UpdateBrand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CategoryService_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Name)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).UpdateBrand(ctx, in)
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.CategoryService/UpdateBrand",
+		FullMethod: "/category.CategoryService/UpdateCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).UpdateBrand(ctx, req.(*Name))
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, req.(*Name))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CategoryService_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CategoryService_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Name)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).DeleteProduct(ctx, in)
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.CategoryService/DeleteProduct",
+		FullMethod: "/category.CategoryService/DeleteCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).DeleteProduct(ctx, req.(*Name))
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, req.(*Name))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -176,7 +176,7 @@ func _CategoryService_GetAllCategories_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.CategoryService/GetAllCategories",
+		FullMethod: "/category.CategoryService/GetAllCategories",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CategoryServiceServer).GetAllCategories(ctx, req.(*NoParam))
@@ -188,20 +188,20 @@ func _CategoryService_GetAllCategories_Handler(srv interface{}, ctx context.Cont
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CategoryService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "product.CategoryService",
+	ServiceName: "category.CategoryService",
 	HandlerType: (*CategoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateBrand",
-			Handler:    _CategoryService_CreateBrand_Handler,
+			MethodName: "CreateCategory",
+			Handler:    _CategoryService_CreateCategory_Handler,
 		},
 		{
-			MethodName: "UpdateBrand",
-			Handler:    _CategoryService_UpdateBrand_Handler,
+			MethodName: "UpdateCategory",
+			Handler:    _CategoryService_UpdateCategory_Handler,
 		},
 		{
-			MethodName: "DeleteProduct",
-			Handler:    _CategoryService_DeleteProduct_Handler,
+			MethodName: "DeleteCategory",
+			Handler:    _CategoryService_DeleteCategory_Handler,
 		},
 		{
 			MethodName: "GetAllCategories",

@@ -1,16 +1,16 @@
 syntax = "proto3";
 
-package product;
+package category;
 
 option go_package = "./";
 
 service CategoryService {
 
-    rpc CreateBrand(Name) returns (Status);
+    rpc CreateCategory(Name) returns (Status);
 
-    rpc UpdateBrand(Name) returns (Status);
+    rpc UpdateCategory(Name) returns (Status);
     
-    rpc DeleteProduct(Name) returns (Status);
+    rpc DeleteCategory(Name) returns (Status);
 
     rpc GetAllCategories(NoParam) returns (Categories);
 }
