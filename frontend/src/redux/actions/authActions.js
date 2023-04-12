@@ -1,7 +1,6 @@
 import { 
     signInWithPopup,
     GoogleAuthProvider,
-    FacebookAuthProvider,
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
