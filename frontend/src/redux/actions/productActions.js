@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { PRODUCT_LOADING, GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from './types';
+import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from './types';
 import client from "../../Apollo";
 
 // GET PRODUCTS API CALL
@@ -11,8 +11,8 @@ export const getProducts = (userId) => (dispatch) => {
                     id, name, brand, description, price, category
                 }
             }
-        `,})
-    .then((res) => {
+        `,
+    }).then((res) => {
         dispatch({
             type: GET_PRODUCTS,
             payload: res.data.getProducts
@@ -26,40 +26,70 @@ export const getProducts = (userId) => (dispatch) => {
 }
 
 // POST PRODUCT API CALL
-export const addProduct = (product) => (dispatch, getState) => {
+export const addProduct = (userId, product) => (dispatch) => {
     client.mutate({
         mutation: gql`
             mutation{
                 createProduct(
-                    userId: "abc1234",
-                    product: ${product}
+                    userId: $userId,
+                    product: $product
                 )
             }
-        `,})
-    .then((res) => {
+        `,
+        variables: {userId, product: product}
+    }).then((res) => {
         dispatch({
             type: ADD_PRODUCT,
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            console.log({err});
         }
     });
 }
 
-// // DELETE STUDENT API CALL
-// export const deleteStudent = (id) => (dispatch, getState) => {
+// UPDATE PRODUCT API CALL
+export const updateProduct = (userId, product) => (dispatch) => {
+    client.mutate({
+        mutation: gql`
+            mutation{
+                updateProduct(
+                    userId: $userId,
+                    product: $product
+                )
+            }
+        `,
+        variables: {userId, product: product}
+    }).then((res) => {
+        dispatch({
+            type: UPDATE_PRODUCT,
+        });
+    }).catch((err) => {
+        if (err){
+            console.log({err});
+        }
+    });
+}
 
-//     const config = apiconfig(getState);
-
-//     axios.delete(`http://localhost/a1/api/student/delete.php?id=${id}`, config)
-//         .then(res => {
-//             dispatch(createMessage({
-//                 deleteStudent: 'Student Deleted'
-//             }));
-//             dispatch({
-//                 type: DELETE_STUDENT,
-//                 payload: res.data
-//             });
-//         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
-// }
+// DELETE PRODUCT API CALL
+export const deleteProduct = (userId, productId) => (dispatch) => {
+    client.mutate({
+        mutation: gql`
+            mutation{
+                deleteProduct(
+                    userId: $userId,
+                    product: $productId
+                )
+            }
+        `,
+        variables: {userId, productId: productId}
+    }).then((res) => {
+        dispatch({
+            type: DELETE_PRODUCT,
+        });
+    }).catch((err) => {
+        if (err){
+            console.log({err});
+        }
+    });
+}
