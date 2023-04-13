@@ -3,15 +3,12 @@ import { PRODUCT_LOADING, GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PROD
 import client from "../../Apollo";
 
 // GET STUDENTS API CALL
-export const getProducts = () => (dispatch) => {
+export const getProducts = (userId) => (dispatch) => {
     client.query({
         query: gql`
-            query GetProducts {
-                locations {
-                id
-                name
-                description
-                photo
+            query{
+                getProducts(userId: "${userId}"){
+                    name, price
                 }
             }
         `,})
