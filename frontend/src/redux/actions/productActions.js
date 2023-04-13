@@ -1,47 +1,51 @@
-import { useQuery, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { PRODUCT_LOADING, GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from './types';
 import client from "../../Apollo";
 
-// GET STUDENTS API CALL
+// GET PRODUCTS API CALL
 export const getProducts = (userId) => (dispatch) => {
     client.query({
         query: gql`
             query{
                 getProducts(userId: "${userId}"){
-                    name, price
+                    id, name, brand, description, price, category
                 }
             }
         `,})
     .then((res) => {
-        console.log(res);
+        dispatch({
+            type: GET_PRODUCTS,
+            payload: res.data.getProducts
+        });
     }).catch((err) => {
         if (err){
             console.log(err);
         }
     });
-        // dispatch({
-        //     type: GET_PRODUCTS,
-        //     payload: res.data
-        // });
     
 }
 
-// // POST STUDENT API CALL
-// export const addStudent = (student) => (dispatch, getState) => {
-
-//     const config = apiconfig(getState);
-
-//     axios.post('http://localhost/a1/api/student/post.php', student, config)
-//         .then(res => {
-//             dispatch(createMessage({
-//                 addStudent: 'Student Added'
-//             }));
-//             dispatch({
-//                 type: ADD_STUDENT,
-//                 payload: res.data
-//             });
-//         }).catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
-// }
+// POST PRODUCT API CALL
+export const addProduct = (product) => (dispatch, getState) => {
+    client.mutate({
+        mutation: gql`
+            mutation{
+                createProduct(
+                    userId: "abc1234",
+                    product: ${product}
+                )
+            }
+        `,})
+    .then((res) => {
+        dispatch({
+            type: ADD_PRODUCT,
+        });
+    }).catch((err) => {
+        if (err){
+            console.log(err);
+        }
+    });
+}
 
 // // DELETE STUDENT API CALL
 // export const deleteStudent = (id) => (dispatch, getState) => {

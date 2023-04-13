@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { getProducts } from "../../redux/actions/productActions";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -29,7 +29,7 @@ const ProductsTable = (props) => {
     const [openForm, setOpenForm] = useState(false);
 
     useEffect(() => {
-        props.getProducts();
+        props.getProducts("abc123");
         console.log("GET PRODUCTS #" + inventory_id);
     }, []);
 

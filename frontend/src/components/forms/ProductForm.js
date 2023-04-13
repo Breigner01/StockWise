@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-// To be uncommented when we integrate inventory redux
-// import PropTypes from "prop-types";
-// import { connect } from "react-redux";
-// import { addInventory } from "../../redux/actions/inventoryActions";
+
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addProduct } from "../../redux/actions/productActions";
 
 // MUI
 import {
@@ -32,10 +32,16 @@ const ProductForm = (props) => {
 
     const createProduct = (e) => {
         e.preventDefault();
-        if (validProduct()){
-            // props.addInventory(inventoryData);
-            console.log("ADD PRODUCT");
-            console.log(productData);
+        if (true || validProduct()){
+            const productData2 = {
+              id: 5,
+              name: "name",
+              brand: "gucci",
+              description: "sick product trust",
+              price: 20.99,
+              categeory: "A",
+            }
+            props.addProduct(productData2);
             onClose();
         }
     };
@@ -101,10 +107,8 @@ const ProductForm = (props) => {
   );
 }
 
-// InventoryForm.propTypes = {
-//   addInventory: PropTypes.func.isRequired,
-// };
+ProductForm.propTypes = {
+  addProduct: PropTypes.func.isRequired,
+};
 
-// export default connect(null, { addInventory })(InventoryForm);
-
-export default ProductForm;
+export default connect(null, { addProduct })(ProductForm);
