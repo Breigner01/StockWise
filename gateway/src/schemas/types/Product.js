@@ -26,7 +26,7 @@ export const InputProductType = new GraphQLInputObjectType({
     brand: { type: GraphQLString },
     description: { type: GraphQLString },
     price: { type: GraphQLFloat },
-    categeory: { type: GraphQLString },
+    category: { type: GraphQLString },
   },
 });
 
@@ -38,7 +38,7 @@ export const ProductRequest = new GraphQLObjectType({
     brand: { type: GraphQLString },
     description: { type: GraphQLString },
     price: { type: GraphQLFloat },
-    categeory: { type: GraphQLString },
+    category: { type: GraphQLString },
   }),
 });
 

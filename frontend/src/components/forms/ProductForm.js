@@ -32,16 +32,8 @@ const ProductForm = (props) => {
 
     const createProduct = (e) => {
         e.preventDefault();
-        if (true || validProduct()){
-            const productData2 = {
-              id: 5,
-              name: "name",
-              brand: "gucci",
-              description: "sick product trust",
-              price: 20.99,
-              categeory: "A",
-            }
-            props.addProduct(productData2);
+        if (validProduct()){
+            props.addProduct(productData);
             onClose();
         }
     };
