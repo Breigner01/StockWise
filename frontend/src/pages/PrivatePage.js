@@ -40,7 +40,7 @@ const PrivatePage = (props) => {
 
     const handleGetInventory = (e) => {
         e.preventDefault();
-        props.getInventory("abc123", "111");
+        props.getInventory("QQP4wAWbWaeO2sDdSfvU0Ac3NTg2", "111");
     };
 
     const handleAddInventory = (e) => {
