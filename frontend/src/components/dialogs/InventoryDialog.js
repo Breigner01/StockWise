@@ -9,23 +9,24 @@ import {
   IconButton,
 } from "@mui/material";
 
-import ProductsTable from "../tables/ProductsTable";
+import InventoryTable from "../tables/InventoryTable";
 
 const InventoryDialog = (props) => {
 
-  const { open, onClose, inventory_id } = props;
+  const { open, onClose, sku } = props;
 
-  const products = [
-    { id: 1, name: "Product A", quantity: 10 },
-    { id: 2, name: "Product B", quantity: 11 },
-    { id: 3, name: "Product C", quantity: 12 },
-    { id: 4, name: "Product D", quantity: 13 },
-  ];
+  const inventory = {
+    ownerId: "1",
+    sku: "111",
+    quantity: 100,
+    available: 30,
+    inTransit: 70
+  };
 
   return (
       <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
         <DialogTitle sx={{ bgcolor: "#212121", color: "#fff" }}>
-          Inventory #{inventory_id}
+          Product #{sku}
           <IconButton
             edge="start"
             color="inherit"
@@ -43,7 +44,7 @@ const InventoryDialog = (props) => {
         <DialogContent
           align="center"
         >
-            <ProductsTable inventory_id={inventory_id} products={products}/>
+            <InventoryTable sku={sku} inventory={inventory}/>
         </DialogContent>
     </Dialog>
   );

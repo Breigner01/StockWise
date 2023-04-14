@@ -11,15 +11,9 @@ import {
     Divider,
     Grid
   } from "@mui/material";
+import ProductsTable from "../components/tables/ProductsTable";
 
 const WarehouseManagement = (props) => {
-
-    const inventories = [
-        { inventory_id: 1, name: "Inventory A" },
-        { inventory_id: 2, name: "Inventory B" },
-        { inventory_id: 3, name: "Inventory C" },
-        { inventory_id: 4, name: "Inventory D" },
-    ];
 
     return (
         <Card align="center">
@@ -40,7 +34,7 @@ const WarehouseManagement = (props) => {
                 spacing={1}
                 >
                     <Grid item xs={12} sx={{mx: 5}}>
-                        <InventoryTable inventories={inventories} />
+                        <ProductsTable inventory_id={69} />
                     </Grid>
 
                 </Grid>

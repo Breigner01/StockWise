@@ -10,15 +10,19 @@ import {
   Button,
   Box,
   Container,
-  TextField
+  TextField,
+  InputAdornment
 } from "@mui/material";
 
 const ProductForm = (props) => {
     const { onClose } = props;
 
     const emptyProduct = {
-        name: "",
-        quantity: 0,
+      name: "",
+      brand: "",
+      description: "",
+      price: 0.00,
+      category: ""
     };
     
     const [productData, setProductData] = useState(emptyProduct);
@@ -33,7 +37,7 @@ const ProductForm = (props) => {
     const createProduct = (e) => {
         e.preventDefault();
         if (validProduct()){
-            props.addProduct(productData);
+            props.addProduct(props.userId, productData);
             onClose();
         }
     };
@@ -42,7 +46,7 @@ const ProductForm = (props) => {
         let temp = {};
     
         temp.name = (productData.name.length > 2)? "" : "Product name must have more than 2 characters";
-        temp.quantity = (productData.quantity > 0)? "" : "Quantity must be more than 0";
+        temp.price = (productData.price > 0)? "" : "Product cannot be free";
         
         setErrors({ ...temp });
     
@@ -63,7 +67,7 @@ const ProductForm = (props) => {
             <TextField
                 margin="dense"
                 required
-                placeholder="Product Name"
+                placeholder="Name"
                 name="name"
                 autoFocus
                 fullWidth
@@ -72,18 +76,63 @@ const ProductForm = (props) => {
                 {...(errors.name && {error: true, helperText: errors.name} )}
             />
             <Typography  align="left" variant="subtitle1">
-                Quantity
+                Brand
             </Typography>
             <TextField
                 margin="dense"
                 required
-                placeholder="Quantity"
-                name="quantity"
+                placeholder="Brand"
+                name="brand"
                 autoFocus
                 fullWidth
                 onChange={onChange}
-                value={productData.quantity}
-                {...(errors.name && {error: true, helperText: errors.name} )}
+                value={productData.brand}
+                // {...(errors.brand && {error: true, helperText: errors.brand} )}
+            />
+            <Typography  align="left" variant="subtitle1">
+                Description
+            </Typography>
+            <TextField
+                margin="dense"
+                required
+                placeholder="Description"
+                name="description"
+                autoFocus
+                fullWidth
+                onChange={onChange}
+                value={productData.description}
+                // {...(errors.name && {error: true, helperText: errors.name} )}
+            />
+            <Typography  align="left" variant="subtitle1">
+                Price
+            </Typography>
+            <TextField
+                margin="dense"
+                type="number"
+                required
+                name="price"
+                autoFocus
+                fullWidth
+                onChange={onChange}
+                value={productData.price}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
+                // {...(errors.name && {error: true, helperText: errors.name} )}
+            />
+            <Typography  align="left" variant="subtitle1">
+                Category
+            </Typography>
+            <TextField
+                margin="dense"
+                required
+                placeholder="Category"
+                name="category"
+                autoFocus
+                fullWidth
+                onChange={onChange}
+                value={productData.category}
+                // {...(errors.name && {error: true, helperText: errors.name} )}
             />
             <Button
                 type="submit"
@@ -103,4 +152,9 @@ ProductForm.propTypes = {
   addProduct: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addProduct })(ProductForm);
+const mapStateToProps = (state) => ({
+  userId: state.authReducer.user.uid,
+});
+
+
+export default connect(mapStateToProps, { addProduct })(ProductForm);
