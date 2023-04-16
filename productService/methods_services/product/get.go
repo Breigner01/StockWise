@@ -14,7 +14,7 @@ func GetProductByID(conf config.Config, id int) (*product.Product, error) {
 	}
 
 	return &product.Product{
-		Id:          int64(p.ID),
+		Id:          int32(p.ID),
 		Name:        p.Name,
 		Description: p.Description,
 		Price:       p.Price,

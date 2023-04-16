@@ -13,7 +13,7 @@ service ProductService {
     // returns list of products
     rpc SearchProductByName(Name) returns (Products);
     rpc SearchProductByBrand(Brand) returns (Products);
-    rpc SearchProductByPrice(Price) returns (Products);
+    rpc SearchProductByCategory(Category) returns (Products);
 
     rpc UpdateProduct(Product) returns (Status);
     // need to specify id
@@ -23,9 +23,8 @@ service ProductService {
 }
 
 
-
 message Product {
-    int64 id = 1;
+    int32 id = 1;
     string name = 2;
     string brand = 3;
     string description = 4;
@@ -42,7 +41,7 @@ message Status {
 }
 
 message Id {
-    int64 id = 1;
+    int32 id = 1;
 }
 
 message Name {
@@ -53,11 +52,9 @@ message Brand {
     string brand = 1;
 }
 
-message Price {
-    double price = 1;
+message Category {
+    string category = 1;
 }
-
-
 
 
 

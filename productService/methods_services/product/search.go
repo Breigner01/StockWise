@@ -16,7 +16,7 @@ func SearchProductsByName(conf config.Config, name string) ([]*product.Product, 
 	var productsList []*product.Product
 	for _, p := range products {
 		productsList = append(productsList, &product.Product{
-			Id:          int64(p.ID),
+			Id:          int32(p.ID),
 			Name:        p.Name,
 			Description: p.Description,
 			Price:       p.Price,
@@ -38,7 +38,7 @@ func SearchProductsByBrand(conf config.Config, brandName string) ([]*product.Pro
 	var productsList []*product.Product
 	for _, p := range products {
 		productsList = append(productsList, &product.Product{
-			Id:          int64(p.ID),
+			Id:          int32(p.ID),
 			Name:        p.Name,
 			Description: p.Description,
 			Price:       p.Price,
@@ -60,7 +60,7 @@ func SearchProductsByCategory(conf config.Config, categoryName string) ([]*produ
 	var productsList []*product.Product
 	for _, p := range products {
 		productsList = append(productsList, &product.Product{
-			Id:          int64(p.ID),
+			Id:          int32(p.ID),
 			Name:        p.Name,
 			Description: p.Description,
 			Price:       p.Price,
