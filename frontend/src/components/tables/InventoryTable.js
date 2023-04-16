@@ -60,7 +60,7 @@ const InventoryTable = (props) => {
         
         setErrors({ ...temp });
     
-        return Object.values(temp).every(helperText => helperText == "");
+        return Object.values(temp).every(helperText => helperText === "");
     };
     
     return (
