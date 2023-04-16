@@ -15,14 +15,6 @@ const InventoryDialog = (props) => {
 
   const { open, onClose, sku } = props;
 
-  const inventory = {
-    ownerId: "1",
-    sku: "111",
-    quantity: 100,
-    available: 30,
-    inTransit: 70
-  };
-
   return (
       <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
         <DialogTitle sx={{ bgcolor: "#212121", color: "#fff" }}>
@@ -44,7 +36,7 @@ const InventoryDialog = (props) => {
         <DialogContent
           align="center"
         >
-            <InventoryTable sku={sku} inventory={inventory}/>
+            <InventoryTable sku={sku}/>
         </DialogContent>
     </Dialog>
   );
