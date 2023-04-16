@@ -13,7 +13,7 @@ let grpcObject = protoLoader.loadSync(
 let ProductService = grpc.loadPackageDefinition(grpcObject).ProductService;
 
 export const productClient = new ProductService(
-  "localhost:50052",
+  "localhost:5001",
   grpc.credentials.createInsecure()
 );
 
@@ -23,6 +23,7 @@ export const getProducts = () => {
       console.log(err)
       console.log(result)
       if (!err) {
+        console.log(err)
         resolve(result);
       }
     });
