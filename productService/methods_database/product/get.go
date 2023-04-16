@@ -10,5 +10,7 @@ func GetProductByID(client *ent.Client, id int) (*ent.Product, error) {
 	return client.Product.
 		Query().
 		Where(product.ID(id)).
+		WithBrand().
+		WithCategory().
 		Only(context.Background())
 }
