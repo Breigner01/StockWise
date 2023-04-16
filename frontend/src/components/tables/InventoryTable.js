@@ -18,7 +18,7 @@ import {
 const InventoryTable = (props) => {
 
     useEffect(() => {
-        props.getInventory(props.auth.user.uid, props.sku.toString());
+        props.getInventory(props.userId, props.sku.toString());
     }, []);
     
     return (
@@ -64,12 +64,11 @@ const InventoryTable = (props) => {
 }
 
 InventoryTable.propTypes = {
-  auth: PropTypes.object.isRequired,
   inventory: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer,
+  userId: state.authReducer.user.uid,
   inventory: state.inventoryReducer.inventory,
 });
 

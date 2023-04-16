@@ -2,7 +2,7 @@ import { React } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import InventoryTable from "../components/tables/InventoryTable";
+import ProductsTable from "../components/tables/ProductsTable";
 
 import {
     Typography,
@@ -11,7 +11,6 @@ import {
     Divider,
     Grid
   } from "@mui/material";
-import ProductsTable from "../components/tables/ProductsTable";
 
 const WarehouseManagement = (props) => {
 

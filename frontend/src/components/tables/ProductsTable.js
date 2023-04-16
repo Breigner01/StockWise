@@ -31,12 +31,11 @@ const ProductsTable = (props) => {
     const [sku, setSku] = useState(null);
 
     useEffect(() => {
-        props.getProducts("QQP4wAWbWaeO2sDdSfvU0Ac3NTg2");
+        props.getProducts(props.userId);
     }, []);
 
-    const handleDialogOpen = (id) => {
-        // setSku(id);
-        setSku("111");
+    const handleDialogOpen = (product_id) => {
+        setSku(product_id);
         setOpen(true);
     };
 
@@ -52,17 +51,16 @@ const ProductsTable = (props) => {
         setOpenForm(false);
     };
 
-    const dropProduct = (id) => {
-        props.deleteProduct(props.userId, id);
+    const dropProduct = (product_id) => {
+        props.deleteProduct(props.userId, product_id);
     };
 
     if (props.products.length == 0) {
         return (
             <Fragment>
-                <InventoryDialog open={open} onClose={handleDialogClose} sku={sku} />
                 <CreateProductDialog open={openForm} onClose={handleFormDialogClose} />
                 <Typography variant="h3" component="div" align="center" sx={{ my: 3 }}>
-                    No Products!
+                    Products
                     <Tooltip title="Create Product">
                         <IconButton sx={{ ml: 1 }} size="large" color="success" onClick={handleFormDialogOpen} >
                             <AddCircleIcon />
@@ -152,8 +150,8 @@ ProductsTable.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    products: state.productReducer.products,
     userId: state.authReducer.user.uid,
+    products: state.productReducer.products,
 });
 
 export default connect(mapStateToProps, {

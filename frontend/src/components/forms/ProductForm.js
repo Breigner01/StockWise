@@ -29,28 +29,28 @@ const ProductForm = (props) => {
     const [errors, setErrors] = useState({});
 
     const onChange = (e) =>
-        setProductData((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }));
+      setProductData((prevState) => ({
+          ...prevState,
+          [e.target.name]: e.target.value,
+      }));
 
     const createProduct = (e) => {
-        e.preventDefault();
-        if (validProduct()){
-            props.addProduct(props.userId, productData);
-            onClose();
-        }
+      e.preventDefault();
+      if (validProduct()){
+          props.addProduct(props.userId, productData);
+          onClose();
+      }
     };
 
     const validProduct = () => {
-        let temp = {};
-    
-        temp.name = (productData.name.length > 2)? "" : "Product name must have more than 2 characters";
-        temp.price = (productData.price > 0)? "" : "Product cannot be free";
-        
-        setErrors({ ...temp });
-    
-        return Object.values(temp).every(helperText => helperText == "");
+      let temp = {};
+  
+      temp.name = (productData.name.length > 2)? "" : "Product name must have more than 2 characters";
+      temp.price = (productData.price > 0)? "" : "Product cannot be free";
+      
+      setErrors({ ...temp });
+  
+      return Object.values(temp).every(helperText => helperText == "");
     };
 
   return (
