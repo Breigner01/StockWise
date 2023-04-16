@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package category;
+
+option go_package = "./";
+
+service CategoryService {
+
+    rpc CreateCategory(Name) returns (Status);
+
+    rpc UpdateCategory(Category) returns (Status);
+    
+    rpc DeleteCategory(Category) returns (Status);
+
+    rpc GetAllCategories(NoParam) returns (Categories);
+}
+
+message Name {
+    string name = 1;
+}
+
+message Status {
+    string statusMessage = 1;
+}
+
+message NoParam {
+
+}
+
+message Category {
+    int64 id = 1;
+    string name = 2;
+}
+
+message Categories{
+    repeated Category Categories = 1;
+}
+
+
+// protoc --go_out=. --go-grpc_out=. category.proto
+// go mod tidy
