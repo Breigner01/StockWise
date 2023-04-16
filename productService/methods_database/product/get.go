@@ -14,3 +14,11 @@ func GetProductByID(client *ent.Client, id int) (*ent.Product, error) {
 		WithCategory().
 		Only(context.Background())
 }
+
+func GetAllProducts(client *ent.Client) ([]*ent.Product, error) {
+	return client.Product.
+		Query().
+		WithBrand().
+		WithCategory().
+		All(context.Background())
+}
