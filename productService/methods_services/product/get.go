@@ -11,6 +11,8 @@ func GetProductByID(conf config.Config, id int) (*product.Product, error) {
 	p, err := productDB.GetProductByID(conf.DB, id)
 	if err != nil {
 		return nil, err
+	} else if p == nil {
+		return nil, nil
 	}
 
 	return &product.Product{

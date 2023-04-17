@@ -16,7 +16,9 @@ func CreateProduct(conf config.Config, p *product.Product) error {
 	if err != nil {
 		return err
 	} else if brand == nil {
-		return fmt.Errorf("brand %s does not exist", p.Brand)
+		brand, err = brandDB.CreateBrand(conf.DB, &ent.Brand{
+			Name: p.Brand,
+		})
 	}
 
 	category, err := categoryDB.GetByName(conf.DB, p.Category)
