@@ -98,8 +98,4 @@ export const deleteProduct = (userId, productId) => (dispatch) => {
             console.log({err});
         }
     });
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> ed90be69d4c2dc22de2e21180d9f33f9fce01b53
