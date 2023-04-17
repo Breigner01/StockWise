@@ -8,23 +8,21 @@ import (
 )
 
 var defaultCategories = []string{
-	"Electronics",
-	"Books",
-	"Movies",
-	"Music",
-	"Sports",
-	"Toys",
-	"Home",
-	"Industrial",
-	"Tools",
-	"Grocery",
-	"Health",
-	"Beauty",
-	"Baby",
+	"Apparel and Accessories",
 	"Automotive",
-	"Pet",
+	"Books & Movies & Music",
+	"Baby",
+	"Electronics",
+	"Health & Beauty",
+	"Home & Garden",
+	"Industrial",
+	"Sports & Fitness",
+	"Food & Beverage",
 	"Office",
 	"Other",
+	"Pet",
+	"Tools",
+	"Toys and Games",
 }
 
 func CreateDefaultCategories(client *ent.Client) {
