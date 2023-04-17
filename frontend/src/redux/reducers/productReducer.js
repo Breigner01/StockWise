@@ -1,8 +1,9 @@
-import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_CATEGORIES } from "../actions/types";
+import { GET_PRODUCTS, GET_PRODUCT, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_CATEGORIES } from "../actions/types";
 
 const initialState = {
     products: [],
     categories: [],
+    product: {}
 };
 
 // Note: function has no name so we define ...
@@ -18,6 +19,11 @@ export default function(state=initialState, action){
             return {
                 ...state,
                 products: action.payload
+            };
+        case GET_PRODUCT:
+            return {
+                ...state,
+                product: action.payload
             };
         case DELETE_PRODUCT:
             return {

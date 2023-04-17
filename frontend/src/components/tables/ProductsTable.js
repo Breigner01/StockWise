@@ -8,6 +8,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import InventoryDialog from "../dialogs/InventoryDialog";
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import {
     Table,
     TableBody,
@@ -23,11 +24,13 @@ import {
 } from "@mui/material";
 
 import CreateProductDialog from "../dialogs/CreateProductDialog";
+import UpdateProductDialog from "../dialogs/UpdateProductDialog";
 
 const ProductsTable = (props) => {
 
     const [open, setOpen] = useState(false);
     const [openForm, setOpenForm] = useState(false);
+    const [openUpdateForm, setOpenUpdateForm] = useState(false);
     const [sku, setSku] = useState(null);
 
     useEffect(() => {
@@ -49,6 +52,15 @@ const ProductsTable = (props) => {
 
     const handleFormDialogClose = () => {
         setOpenForm(false);
+    };
+
+    const handleUpdateFormDialogOpen = (product_id) => {
+        setSku(product_id);
+        setOpenUpdateForm(true);
+    };
+
+    const handleUpdateFormDialogClose = () => {
+        setOpenUpdateForm(false);
     };
 
     const dropProduct = (product_id) => {
@@ -74,6 +86,7 @@ const ProductsTable = (props) => {
             <Fragment>
                 <InventoryDialog open={open} onClose={handleDialogClose} sku={sku} />
                 <CreateProductDialog open={openForm} onClose={handleFormDialogClose} />
+                <UpdateProductDialog open={openUpdateForm} onClose={handleUpdateFormDialogClose} sku={sku} />
                 <Typography variant="h3" component="div" align="center" sx={{ my: 3 }}>
                     Products
                     <Tooltip title="Create Product">
@@ -95,6 +108,7 @@ const ProductsTable = (props) => {
                         <TableCell>Description</TableCell>
                         <TableCell>Price</TableCell>
                         <TableCell>Category</TableCell>
+                        <TableCell>Change Product Info</TableCell>
                         <TableCell>View Inventory</TableCell>
                         <TableCell></TableCell>
                     </TableRow>
@@ -111,6 +125,18 @@ const ProductsTable = (props) => {
                         <TableCell key={i + "4"}>{item["description"]}</TableCell>
                         <TableCell key={i + "5"}>{item["price"]}$</TableCell>
                         <TableCell key={i + "6"}>{item["category"]}</TableCell>
+                        <TableCell>
+                            <Tooltip title="Change Product Info">
+                                <IconButton 
+                                    sx={{ ml: 1 }} 
+                                    size="large" 
+                                    color="primary" 
+                                    onClick={() => handleUpdateFormDialogOpen(item["id"])}
+                                >
+                                    <ChangeCircleIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </TableCell>
                         <TableCell>
                             <Tooltip title="View Inventory">
                                 <IconButton 

@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_CATEGORIES } from './types';
+import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_CATEGORIES, GET_PRODUCT } from './types';
 import client from "../../Apollo";
 
 // GET CATEGORIES API CALL
@@ -39,6 +39,29 @@ export const getProducts = (userId) => (dispatch) => {
         dispatch({
             type: GET_PRODUCTS,
             payload: res.data.getProducts
+        });
+    }).catch((err) => {
+        if (err){
+            console.log(err);
+        }
+    });
+    
+}
+
+// GET PRODUCTS API CALL
+export const getProduct = (userId, sku) => (dispatch) => {
+    client.query({
+        query: gql`
+            query{
+                getProductById(userId: "${userId}", productId: ${sku}){
+                    id, name, brand, description, price, category
+                }
+            }
+        `
+    }).then((res) => {
+        dispatch({
+            type: GET_PRODUCT,
+            payload: res.data.getProductById
         });
     }).catch((err) => {
         if (err){
