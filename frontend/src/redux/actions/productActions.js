@@ -25,18 +25,19 @@ export const getProducts = (userId) => (dispatch) => {
     
 }
 
+
 // POST PRODUCT API CALL
+
 export const addProduct = (userId, product) => (dispatch) => {
+    product.price = parseFloat(product.price)
+    
     client.mutate({
+        variables: {userId: userId, product: product},
         mutation: gql`
-            mutation{
-                createProduct(
-                    userId: $userId,
-                    product: $product
-                )
-            }
-        `,
-        variables: {userId, product: product}
+        mutation($userId: String!, $product: ProductInput!){
+            createProduct(userId: $userId, product: $product)
+        }`
+        
     }).then((res) => {
         dispatch({
             type: ADD_PRODUCT,
@@ -50,7 +51,8 @@ export const addProduct = (userId, product) => (dispatch) => {
 
 // UPDATE PRODUCT API CALL
 export const updateProduct = (userId, product) => (dispatch) => {
-    client.mutate({
+    try{
+         client.mutate({
         mutation: gql`
             mutation{
                 updateProduct(
@@ -69,6 +71,10 @@ export const updateProduct = (userId, product) => (dispatch) => {
             console.log({err});
         }
     });
+    }catch(e){
+        console.log(e)
+    }
+   
 }
 
 // DELETE PRODUCT API CALL

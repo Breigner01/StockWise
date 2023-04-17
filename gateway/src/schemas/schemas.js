@@ -105,7 +105,7 @@ const Query = new GraphQLObjectType({
           productName: { type: GraphQLString },
         },
         async resolve(parent, args) {
-          const data = await getProductsByName(args.productId);
+          const data = await getProductsByName(args.productName);
           return data.productsFound;
         },
     },
@@ -147,9 +147,9 @@ const Mutation = new GraphQLObjectType({
         product: { type: InputProductType },
       },
       async resolve(parent, args) {
-        
+        console.log(args)
         const result = await createProduct(args.product);
-        
+        console.log(result)
         return result.statusMessage;
       },
     },
@@ -172,6 +172,7 @@ const Mutation = new GraphQLObjectType({
         product: { type: InputProductType },
       },
       async resolve(parent, args) {
+        console.log(args)
         const result = await updateProduct(args.product);
         return result.statusMessage;
       },
