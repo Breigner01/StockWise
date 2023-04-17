@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-let grpcObject = protoLoader.loadSync(path.join(__dirname, "./product.proto"), {
+let grpcObject = protoLoader.loadSync(path.join(__dirname, "../proto/product.proto"), {
   keepCase: true,
   longs: String,
   enums: String,
@@ -38,6 +38,7 @@ export const getProductById = (id) => {
 export const createProduct = (product) => {
   return new Promise((resolve, reject) => {
     productClient.CreateProduct(product, (err, result) => {
+      console.log(err);
       err ? resolve(err) : resolve(result);
     });
   });
@@ -53,7 +54,6 @@ export const getProductsByName = (name) => {
 
 export const getProductsByBrand = (brand) => {
   return new Promise((resolve, reject) => {
-    console.log(brand);
     productClient.SearchProductByBrand({ brand }, (err, result) => {
       err ? resolve(err) : resolve(result);
     });
@@ -71,7 +71,6 @@ export const getProductsByPrice = (price) => {
 export const updateProduct = (product) => {
   return new Promise((resolve, reject) => {
     productClient.updateProduct(product, (err, result) => {
-      console.log(result);
       err ? resolve(err) : resolve(result);
     });
   });

@@ -6,7 +6,7 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 let grpcObject = protoLoader.loadSync(
-  path.join(__dirname, "./category.proto"),
+  path.join(__dirname, "../proto/category.proto"),
   {
     keepCase: true,
     longs: String,
