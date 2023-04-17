@@ -6,14 +6,15 @@ option go_package = "./";
 
 service ProductService {
 
-    rpc CreateProduct(Product) returns (Status);
+    rpc CreateProduct(Product) returns (Product);
 
     rpc GetProductById(Id) returns (Product);
+    rpc GetAllProducts(NoParam) returns (Products);
     
     // returns list of products
     rpc SearchProductByName(Name) returns (Products);
     rpc SearchProductByBrand(Brand) returns (Products);
-    rpc SearchProductByPrice(Price) returns (Products);
+    rpc SearchProductByCategory(Category) returns (Products);
 
     rpc UpdateProduct(Product) returns (Status);
     // need to specify id
@@ -21,7 +22,6 @@ service ProductService {
 
     rpc DeleteProduct(Id) returns (Status);
 }
-
 
 
 message Product {
@@ -53,8 +53,12 @@ message Brand {
     string brand = 1;
 }
 
-message Price {
-    double price = 1;
+message Category {
+    string category = 1;
+}
+
+message NoParam {
+
 }
 
 

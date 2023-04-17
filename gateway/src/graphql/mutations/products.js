@@ -5,10 +5,10 @@ import {
   updateProduct,
 } from "../../services/productService.js";
 
-import { InputProductType } from "../types/product.js";
+import { InputProductType, ProductType } from "../types/product.js";
 
 export const createProductMutation = {
-  type: GraphQLString,
+  type: ProductType,
   args: {
     userId: { type: GraphQLString },
     product: { type: InputProductType },
@@ -20,7 +20,7 @@ export const createProductMutation = {
     } catch (err) {
       return null;
     }
-    return result.statusMessage;
+    return result;
   },
 };
 
@@ -42,7 +42,7 @@ export const deleteProductMutation = {
 };
 
 export const updateProductMutation = {
-  type: GraphQLString,
+  type: ProductType,
   args: {
     userId: { type: GraphQLString },
     product: { type: InputProductType },
@@ -54,6 +54,8 @@ export const updateProductMutation = {
     } catch (err) {
       return null;
     }
-    return result.statusMessage;
+    if(result.statusMessage){
+      return args.product
+    }
   },
 };
