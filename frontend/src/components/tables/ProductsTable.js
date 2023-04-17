@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getProducts } from "../../redux/actions/productActions";
+import { connect } from "react-redux";
+import { getProducts, deleteProduct } from "../../redux/actions/productActions";
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import InventoryDialog from "../dialogs/InventoryDialog";
 import {
     Table,
     TableBody,
@@ -24,14 +26,22 @@ import CreateProductDialog from "../dialogs/CreateProductDialog";
 
 const ProductsTable = (props) => {
 
-    const { inventory_id } = props;
-
+    const [open, setOpen] = useState(false);
     const [openForm, setOpenForm] = useState(false);
+    const [sku, setSku] = useState(null);
 
     useEffect(() => {
-        props.getProducts();
-        console.log("GET PRODUCTS #" + inventory_id);
+        props.getProducts(props.userId);
     }, []);
+
+    const handleDialogOpen = (product_id) => {
+        setSku(product_id);
+        setOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setOpen(false);
+    };
 
     const handleFormDialogOpen = () => {
         setOpenForm(true);
@@ -41,9 +51,8 @@ const ProductsTable = (props) => {
         setOpenForm(false);
     };
 
-    const dropProduct = (id) => {
-        // props.deleteProduct(id, inventory_id);
-        console.log("DELETE PRODUCT " + id);
+    const dropProduct = (product_id) => {
+        props.deleteProduct(props.userId, product_id);
     };
 
     if (props.products.length == 0) {
@@ -51,7 +60,7 @@ const ProductsTable = (props) => {
             <Fragment>
                 <CreateProductDialog open={openForm} onClose={handleFormDialogClose} />
                 <Typography variant="h3" component="div" align="center" sx={{ my: 3 }}>
-                    No Products!
+                    Products
                     <Tooltip title="Create Product">
                         <IconButton sx={{ ml: 1 }} size="large" color="success" onClick={handleFormDialogOpen} >
                             <AddCircleIcon />
@@ -63,6 +72,7 @@ const ProductsTable = (props) => {
     } else {
         return (
             <Fragment>
+                <InventoryDialog open={open} onClose={handleDialogClose} sku={sku} />
                 <CreateProductDialog open={openForm} onClose={handleFormDialogClose} />
                 <Typography variant="h3" component="div" align="center" sx={{ my: 3 }}>
                     Products
@@ -81,7 +91,11 @@ const ProductsTable = (props) => {
                     <TableRow>
                         <TableCell>ID</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Quantity</TableCell>
+                        <TableCell>Brand</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell>Price</TableCell>
+                        <TableCell>Category</TableCell>
+                        <TableCell>View Inventory</TableCell>
                         <TableCell></TableCell>
                     </TableRow>
                     </TableHead>
@@ -93,9 +107,24 @@ const ProductsTable = (props) => {
                         >
                         <TableCell key={i + "1"}>{item["id"]}</TableCell>
                         <TableCell key={i + "2"}>{item["name"]}</TableCell>
-                        <TableCell key={i + "3"}>{item["quantity"]}</TableCell>
+                        <TableCell key={i + "3"}>{item["brand"]}</TableCell>
+                        <TableCell key={i + "4"}>{item["description"]}</TableCell>
+                        <TableCell key={i + "5"}>{item["price"]}$</TableCell>
+                        <TableCell key={i + "6"}>{item["category"]}</TableCell>
                         <TableCell>
-                            <Tooltip title="Remove Inventory">
+                            <Tooltip title="View Inventory">
+                                <IconButton 
+                                    sx={{ ml: 1 }} 
+                                    size="large" 
+                                    color="primary" 
+                                    onClick={() => handleDialogOpen(item["id"])}
+                                >
+                                    <Inventory2OutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </TableCell>
+                        <TableCell>
+                            <Tooltip title="Remove Product">
                             <IconButton 
                                 sx={{ ml: 1 }} 
                                 size="large" 
@@ -117,13 +146,14 @@ const ProductsTable = (props) => {
 }
 
 ProductsTable.propTypes = {
-    _products: PropTypes.array.isRequired,
+    products: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    _products: state.productReducer.products,
+    userId: state.authReducer.user.uid,
+    products: state.productReducer.products,
 });
 
 export default connect(mapStateToProps, {
-    getProducts,
+    getProducts, deleteProduct
 })(ProductsTable);
