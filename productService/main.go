@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
+	_default "github.com/Breigner01/SOEN487-Project3/productService/default"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent/migrate"
 	"github.com/Breigner01/SOEN487-Project3/productService/methods_handlers"
 	"net"
@@ -30,6 +31,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	go func() {
+		_default.CreateDefaultCategories(conf.DB)
+	}()
 
 	quitChannel := make(chan os.Signal, 1)
 	signal.Notify(quitChannel, os.Interrupt)
