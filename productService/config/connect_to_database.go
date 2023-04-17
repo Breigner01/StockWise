@@ -10,8 +10,8 @@ import (
 
 func ConnectToDatabase(conf PostgresConfig) *ent.Client {
 
-	db, err := sql.Open("postgres", "postgres://"+conf.Username+":"+conf.Password+"@"+conf.Host+":"+
-		conf.Port+"/"+conf.Database+"?sslmode="+conf.SSLMode)
+	db, err := sql.Open("postgres", "postgres://"+"postgres"+":"+"tXPT9vjFXvg5aTRT55kl"+"@"+"containers-us-west-112.railway.app"+":"+
+        "8028"+"/"+"railway"+"?sslmode="+"disable")
 	if err != nil {
 		panic(err)
 	}

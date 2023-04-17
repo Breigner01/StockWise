@@ -1,13 +1,19 @@
-import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from "../actions/types";
+import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_CATEGORIES } from "../actions/types";
 
 const initialState = {
     products: [],
+    categories: [],
 };
 
 // Note: function has no name so we define ...
 // this reducers name in the index file when we import
 export default function(state=initialState, action){
     switch (action.type){
+        case GET_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload
+            };
         case GET_PRODUCTS:
             return {
                 ...state,
@@ -16,7 +22,7 @@ export default function(state=initialState, action){
         case DELETE_PRODUCT:
             return {
                 ...state,
-                // products: state.products.filter(product => product.id !== action.payload.data)
+                products: state.products.filter(product => product.id !== action.payload)
             };
         case UPDATE_PRODUCT:
             return {

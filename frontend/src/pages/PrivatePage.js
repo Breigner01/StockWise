@@ -17,7 +17,7 @@ const PrivatePage = (props) => {
 
     const handleGetProducts = (e) => {
         e.preventDefault();
-        props.getProducts("abc123");
+        props.getProducts(props.auth.user.uid);
     };
 
     const handleAddProduct = (e) => {

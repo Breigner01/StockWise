@@ -1,6 +1,29 @@
 import { gql } from '@apollo/client';
-import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from './types';
+import { GET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT, GET_CATEGORIES } from './types';
 import client from "../../Apollo";
+
+// GET CATEGORIES API CALL
+export const getCategories = (userId) => (dispatch) => {
+    client.query({
+        query: gql`
+            query{
+                getCategories(userId: "${userId}"){
+                    id, name
+                }
+            }
+        `
+    }).then((res) => {
+        dispatch({
+            type: GET_CATEGORIES,
+            payload: res.data.getCategories
+        });
+    }).catch((err) => {
+        if (err){
+            console.log(err);
+        }
+    });
+    
+}
 
 // GET PRODUCTS API CALL
 export const getProducts = (userId) => (dispatch) => {
@@ -11,7 +34,7 @@ export const getProducts = (userId) => (dispatch) => {
                     id, name, brand, description, price, category
                 }
             }
-        `,
+        `
     }).then((res) => {
         dispatch({
             type: GET_PRODUCTS,
@@ -29,15 +52,13 @@ export const getProducts = (userId) => (dispatch) => {
 // POST PRODUCT API CALL
 
 export const addProduct = (userId, product) => (dispatch) => {
-    product.price = parseFloat(product.price)
     
     client.mutate({
         variables: {userId: userId, product: product},
         mutation: gql`
         mutation($userId: String!, $product: ProductInput!){
             createProduct(userId: $userId, product: $product)
-        }`
-        
+        }`,
     }).then((res) => {
         dispatch({
             type: ADD_PRODUCT,
@@ -51,16 +72,12 @@ export const addProduct = (userId, product) => (dispatch) => {
 
 // UPDATE PRODUCT API CALL
 export const updateProduct = (userId, product) => (dispatch) => {
-    try{
-         client.mutate({
+    client.mutate({
+        variables: {userId: userId, product: product},
         mutation: gql`
-            mutation{
-                updateProduct(
-                    userId: $userId,
-                    product: $product
-                )
-            }
-        `,
+        mutation($userId: String!, $product: ProductInput!){
+            updateProduct(userId: $userId, product: $product)
+        }`,
         variables: {userId, product: product}
     }).then((res) => {
         dispatch({
@@ -71,20 +88,18 @@ export const updateProduct = (userId, product) => (dispatch) => {
             console.log({err});
         }
     });
-    }catch(e){
-        console.log(e)
-    }
    
 }
 
 // DELETE PRODUCT API CALL
 export const deleteProduct = (userId, productId) => (dispatch) => {
     client.mutate({
+        variables: {userId: userId, productId: productId},
         mutation: gql`
-            mutation{
+            mutation($userId: String!, $productId: Int!){
                 deleteProduct(
                     userId: $userId,
-                    product: $productId
+                    productId: $productId
                 )
             }
         `,
@@ -92,6 +107,7 @@ export const deleteProduct = (userId, productId) => (dispatch) => {
     }).then((res) => {
         dispatch({
             type: DELETE_PRODUCT,
+            payload: productId
         });
     }).catch((err) => {
         if (err){
