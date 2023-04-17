@@ -9,7 +9,7 @@ import (
 	product "github.com/Breigner01/SOEN487-Project3/productService/pb/product"
 )
 
-func CreateProduct(conf config.Config, p *product.Product) error {
+func CreateProduct(conf config.Config, p *product.Product) (*product.Product, error) {
 
 	brand, err := brandDB.GetByName(conf.DB, p.Brand)
 	if err != nil {
@@ -18,19 +18,19 @@ func CreateProduct(conf config.Config, p *product.Product) error {
 				Name: p.Brand,
 			})
 			if err != nil {
-				return err
+				return nil, err
 			}
 		} else {
-			return err
+			return nil, err
 		}
 	}
 
 	category, err := categoryDB.GetByName(conf.DB, p.Category)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = productDB.CreateProduct(conf.DB, &ent.Product{
+	prod, err := productDB.CreateProduct(conf.DB, &ent.Product{
 		ID:          0,
 		Name:        p.Name,
 		Description: p.Description,
@@ -41,8 +41,15 @@ func CreateProduct(conf config.Config, p *product.Product) error {
 		},
 	})
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return &product.Product{
+		Id:          int32(prod.ID),
+		Name:        prod.Name,
+		Description: prod.Description,
+		Price:       prod.Price,
+		Brand:       p.Brand,
+		Category:    p.Category,
+	}, nil
 }

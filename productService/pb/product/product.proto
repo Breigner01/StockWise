@@ -6,7 +6,7 @@ option go_package = "./";
 
 service ProductService {
 
-    rpc CreateProduct(Product) returns (Status);
+    rpc CreateProduct(Product) returns (Product);
 
     rpc GetProductById(Id) returns (Product);
     rpc GetAllProducts(NoParam) returns (Products);
