@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductServiceClient interface {
 	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Status, error)
 	GetProductById(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Product, error)
+	GetAllProducts(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*Products, error)
 	// returns list of products
 	SearchProductByName(ctx context.Context, in *Name, opts ...grpc.CallOption) (*Products, error)
 	SearchProductByBrand(ctx context.Context, in *Brand, opts ...grpc.CallOption) (*Products, error)
@@ -52,6 +53,15 @@ func (c *productServiceClient) CreateProduct(ctx context.Context, in *Product, o
 func (c *productServiceClient) GetProductById(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
 	err := c.cc.Invoke(ctx, "/product.ProductService/GetProductById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productServiceClient) GetAllProducts(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*Products, error) {
+	out := new(Products)
+	err := c.cc.Invoke(ctx, "/product.ProductService/GetAllProducts", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,6 +119,7 @@ func (c *productServiceClient) DeleteProduct(ctx context.Context, in *Id, opts .
 type ProductServiceServer interface {
 	CreateProduct(context.Context, *Product) (*Status, error)
 	GetProductById(context.Context, *Id) (*Product, error)
+	GetAllProducts(context.Context, *NoParam) (*Products, error)
 	// returns list of products
 	SearchProductByName(context.Context, *Name) (*Products, error)
 	SearchProductByBrand(context.Context, *Brand) (*Products, error)
@@ -127,6 +138,9 @@ func (UnimplementedProductServiceServer) CreateProduct(context.Context, *Product
 }
 func (UnimplementedProductServiceServer) GetProductById(context.Context, *Id) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProductById not implemented")
+}
+func (UnimplementedProductServiceServer) GetAllProducts(context.Context, *NoParam) (*Products, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllProducts not implemented")
 }
 func (UnimplementedProductServiceServer) SearchProductByName(context.Context, *Name) (*Products, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchProductByName not implemented")
@@ -188,6 +202,24 @@ func _ProductService_GetProductById_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductServiceServer).GetProductById(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ProductService_GetAllProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NoParam)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServiceServer).GetAllProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.ProductService/GetAllProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServiceServer).GetAllProducts(ctx, req.(*NoParam))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -296,6 +328,10 @@ var ProductService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetProductById",
 			Handler:    _ProductService_GetProductById_Handler,
+		},
+		{
+			MethodName: "GetAllProducts",
+			Handler:    _ProductService_GetAllProducts_Handler,
 		},
 		{
 			MethodName: "SearchProductByName",
