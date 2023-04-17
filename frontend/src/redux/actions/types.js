@@ -14,4 +14,8 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 export const GET_INVENTORY = "GET_INVENTORY";
+<<<<<<< HEAD
 export const UPDATE_INVENTORY = "UPDATE_INVENTORY";
+=======
+export const UPDATE_INVENTORY = "UPDATE_INVENTORY";
+>>>>>>> ed90be69d4c2dc22de2e21180d9f33f9fce01b53

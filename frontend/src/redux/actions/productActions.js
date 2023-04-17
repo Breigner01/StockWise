@@ -25,6 +25,7 @@ export const getProducts = (userId) => (dispatch) => {
     
 }
 
+<<<<<<< HEAD
 // POST PRODUCT API CALL
 export const addProduct = (userId, product) => (dispatch) => {
     client.mutate({
@@ -71,6 +72,60 @@ export const updateProduct = (userId, product) => (dispatch) => {
     });
 }
 
+=======
+
+// POST PRODUCT API CALL
+
+export const addProduct = (userId, product) => (dispatch) => {
+    product.price = parseFloat(product.price)
+    
+    client.mutate({
+        variables: {userId: userId, product: product},
+        mutation: gql`
+        mutation($userId: String!, $product: ProductInput!){
+            createProduct(userId: $userId, product: $product)
+        }`
+        
+    }).then((res) => {
+        dispatch({
+            type: ADD_PRODUCT,
+        });
+    }).catch((err) => {
+        if (err){
+            console.log({err});
+        }
+    });
+}
+
+// UPDATE PRODUCT API CALL
+export const updateProduct = (userId, product) => (dispatch) => {
+    try{
+         client.mutate({
+        mutation: gql`
+            mutation{
+                updateProduct(
+                    userId: $userId,
+                    product: $product
+                )
+            }
+        `,
+        variables: {userId, product: product}
+    }).then((res) => {
+        dispatch({
+            type: UPDATE_PRODUCT,
+        });
+    }).catch((err) => {
+        if (err){
+            console.log({err});
+        }
+    });
+    }catch(e){
+        console.log(e)
+    }
+   
+}
+
+>>>>>>> ed90be69d4c2dc22de2e21180d9f33f9fce01b53
 // DELETE PRODUCT API CALL
 export const deleteProduct = (userId, productId) => (dispatch) => {
     client.mutate({
@@ -92,4 +147,8 @@ export const deleteProduct = (userId, productId) => (dispatch) => {
             console.log({err});
         }
     });
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ed90be69d4c2dc22de2e21180d9f33f9fce01b53

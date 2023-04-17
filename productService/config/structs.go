@@ -2,7 +2,6 @@ package config
 
 import (
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
-	"github.com/Breigner01/SOEN487-Project3/productService/methods_handlers"
 )
 
 type PostgresConfig struct {
@@ -20,6 +19,5 @@ type ProgramConfig struct {
 }
 
 type Config struct {
-	Sv *methods_handlers.Server
 	DB *ent.Client
 }

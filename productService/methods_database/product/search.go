@@ -12,6 +12,8 @@ func SearchProductsByName(client *ent.Client, name string) ([]*ent.Product, erro
 	return client.Product.
 		Query().
 		Where(product.NameContains(name)).
+		WithBrand().
+		WithCategory().
 		All(context.Background())
 }
 
@@ -19,6 +21,8 @@ func SearchProductsByBrand(client *ent.Client, brandName string) ([]*ent.Product
 	return client.Product.
 		Query().
 		Where(product.HasBrandWith(brand.NameContains(brandName))).
+		WithBrand().
+		WithCategory().
 		All(context.Background())
 }
 
@@ -26,5 +30,7 @@ func SearchProductsByCategory(client *ent.Client, categoryName string) ([]*ent.P
 	return client.Product.
 		Query().
 		Where(product.HasCategoryWith(category.NameContains(categoryName))).
+		WithBrand().
+		WithCategory().
 		All(context.Background())
 }
