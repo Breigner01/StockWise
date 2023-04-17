@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductServiceClient interface {
-	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Status, error)
+	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	GetProductById(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Product, error)
 	GetAllProducts(ctx context.Context, in *NoParam, opts ...grpc.CallOption) (*Products, error)
 	// returns list of products
@@ -41,8 +41,8 @@ func NewProductServiceClient(cc grpc.ClientConnInterface) ProductServiceClient {
 	return &productServiceClient{cc}
 }
 
-func (c *productServiceClient) CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Status, error) {
-	out := new(Status)
+func (c *productServiceClient) CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
 	err := c.cc.Invoke(ctx, "/product.ProductService/CreateProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -117,7 +117,7 @@ func (c *productServiceClient) DeleteProduct(ctx context.Context, in *Id, opts .
 // All implementations must embed UnimplementedProductServiceServer
 // for forward compatibility
 type ProductServiceServer interface {
-	CreateProduct(context.Context, *Product) (*Status, error)
+	CreateProduct(context.Context, *Product) (*Product, error)
 	GetProductById(context.Context, *Id) (*Product, error)
 	GetAllProducts(context.Context, *NoParam) (*Products, error)
 	// returns list of products
@@ -133,7 +133,7 @@ type ProductServiceServer interface {
 type UnimplementedProductServiceServer struct {
 }
 
-func (UnimplementedProductServiceServer) CreateProduct(context.Context, *Product) (*Status, error) {
+func (UnimplementedProductServiceServer) CreateProduct(context.Context, *Product) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProduct not implemented")
 }
 func (UnimplementedProductServiceServer) GetProductById(context.Context, *Id) (*Product, error) {

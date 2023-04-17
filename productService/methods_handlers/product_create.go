@@ -7,12 +7,12 @@ import (
 	// "google.golang.org/grpc"
 )
 
-func (s *Server) CreateProduct(ctx context.Context, input *product.Product) (*product.Status, error) {
+func (s *Server) CreateProduct(ctx context.Context, input *product.Product) (*product.Product, error) {
 
-	err := productService.CreateProduct(s.conf, input)
+	p, err := productService.CreateProduct(s.conf, input)
 
 	if err != nil {
-		return &product.Status{StatusMessage: "Failed to create product"}, err
+		return nil, err
 	}
-	return &product.Status{StatusMessage: "Created"}, nil
+	return p, nil
 }
