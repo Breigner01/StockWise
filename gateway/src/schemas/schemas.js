@@ -84,7 +84,7 @@ const Query = new GraphQLObjectType({
       },
       async resolve(parent, args) {
         const data = await getProducts();
-        return data.productsFound
+        return data.productsFound;
       },
     },
     getProductById: {
@@ -99,27 +99,27 @@ const Query = new GraphQLObjectType({
       },
     },
     getProductsbyName: {
-        type: GraphQLList(ProductType),
-        args: {
-          userId: { type: GraphQLString },
-          productName: { type: GraphQLString },
-        },
-        async resolve(parent, args) {
-          const data = await getProductsByName(args.productId);
-          return data.productsFound;
-        },
+      type: GraphQLList(ProductType),
+      args: {
+        userId: { type: GraphQLString },
+        productName: { type: GraphQLString },
+      },
+      async resolve(parent, args) {
+        const data = await getProductsByName(args.productId);
+        return data.productsFound;
+      },
     },
     getProductsbyBrand: {
-        type: GraphQLList(ProductType),
-        args: {
-          userId: { type: GraphQLString },
-          productBrand: { type: GraphQLString },
-        },
-        async resolve(parent, args) {
-          const data = await getProductsByBrand(args.productBrand);
-          console.log(data)
-          return data.productsFound;
-        },
+      type: GraphQLList(ProductType),
+      args: {
+        userId: { type: GraphQLString },
+        productBrand: { type: GraphQLString },
+      },
+      async resolve(parent, args) {
+        const data = await getProductsByBrand(args.productBrand);
+        console.log(data);
+        return data.productsFound;
+      },
     },
 
     // INVENTORY QUERIES
@@ -127,7 +127,7 @@ const Query = new GraphQLObjectType({
       type: new GraphQLList(ItemType),
       args: {
         userId: { type: GraphQLString },
-        sku: { type: GraphQLString },
+        sku: { type: GraphQLInt },
       },
       async resolve(parent, args) {
         const data = await getInventory(args.sku);
@@ -147,9 +147,8 @@ const Mutation = new GraphQLObjectType({
         product: { type: InputProductType },
       },
       async resolve(parent, args) {
-        
         const result = await createProduct(args.product);
-        
+
         return result.statusMessage;
       },
     },

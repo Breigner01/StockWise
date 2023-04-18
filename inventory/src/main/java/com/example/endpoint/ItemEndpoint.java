@@ -25,7 +25,7 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
 
     @Override
     public void viewInventory(InventoryRequest request, StreamObserver<InventoryReply> responseObserver) {
-        final String sku = request.getSku();
+        final int sku = request.getSku();
         final ArrayList<Item> items = new ArrayList<>();
         itemRepository.findAllBySku(sku).forEach(itemDao -> items.add(itemDao.toItem()));
 

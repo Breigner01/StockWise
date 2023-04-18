@@ -22,10 +22,10 @@ public interface MessageBroker {
     void sendItemStoredMessage(@KafkaKey String ownerId, String message);
 
     @Topic("item-deleted")
-    void sendItemDeletedMessage(@KafkaKey String sku, String message);
+    void sendItemDeletedMessage(@KafkaKey int sku, String message);
 
     @Topic("delivery-note")
-    void createDeliveryNote(String ownerID, @MessageHeader("sku") String sku);
+    void createDeliveryNote(String ownerID, @MessageHeader("sku") int sku);
 
     static String createLowInventoryMessage(ItemDao itemDao) {
         JSONObject message = new JSONObject();
@@ -45,5 +45,5 @@ public interface MessageBroker {
         return (new JSONArray(ownerIds)).toString();
     }
 
-    
+
 }

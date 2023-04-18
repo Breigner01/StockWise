@@ -6,7 +6,6 @@ package com.example;
 // option java_outer_classname = "Inventory";
 // option objc_class_prefix = "HLW";
 
-
 service InventoryService {
   rpc decreaseInventory (ItemRequest) returns (ItemReply) {}
   rpc addInventory (ItemRequest) returns (ItemReply) {}
@@ -16,14 +15,14 @@ service InventoryService {
 
 message Item {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
   uint32 quantity = 3;
   uint32 available = 4;
   uint32 inTransit = 5;
 }
 
 message InventoryRequest {
-  string sku = 2;
+  uint32 sku = 2;
 }
 
 message InventoryReply {
@@ -32,7 +31,7 @@ message InventoryReply {
 
 message ItemRequest {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
   uint32 quantity = 3;
 }
 
@@ -42,17 +41,17 @@ message ItemReply {
 
 message LowInventoryErrorResponse {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
   uint32 quantity = 3;
   uint32 available = 4;
 }
 
 message EmptyInventoryErrorResponse {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
 }
 
 message NoProductErrorResponse {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
 }

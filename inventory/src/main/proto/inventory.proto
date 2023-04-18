@@ -9,14 +9,14 @@ package com.example;
 
 message Item {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
   uint32 quantity = 3;
   uint32 available = 4;
   uint32 inTransit = 5;
 }
 
 message InventoryRequest {
-  string sku = 2;
+  uint32 sku = 2;
 }
 
 message InventoryReply {
@@ -25,7 +25,7 @@ message InventoryReply {
 
 message ItemRequest {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
   uint32 quantity = 3;
 }
 
@@ -42,17 +42,17 @@ service InventoryService {
 
 message LowInventoryErrorResponse {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
   uint32 quantity = 3;
   uint32 available = 4;
 }
 
 message EmptyInventoryErrorResponse {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
 }
 
 message NoProductErrorResponse {
   string ownerId = 1;
-  string sku = 2;
+  uint32 sku = 2;
 }

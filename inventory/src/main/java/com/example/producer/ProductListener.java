@@ -21,10 +21,8 @@ public class ProductListener {
     MessageBroker messageBroker;
 
     @Topic("remove-item")
-    void removeItem(@KafkaKey String sku, String message) {
-        System.out.println(sku);
+    void removeItem(@KafkaKey int sku, String message) {
         JSONObject request = new JSONObject(message);
-        System.out.println(request);
 
         final ArrayList<String> ownerIds = StreamSupport
                 .stream(itemRepository.findOwnerIdBySku(sku).spliterator(), false)
