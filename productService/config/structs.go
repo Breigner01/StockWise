@@ -5,7 +5,7 @@ import (
 )
 
 type PostgresConfig struct {
-	Username string `mapstructure:"username"`
+	User     string `mapstructure:"user"`
 	Password string `mapstructure:"password"`
 	Host     string `mapstructure:"host"`
 	Database string `mapstructure:"database"`
