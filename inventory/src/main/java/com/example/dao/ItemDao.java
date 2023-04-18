@@ -1,5 +1,6 @@
 package com.example.dao;
 
+import com.example.Item;
 import io.micronaut.data.annotation.Embeddable;
 import io.micronaut.data.annotation.EmbeddedId;
 import io.micronaut.data.annotation.MappedEntity;
@@ -119,8 +120,24 @@ public class ItemDao {
         this.quantity -= quantity;
     }
 
+    public void storeInventory(int quantity) {
+        this.available += quantity;
+        this.inTransit -= quantity;
+    }
+    
     public void insertInTransit(int quantity) {
         this.inTransit += quantity;
         this.quantity += quantity;
     }
+
+    public Item toItem() {
+        return Item.newBuilder()
+                .setOwnerId(this.getOwnerId())
+                .setSku(this.getSku())
+                .setQuantity(this.quantity)
+                .setAvailable(this.available)
+                .setInTransit(this.inTransit)
+                .build();
+    }
+    
 }
