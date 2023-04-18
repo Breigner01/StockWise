@@ -67,7 +67,7 @@ const ProductsTable = (props) => {
         props.deleteProduct(props.userId, product_id);
     };
 
-    if (props.products.length == 0) {
+    if (!props.products || props.products.length == 0) {
         return (
             <Fragment>
                 <CreateProductDialog open={openForm} onClose={handleFormDialogClose} />
@@ -170,10 +170,6 @@ const ProductsTable = (props) => {
         );
     }
 }
-
-ProductsTable.propTypes = {
-    products: PropTypes.array.isRequired,
-};
 
 const mapStateToProps = (state) => ({
     userId: state.authReducer.user.uid,

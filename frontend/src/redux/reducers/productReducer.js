@@ -18,7 +18,7 @@ export default function(state=initialState, action){
         case GET_PRODUCTS:
             return {
                 ...state,
-                products: action.payload
+                products: [...action.payload].sort((a, b) => a.id - b.id)
             };
         case GET_PRODUCT:
             return {
@@ -31,18 +31,18 @@ export default function(state=initialState, action){
                 products: state.products.filter(product => product.id !== action.payload)
             };
         case UPDATE_PRODUCT:
-            const prods = state.products;
+            const productsArr = [...state.products]
             const newProduct = action.payload;
-            const oldProduct = prods.findIndex(x => x.id == newProduct.id);
-            prods[oldProduct] = newProduct;
+            const oldProductIndex = productsArr.findIndex(x => x.id == newProduct.id);
+            productsArr[oldProductIndex] = newProduct;
             return {
                 ...state,
-                products: [...prods]
+                products: [...productsArr].sort((a, b) => a.id - b.id)
             };
         case ADD_PRODUCT:
             return {
                 ...state,
-                products: [...state.products, action.payload]
+                products: [...state.products, action.payload].sort((a, b) => a.id - b.id)
             };
         default:
             return state;
