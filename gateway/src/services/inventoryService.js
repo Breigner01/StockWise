@@ -1,5 +1,5 @@
-import * as protoLoader from "@grpc/proto-loader";
-import * as grpc from "@grpc/grpc-js";
+import protoLoader from "@grpc/proto-loader";
+import grpc from "@grpc/grpc-js";
 import * as path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -10,7 +10,7 @@ let grpcObject = protoLoader.loadSync(
   { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true }
 );
 
-let inventoryService = grpc.loadPackageDefinition(grpcObject).inventory;
+let inventoryService = grpc.loadPackageDefinition(grpcObject).com.example;
 
 const inventoryClient = new inventoryService.InventoryService(
   "localhost:50051",
@@ -19,7 +19,7 @@ const inventoryClient = new inventoryService.InventoryService(
 
 export const getInventory = (sku) => {
   return new Promise((resolve, reject) => {
-    inventoryClient.viewInventory({ sku }, (err, inventory) => {
+    inventoryClient.viewInventory({ sku }, (err, result) => {
       err ? resolve(err) : resolve(result);
     });
   });
