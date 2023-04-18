@@ -1,4 +1,4 @@
-import { GraphQLList, GraphQLString } from "graphql";
+import { GraphQLInt, GraphQLList, GraphQLString } from "graphql";
 import { ItemType } from "../types/item.js";
 import { getInventory } from "../../services/inventoryService.js";
 
@@ -6,7 +6,7 @@ export const viewInventoryQuery = {
   type: new GraphQLList(ItemType),
   args: {
     userId: { type: GraphQLString },
-    sku: { type: GraphQLString },
+    sku: { type: GraphQLInt },
   },
   async resolve(parent, args) {
     let data = null;
