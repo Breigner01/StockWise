@@ -5,6 +5,7 @@ import com.example.dto.ItemDto;
 import io.micronaut.configuration.kafka.annotation.KafkaClient;
 import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.Topic;
+import io.micronaut.messaging.annotation.MessageHeader;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -23,7 +24,8 @@ public interface MessageBroker {
     @Topic("item-deleted")
     void sendItemDeletedMessage(@KafkaKey String sku, String message);
 
-    @Topic()
+    @Topic("delivery-note")
+    void createDeliveryNote(String ownerID, @MessageHeader("sku") String sku);
 
     static String createLowInventoryMessage(ItemDao itemDao) {
         JSONObject message = new JSONObject();
@@ -42,4 +44,6 @@ public interface MessageBroker {
     static String createDeleteProductMessage(ArrayList<String> ownerIds) {
         return (new JSONArray(ownerIds)).toString();
     }
+
+    
 }

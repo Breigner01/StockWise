@@ -36,8 +36,11 @@ message ItemReply {
 service InventoryService {
   rpc decreaseInventory (ItemRequest) returns (ItemReply) {}
   rpc addInventory (ItemRequest) returns (ItemReply) {}
+<<<<<<< HEAD
   rpc viewInventory (InventoryRequest) returns (InventoryReply) {}
   rpc storeInventory (ItemRequest) returns (ItemReply) {}
+=======
+>>>>>>> main
 }
 
 message LowInventoryErrorResponse {

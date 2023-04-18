@@ -143,4 +143,38 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
             );
         }
     }
+
+    @Override
+    public void addInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
+        final OwnerDto ownerDto = new OwnerDto(request.getOwnerId());
+        final ItemDto itemDto = new ItemDto(request.getSku(), request.getQuantity());
+
+        try {
+            final ItemDao itemDao = itemRepository.findByItemPK(new ItemDao.ItemPK(ownerDto.getId(), itemDto.getSku()));
+
+            itemDao.insertInTransit(itemDto.getQuantity());
+            itemRepository.updateByItemPK(itemDao.getItemPK(), itemDao);
+            messageBroker.createDeliveryNote(itemDao.getOwnerId(), itemDao.getSku());
+
+            final ItemReply response = ItemReply.newBuilder()
+                    .setMessage("success")
+                    .build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (EmptyResultException e) {
+            final ItemDao newItem = new ItemDao(ownerDto.getId(), itemDto.getSku());
+            newItem.setQuantity(itemDto.getQuantity());
+            newItem.setInTransit(itemDto.getQuantity());
+
+            itemRepository.save(newItem);
+
+            final ItemReply response = ItemReply.newBuilder()
+                    .setMessage("success")
+                    .build();
+
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+    }
 }

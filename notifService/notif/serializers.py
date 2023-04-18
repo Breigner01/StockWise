@@ -6,20 +6,23 @@ class NotifSerializer(serializers.ModelSerializer):
         model = Notif
         fields = "__all__"
 
-class ComplexNotifSerializer(serializers.ModelSerializer):
+class OwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Owner
+        fields = "__all__"
+
+class NotifOwnersSerializer(serializers.ModelSerializer):
+    owner_ids = serializers.ListField(
+        child=serializers.CharField(), write_only=True, required=True, allow_empty=False
+    )
+
     class Meta:
         model = Notif
-        fields = "__all__"
-        extra_kwargs = {
-            'type':{'read_only':True}
-            }
-        
+        fields = ('type', 'owner', 'subject', 'message', 'owner_ids')
+
     def create(self, validated_data):
-        # logic on notif
-
-        complexNotif = Notif.objects.create(
-            type = "Default",
-            **validated_data
-        )
-
-        return complexNotif
+        owner_ids = validated_data.pop('owner_ids', [])
+        owners = Owner.objects.filter(id__in=owner_ids)
+        notif = Notif.objects.create(**validated_data)
+        notif.save()
+        return notif, owners
