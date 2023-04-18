@@ -16,4 +16,6 @@ public interface ItemRepository extends CrudRepository<ItemDao, ItemDao.ItemPK> 
     Iterable<ItemDao> findAllBySku(String sku);
 
     void deleteByOwnerIdIn(Iterable<String> ownerIds);
+
+    void deleteBySku(String sku);
 }
