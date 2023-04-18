@@ -80,11 +80,14 @@ export const addProduct = (userId, product) => (dispatch) => {
         variables: {userId: userId, product: product},
         mutation: gql`
         mutation($userId: String!, $product: ProductInput!){
-            createProduct(userId: $userId, product: $product)
+            createProduct(userId: $userId, product: $product){
+                id, name, brand, price, description, category
+            }
         }`,
     }).then((res) => {
         dispatch({
             type: ADD_PRODUCT,
+            payload: res.data.createProduct
         });
     }).catch((err) => {
         if (err){
@@ -99,12 +102,15 @@ export const updateProduct = (userId, product) => (dispatch) => {
         variables: {userId: userId, product: product},
         mutation: gql`
         mutation($userId: String!, $product: ProductInput!){
-            updateProduct(userId: $userId, product: $product)
+            updateProduct(userId: $userId, product: $product){
+                id, name, brand, price, description, category
+            }
         }`,
         variables: {userId, product: product}
     }).then((res) => {
         dispatch({
             type: UPDATE_PRODUCT,
+            payload: res.data.updateProduct
         });
     }).catch((err) => {
         if (err){

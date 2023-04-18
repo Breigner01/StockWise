@@ -31,14 +31,18 @@ export default function(state=initialState, action){
                 products: state.products.filter(product => product.id !== action.payload)
             };
         case UPDATE_PRODUCT:
+            const prods = state.products;
+            const newProduct = action.payload;
+            const oldProduct = prods.findIndex(x => x.id == newProduct.id);
+            prods[oldProduct] = newProduct;
             return {
                 ...state,
-                // products: [...state.products, action.payload.data]
+                products: [...prods]
             };
         case ADD_PRODUCT:
             return {
                 ...state,
-                // products: [...state.products, action.payload.data]
+                products: [...state.products, action.payload]
             };
         default:
             return state;

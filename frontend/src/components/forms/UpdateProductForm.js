@@ -20,6 +20,7 @@ const UpdateProductForm = (props) => {
     const { sku, onClose } = props;
 
     const emptyProduct = {
+      id: sku,
       name: "",
       brand: "",
       description: "",
@@ -41,6 +42,7 @@ const UpdateProductForm = (props) => {
     useEffect(() => {
       if(props.product){
         const currentProduct = {
+          id: sku,
           name: props.product.name,
           brand: props.product.brand,
           description: props.product.description,
