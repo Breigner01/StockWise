@@ -3,6 +3,7 @@ package product
 import (
 	"github.com/Breigner01/SOEN487-Project3/productService/config"
 	"github.com/Breigner01/SOEN487-Project3/productService/ent"
+	broker "github.com/Breigner01/SOEN487-Project3/productService/message_broker"
 	brandDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/brand"
 	categoryDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/category"
 	productDB "github.com/Breigner01/SOEN487-Project3/productService/methods_database/product"
@@ -43,6 +44,10 @@ func CreateProduct(conf config.Config, p *product.Product) (*product.Product, er
 	if err != nil {
 		return nil, err
 	}
+
+	writer := broker.KafkaProducer()
+	message := broker.ProductCreationMessage{Name: p.Name, Price: p.Price}
+	writer.SendMessage(broker.ProductCreation, "0", message.CreateMessage())
 
 	return &product.Product{
 		Id:          int32(prod.ID),
