@@ -5,8 +5,8 @@ build/
 target/
 out/
 .micronaut/
-.idea
-.mvn
+.idea/
+.mvn/
 *.iml
 *.ipr
 *.iws
