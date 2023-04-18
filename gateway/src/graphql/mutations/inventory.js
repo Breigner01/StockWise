@@ -13,8 +13,13 @@ export const addInventoryMutation = {
     itemRequest: { type: ItemRequestType },
   },
   async resolve(parent, args) {
-    const result = await addInventory(args.itemRequest);
-    return result.message;
+    let data = null;
+    try {
+      data = await addInventory(args.itemRequest);
+    } catch (err) {
+      return null;
+    }
+    return data.message;
   },
 };
 
@@ -25,8 +30,13 @@ export const decreaseInventoryMutation = {
     itemRequest: { type: ItemRequestType },
   },
   async resolve(parent, args) {
-    const result = await decreaseInventory(args.itemRequest);
-    return result.message;
+    let data = null;
+    try {
+      data = await decreaseInventory(args.itemRequest);
+    } catch (err) {
+      return null;
+    }
+    return data.message;
   },
 };
 
@@ -37,7 +47,12 @@ export const storeInventoryMutation = {
     itemRequest: { type: ItemRequestType },
   },
   async resolve(parent, args) {
-    const result = await storeInventory(args.itemRequest);
-    return result.message;
+    let data = null;
+    try {
+      data = await storeInventory(args.itemRequest);
+    } catch (err) {
+      return null;
+    }
+    return data.message;
   },
 };
