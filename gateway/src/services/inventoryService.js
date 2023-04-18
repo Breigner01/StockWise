@@ -20,7 +20,7 @@ const inventoryClient = new inventoryService.InventoryService(
 export const getInventory = (sku) => {
   return new Promise((resolve, reject) => {
     inventoryClient.viewInventory({ sku }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -28,7 +28,7 @@ export const getInventory = (sku) => {
 export const addInventory = (itemRequest) => {
   return new Promise((resolve, reject) => {
     inventoryClient.addInventory(itemRequest, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -36,7 +36,7 @@ export const addInventory = (itemRequest) => {
 export const decreaseInventory = (itemRequest) => {
   return new Promise((resolve, reject) => {
     inventoryClient.decreaseInventory(itemRequest, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -44,7 +44,7 @@ export const decreaseInventory = (itemRequest) => {
 export const storeInventory = (itemRequest) => {
   return new Promise((resolve, reject) => {
     inventoryClient.storeInventory(itemRequest, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };

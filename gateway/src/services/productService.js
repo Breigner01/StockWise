@@ -22,7 +22,7 @@ var productClient = new productservice.ProductService(
 export const getProducts = () => {
   return new Promise((resolve, reject) => {
     productClient.SearchProductByName({ name: "" }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -30,7 +30,7 @@ export const getProducts = () => {
 export const getProductById = (id) => {
   return new Promise((resolve, reject) => {
     productClient.GetProductById({ id }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -38,7 +38,7 @@ export const getProductById = (id) => {
 export const createProduct = (product) => {
   return new Promise((resolve, reject) => {
     productClient.CreateProduct(product, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -46,7 +46,7 @@ export const createProduct = (product) => {
 export const getProductsByName = (name) => {
   return new Promise((resolve, reject) => {
     productClient.SearchProductByName({ name: name }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -54,7 +54,7 @@ export const getProductsByName = (name) => {
 export const getProductsByBrand = (brand) => {
   return new Promise((resolve, reject) => {
     productClient.SearchProductByBrand({ brand }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -62,7 +62,7 @@ export const getProductsByBrand = (brand) => {
 export const getProductsByPrice = (price) => {
   return new Promise((resolve, reject) => {
     productClient.SearchProductByPrice({ price }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -70,7 +70,7 @@ export const getProductsByPrice = (price) => {
 export const updateProduct = (product) => {
   return new Promise((resolve, reject) => {
     productClient.updateProduct(product, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
@@ -78,7 +78,7 @@ export const updateProduct = (product) => {
 export const deleteProduct = (id) => {
   return new Promise((resolve, reject) => {
     productClient.DeleteProduct({ id }, (err, result) => {
-      err ? resolve(err) : resolve(result);
+      err ? reject(err) : resolve(result);
     });
   });
 };
