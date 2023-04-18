@@ -40,7 +40,7 @@ const UpdateProductForm = (props) => {
     }, [props.categories]);
 
     useEffect(() => {
-      if(props.product){
+      if(props.product && Object.keys(props.product).length !== 0){
         const currentProduct = {
           id: sku,
           name: props.product.name,
@@ -49,7 +49,10 @@ const UpdateProductForm = (props) => {
           price: props.product.price,
           category: props.product.category
         };
-        setProductData(currentProduct);
+        setProductData((productData) => ({
+          ...productData,
+          ...currentProduct
+        }));
       }
     }, [props.product]);
 
@@ -157,7 +160,6 @@ const UpdateProductForm = (props) => {
               name="category"
               fullWidth
               value={productData.category}
-              label="Category"
               onChange={onChange}
               align="left"
             >
