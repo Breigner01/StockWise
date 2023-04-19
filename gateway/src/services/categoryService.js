@@ -18,7 +18,7 @@ let grpcObject = protoLoader.loadSync(
 
 var categoryservice = grpc.loadPackageDefinition(grpcObject).category;
 var categoryClient = new categoryservice.CategoryService(
-  "localhost:5001",
+  "product-service:5001",
   grpc.credentials.createInsecure()
 );
 

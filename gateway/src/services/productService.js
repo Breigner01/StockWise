@@ -5,17 +5,20 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-let grpcObject = protoLoader.loadSync(path.join(__dirname, "../proto/product.proto"), {
-  keepCase: true,
-  longs: String,
-  enums: String,
-  defaults: true,
-  oneofs: true,
-});
+let grpcObject = protoLoader.loadSync(
+  path.join(__dirname, "../proto/product.proto"),
+  {
+    keepCase: true,
+    longs: String,
+    enums: String,
+    defaults: true,
+    oneofs: true,
+  }
+);
 
 var productservice = grpc.loadPackageDefinition(grpcObject).product;
 var productClient = new productservice.ProductService(
-  "localhost:5001",
+  "product-service:5001",
   grpc.credentials.createInsecure()
 );
 

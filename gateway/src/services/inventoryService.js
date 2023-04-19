@@ -13,7 +13,7 @@ let grpcObject = protoLoader.loadSync(
 let inventoryService = grpc.loadPackageDefinition(grpcObject).com.example;
 
 const inventoryClient = new inventoryService.InventoryService(
-  "localhost:50051",
+  "inventory-service:50051",
   grpc.credentials.createInsecure()
 );
 
