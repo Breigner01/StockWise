@@ -3,11 +3,11 @@
 const { default: axios } = require("axios");
 const { Kafka, logLevel } = require("kafkajs");
 
-const host = "localhost";
+const host = "broker";
 
 const kafka = new Kafka({
   logLevel: logLevel.INFO,
-  brokers: [`${host}:9092`],
+  brokers: [`${host}:29092`],
 });
 
 const topics = [
