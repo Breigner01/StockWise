@@ -68,9 +68,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'db',
-        'USER': 'philippe',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'notif-service-database',
         'PORT': '5432',
     }
 }
