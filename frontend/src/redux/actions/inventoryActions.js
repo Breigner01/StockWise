@@ -19,7 +19,7 @@ export const getInventory = (userId, sku) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -47,7 +47,7 @@ export const addInventory = (userId, item) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }
@@ -73,7 +73,7 @@ export const decreaseInventory = (userId, item) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }
@@ -99,7 +99,7 @@ export const storeInventory = (userId, item) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }

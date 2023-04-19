@@ -19,7 +19,7 @@ export const getCategories = (userId) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -42,7 +42,7 @@ export const getProducts = (userId) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -65,7 +65,7 @@ export const getProduct = (userId, sku) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -93,7 +93,7 @@ export const addProduct = (userId, product) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }
@@ -119,7 +119,7 @@ export const updateProduct = (userId, product) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
    
@@ -148,7 +148,7 @@ export const deleteProduct = (userId, productId) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }

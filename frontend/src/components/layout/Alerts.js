@@ -14,9 +14,25 @@ const Alerts = (props) => {
 
         // Avoid initial mount with this if stment
         if (updateRef.current){
-            // actual update code
-
-            // Custom msgs per error returned
+            // These error codes will depend on what the gateway throws as an error
+            if (props.error.code && (props.error.code == "add product error")) {
+                props.alert.error("Error Adding Product");
+            }
+            if (props.error.code && (props.error.code == "update product error")) {
+                props.alert.error("Error Updating Product");
+            }
+            if (props.error.code && (props.error.code == "delete product error")) {
+                props.alert.error("Error Deleting Product");
+            }
+            if (props.error.code && (props.error.code == "add inventory error")) {
+                props.alert.error("Error Adding Inventory");
+            }
+            if (props.error.code && (props.error.code == "decreasing inventory error")) {
+                props.alert.error("Error Decreasing Inventory");
+            }
+            if (props.error.code && (props.error.code == "storing inventory error")) {
+                props.alert.error("Error Storing Inventory");
+            }
 
             props.removeErrors();
         }

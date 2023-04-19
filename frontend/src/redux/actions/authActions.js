@@ -40,6 +40,7 @@ export const googleLogin = () => (dispatch) => {
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
+            dispatch(returnErrors(error));
         });
 }
 
