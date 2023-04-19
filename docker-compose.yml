@@ -1,0 +1,156 @@
+version: "3.9"
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.2
+    container_name: zookeeper
+    networks:
+      - message-broker
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  broker:
+    image: confluentinc/cp-kafka:7.3.2
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - message-broker
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  message-consumer:
+    image: soen487-project3/message-consumer
+    build: MessageConsumer
+    restart: on-failure
+    networks:
+      - message-broker
+    depends_on:
+      - broker
+
+  product-service:
+    image: soen487-project3/product-service
+    build: productService
+    restart: always
+    environment:
+      PRODUCT_SERVICE_POSTGRES_USER: postgres
+      PRODUCT_SERVICE_POSTGRES_PASSWORD: password
+      PRODUCT_SERVICE_POSTGRES_DB: railway
+      PRODUCT_SERVICE_POSTGRES_HOST: product-service-database
+      PRODUCT_SERVICE_POSTGRES_PORT: 5432
+      PRODUCT_SERVICE_POSTGRES_SSLMODE: disable
+      PRODUCT_SERVICE_PORT: 5001
+    ports:
+      - "5001:5001"
+    networks:
+      - message-broker
+      - gateway-product-service
+      - product-service-db
+
+  product-service-database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: railway
+    volumes:
+      - product-service-database-data:/var/lib/postgresql/data
+    networks:
+      - product-service-db
+
+  notif-service:
+    image: soen487-project3/notif-service
+    build: notifService
+    restart: always
+    environment:
+      # EMAIL_USER: ${NOTIF_SERVICE_EMAIL_USER}
+      # EMAIL_PASS: ${NOTIF_SERVICE_EMAIL_PASS}
+      DJANGO_SUPERUSER_PASSWORD: password
+      DJANGO_SUPERUSER_EMAIL: test@test.com
+      DJANGO_SUPERUSER_USERNAME: philippe
+      # POSTGRES_USER: ${NOTIF_SERVICE_POSTGRES_USER}
+      # POSTGRES_PASSWORD: ${NOTIF_SERVICE_POSTGRES_PASSWORD}
+      # POSTGRES_NAME: ${NOTIF_SERVICE_POSTGRES_DB}
+      POSTGRES_HOST: notif-service-database
+      # POSTGRES_PORT: ${NOTIF_SERVICE_POSTGRES_PORT}
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    networks:
+      - message-broker
+      - broker-notif-service
+      - notif-service-db
+
+  notif-service-database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    volumes:
+      - notif-service-database-data:/var/lib/postgresql/data
+    networks:
+      - notif-service-db
+  
+  inventory-service:
+    image: soen487-project3/inventory
+    build: inventory
+    ports:
+      - "50051:50051"
+    restart: on-failure
+    networks:
+      - message-broker
+      - gateway-network
+      - inventory-network
+    depends_on:
+      - inventory-service-db
+      - broker
+
+  inventory-service-db:
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    networks:
+      - inventory-network
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'sherlock'
+      MYSQL_PASSWORD: 'elementary'
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+
+  gateway:
+    image: soen487-project3/gateway
+    build: gateway
+    restart: always
+    environment:
+      NODE_ENV: production
+      FIREBASE_AUTH: ${FIREBASE_AUTH}
+    ports:
+      - "8080:8080"
+    networks:
+      - gateway-network
+
+volumes:
+  product-service-database-data:
+  notif-service-database-data:
+
+networks:
+  message-broker:
+    driver: bridge
+  gateway-product-service:
+  inventory-network:
+    driver: bridge
+  product-service-db:
+  broker-notif-service:
+  notif-service-db:
+  gateway-network:
