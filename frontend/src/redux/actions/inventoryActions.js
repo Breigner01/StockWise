@@ -13,7 +13,6 @@ export const getInventory = (userId, sku) => (dispatch) => {
             }
         `,
     }).then((res) => {
-        console.log(res.data.viewInventory);
         dispatch({
             type: GET_INVENTORY,
             payload: res.data.viewInventory[0]
@@ -40,6 +39,9 @@ export const addInventory = (userId, item) => (dispatch) => {
         `,
         variables: {userId, item: item}
     }).then((res) => {
+        dispatch(createMessage({
+            inventoryAdded: 'Inventory Added'
+        }));
         dispatch({
             type: UPDATE_INVENTORY,
         });
@@ -63,6 +65,9 @@ export const decreaseInventory = (userId, item) => (dispatch) => {
         `,
         variables: {userId, item: item}
     }).then((res) => {
+        dispatch(createMessage({
+            inventoryDecreased: 'Inventory Decreased'
+        }));
         dispatch({
             type: UPDATE_INVENTORY,
         });
@@ -86,6 +91,9 @@ export const storeInventory = (userId, item) => (dispatch) => {
         `,
         variables: {userId, item: item}
     }).then((res) => {
+        dispatch(createMessage({
+            inventoryStored: 'Inventory Stored'
+        }));
         dispatch({
             type: UPDATE_INVENTORY,
         });

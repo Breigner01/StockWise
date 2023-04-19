@@ -27,10 +27,12 @@ const Alerts = (props) => {
 
         // Avoid initial mount with this if stment
         if (updateRef.current){
-            if (props.message.createInventory) props.alert.success(props.message.createInventory);
-            if (props.message.deleteInventory) props.alert.error(props.message.deleteInventory);
-            if (props.message.createProduct) props.alert.success(props.message.createProduct);
-            if (props.message.deleteProduct) props.alert.error(props.message.deleteProduct);
+            if (props.message.productCreated) props.alert.success(props.message.productCreated);
+            if (props.message.productUpdated) props.alert.success(props.message.productUpdated);
+            if (props.message.productDeleted) props.alert.error(props.message.productDeleted);
+            if (props.message.inventoryAdded) props.alert.success(props.message.inventoryAdded);
+            if (props.message.inventoryDecreased) props.alert.success(props.message.inventoryDecreased);
+            if (props.message.inventoryStored) props.alert.success(props.message.inventoryStored);
 
             props.removeMessages();
         }
