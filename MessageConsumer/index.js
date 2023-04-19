@@ -10,7 +10,12 @@ const kafka = new Kafka({
   brokers: [`${host}:9092`],
 });
 
-const topics = ["low-inventory", "item-stored", "item-deleted"];
+const topics = [
+  "low-inventory",
+  "item-stored",
+  "item-deleted",
+  "product-created",
+];
 const consumer = kafka.consumer({ groupId: "test-group" });
 
 const run = async () => {
@@ -51,33 +56,37 @@ const run = async () => {
 };
 
 const sendSingleOwnerMessage = async (message) => {
+  console.log("--->", message);
   await fetch("http://127.0.0.1:8000/api/notify/", {
     method: "post",
     body: message,
     headers: new Headers({
-      Authorization: "Basic cGhpbGlwcGU6MTIzNDU2",
+      Authorization: "Basic cGhpbGlwcGU6cGFzc3dvcmQ=",
       "Content-Type": "application/json",
     }),
   }).catch((e) => console.log(e.message));
 };
 
 const sendMultipleOwnerMessage = async (message) => {
+  console.log("---> ", message);
   await fetch("http://127.0.0.1:8000/api/notify/set/", {
     method: "post",
     body: message,
     headers: new Headers({
-      Authorization: "Basic cGhpbGlwcGU6MTIzNDU2",
+      Authorization: "Basic cGhpbGlwcGU6cGFzc3dvcmQ=",
       "Content-Type": "application/json",
     }),
   }).catch((e) => console.log(e.message));
 };
 
 const sendAllOwnerMessage = async (message) => {
+  console.log("---> ", message);
   await fetch("http://127.0.0.1:8000/api/notify/all/", {
     method: "post",
     body: message,
+    owner: null,
     headers: new Headers({
-      Authorization: "Basic cGhpbGlwcGU6MTIzNDU2",
+      Authorization: "Basic cGhpbGlwcGU6cGFzc3dvcmQ=",
       "Content-Type": "application/json",
     }),
   }).catch((e) => console.log(e.message));
@@ -85,10 +94,11 @@ const sendAllOwnerMessage = async (message) => {
 
 const createNewProductMessage = (sku, message) => {
   const product = JSON.parse(message);
+  console.log(product);
   return JSON.stringify({
     type: "NewProduct",
-    subject: `Product ${product.name} - Prodcut Added`,
-    message: `Product ${product.name} has been added to the inventory at price ${product.price}.`,
+    subject: `Product ${product.Name} - Product Added`,
+    message: `Product ${product.Name} has been added to the inventory at price ${product.Price}.`,
   });
 };
 
@@ -119,12 +129,13 @@ const createItemStoredMessage = (ownerId, message) => {
 };
 
 const createItemDeletedMessage = (sku, message) => {
+  const productSku = sku.readInt32BE(0);
   const ownerIds = JSON.parse(message);
   return JSON.stringify({
     type: "NewProduct",
     owner_ids: ownerIds,
-    subject: `Product ${sku} - Removed`,
-    message: `Product ${sku} will be discontinued please pickup your inventory left.`,
+    subject: `Product ${productSku} - Removed`,
+    message: `Product ${productSku} will be discontinued please pickup your inventory left.`,
   });
 };
 

@@ -67,9 +67,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'admin',
-        'PASSWORD': 'test',
+        'NAME': 'db',
+        'USER': 'philippe',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -107,10 +107,10 @@ USE_I18N = True
 USE_TZ = True
 
 # EMAIL CONFIG
-EMAIL_FROM_USER = os.getenv('EMAIL_SMTP_USER')
+EMAIL_FROM_USER = 'warehouseteam487@gmail.com' # os.getenv('EMAIL_SMTP_USER')
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.getenv('EMAIL_SMTP_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_SMTP_PASS')
+EMAIL_HOST_USER = 'warehouseteam487@gmail.com' # os.getenv('EMAIL_SMTP_USER')
+EMAIL_HOST_PASSWORD = 'ffditjkroanrdteu' # os.getenv('EMAIL_SMTP_PASS')
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 

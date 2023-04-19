@@ -12,13 +12,14 @@ import {
   getInventory,
   addInventory,
   decreaseInventory,
-  storeInventory
+  storeInventory,
 } from "../redux/actions/inventoryActions";
 
 import { Button, Box, Typography, Grid } from "@mui/material";
 
 const PrivatePage = (props) => {
   const handleGetProducts = (e) => {
+    console.log(props.auth.user.uid);
     e.preventDefault();
     props.getProducts(props.auth.user.uid);
   };
@@ -117,11 +118,7 @@ const PrivatePage = (props) => {
               Decrease Inventory
             </Button>
           </Box>
-          <Box
-            component="form"
-            onSubmit={handleStoreInventory}
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleStoreInventory} sx={{ mt: 1 }}>
             <Button type="submit" fullWidth variant="contained" color="success">
               Store Inventory
             </Button>
@@ -147,5 +144,5 @@ export default connect(mapStateToProps, {
   getInventory,
   addInventory,
   decreaseInventory,
-  storeInventory
+  storeInventory,
 })(PrivatePage);
