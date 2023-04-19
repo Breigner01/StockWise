@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package com.example;
+// option java_multiple_files = true;
+// option java_package = "com.example";
+// option java_outer_classname = "Inventory";
+// option objc_class_prefix = "HLW";
+
+service InventoryService {
+  rpc decreaseInventory (ItemRequest) returns (ItemReply) {}
+  rpc addInventory (ItemRequest) returns (ItemReply) {}
+  rpc viewInventory (InventoryRequest) returns (InventoryReply) {}
+  rpc storeInventory (ItemRequest) returns (ItemReply) {}
+}
+
+message Item {
+  string ownerId = 1;
+  uint32 sku = 2;
+  uint32 quantity = 3;
+  uint32 available = 4;
+  uint32 inTransit = 5;
+}
+
+message InventoryRequest {
+  uint32 sku = 2;
+}
+
+message InventoryReply {
+  repeated Item items = 1;
+}
+
+message ItemRequest {
+  string ownerId = 1;
+  uint32 sku = 2;
+  uint32 quantity = 3;
+}
+
+message ItemReply {
+  string message = 1;
+}
+
+message LowInventoryErrorResponse {
+  string ownerId = 1;
+  uint32 sku = 2;
+  uint32 quantity = 3;
+  uint32 available = 4;
+}
+
+message EmptyInventoryErrorResponse {
+  string ownerId = 1;
+  uint32 sku = 2;
+}
+
+message NoProductErrorResponse {
+  string ownerId = 1;
+  uint32 sku = 2;
+}

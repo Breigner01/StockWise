@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ApolloProvider } from '@apollo/client';
+import client from "./Apollo";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "./redux/store";
 
@@ -24,14 +26,16 @@ const Root = () => {
     }, []);
 
     return (
-      <ReduxProvider store={store}>
-        <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <React.StrictMode>
-            <AuthAlerts />
-            <App />
-          </React.StrictMode>
-        </AlertProvider>
-      </ReduxProvider>
+      <ApolloProvider client={client}>
+        <ReduxProvider store={store}>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <React.StrictMode>
+              <AuthAlerts />
+              <App />
+            </React.StrictMode>
+          </AlertProvider>
+        </ReduxProvider>
+      </ApolloProvider>
     );
 };
 

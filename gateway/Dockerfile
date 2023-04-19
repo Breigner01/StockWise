@@ -1,15 +1,20 @@
-FROM node:16
+FROM node:alpine
 
-# Create app directory
 RUN mkdir -p /usr/src/app
+ENV PORT 80
+
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package.json /usr/src/app
+COPY package-lock.json /usr/src/app
+
+# Production use node instead of root
+# USER node
+
+RUN npm install 
+
+COPY . /usr/src/app
 
 
-RUN npm install
-
-
-
-EXPOSE 8080
-CMD [ "node", "server.js" ]
+EXPOSE 80
+CMD [ "npm", "start" ]
