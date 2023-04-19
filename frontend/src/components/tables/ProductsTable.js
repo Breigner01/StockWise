@@ -9,6 +9,7 @@ import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import InventoryDialog from "../dialogs/InventoryDialog";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import CategoryIcon from '@mui/icons-material/Category';
 import {
     Table,
     TableBody,
@@ -25,12 +26,15 @@ import {
 
 import CreateProductDialog from "../dialogs/CreateProductDialog";
 import UpdateProductDialog from "../dialogs/UpdateProductDialog";
+import UpdateInventoryDialog from "../dialogs/UpdateInventoryDialog";
+
 
 const ProductsTable = (props) => {
 
     const [open, setOpen] = useState(false);
     const [openForm, setOpenForm] = useState(false);
-    const [openUpdateForm, setOpenUpdateForm] = useState(false);
+    const [openUpdateProduct, setOpenUpdateProduct] = useState(false);
+    const [openUpdateInventory, setOpenUpdateInventory] = useState(false);
     const [sku, setSku] = useState(null);
 
     useEffect(() => {
@@ -54,13 +58,22 @@ const ProductsTable = (props) => {
         setOpenForm(false);
     };
 
-    const handleUpdateFormDialogOpen = (product_id) => {
+    const handleUpdateProductOpen = (product_id) => {
         setSku(product_id);
-        setOpenUpdateForm(true);
+        setOpenUpdateProduct(true);
     };
 
-    const handleUpdateFormDialogClose = () => {
-        setOpenUpdateForm(false);
+    const handleUpdateProductClose = () => {
+        setOpenUpdateProduct(false);
+    };
+
+    const handleUpdateInventoryOpen = (product_id) => {
+        setSku(product_id);
+        setOpenUpdateInventory(true);
+    };
+
+    const handleUpdateInventoryClose = () => {
+        setOpenUpdateInventory(false);
     };
 
     const dropProduct = (product_id) => {
@@ -86,7 +99,8 @@ const ProductsTable = (props) => {
             <Fragment>
                 <InventoryDialog open={open} onClose={handleDialogClose} sku={sku} />
                 <CreateProductDialog open={openForm} onClose={handleFormDialogClose} />
-                <UpdateProductDialog open={openUpdateForm} onClose={handleUpdateFormDialogClose} sku={sku} />
+                <UpdateProductDialog open={openUpdateProduct} onClose={handleUpdateProductClose} sku={sku} />
+                <UpdateInventoryDialog open={openUpdateInventory} onClose={handleUpdateInventoryClose} sku={sku} />
                 <Typography variant="h3" component="div" align="center" sx={{ my: 3 }}>
                     Products
                     <Tooltip title="Create Product">
@@ -109,6 +123,7 @@ const ProductsTable = (props) => {
                         <TableCell>Price</TableCell>
                         <TableCell>Category</TableCell>
                         <TableCell>Change Product Info</TableCell>
+                        <TableCell>Actions</TableCell>
                         <TableCell>View Inventory</TableCell>
                         <TableCell></TableCell>
                     </TableRow>
@@ -131,9 +146,21 @@ const ProductsTable = (props) => {
                                     sx={{ ml: 1 }} 
                                     size="large" 
                                     color="primary" 
-                                    onClick={() => handleUpdateFormDialogOpen(item["id"])}
+                                    onClick={() => handleUpdateProductOpen(item["id"])}
                                 >
                                     <ChangeCircleIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </TableCell>
+                        <TableCell>
+                            <Tooltip title="Actions">
+                                <IconButton 
+                                    sx={{ ml: 1 }} 
+                                    size="large" 
+                                    color="primary" 
+                                    onClick={() => handleUpdateInventoryOpen(item["id"])}
+                                >
+                                    <CategoryIcon />
                                 </IconButton>
                             </Tooltip>
                         </TableCell>

@@ -12,6 +12,7 @@ import {
   getInventory,
   addInventory,
   decreaseInventory,
+  storeInventory
 } from "../redux/actions/inventoryActions";
 
 import { Button, Box, Typography, Grid } from "@mui/material";
@@ -42,7 +43,7 @@ const PrivatePage = (props) => {
 
   const handleGetInventory = (e) => {
     e.preventDefault();
-    props.getInventory("firebase_id", "sku");
+    props.getInventory("firebase_id", 51);
     console.log("object");
   };
 
@@ -50,8 +51,8 @@ const PrivatePage = (props) => {
     e.preventDefault();
     const invData = {
       ownerId: "firebase_id",
-      sku: 1,
-      quantity: 1,
+      sku: 16,
+      quantity: 5,
     };
     props.addInventory("firebase_id", invData);
   };
@@ -60,10 +61,20 @@ const PrivatePage = (props) => {
     e.preventDefault();
     const invData = {
       ownerId: "firebase_id",
-      sku: 1,
-      quantity: 1,
+      sku: 51,
+      quantity: 5,
     };
     props.decreaseInventory("firebase_id", invData);
+  };
+
+  const handleStoreInventory = (e) => {
+    e.preventDefault();
+    const invData = {
+      ownerId: "firebase_id",
+      sku: 51,
+      quantity: 5,
+    };
+    props.storeInventory("firebase_id", invData);
   };
 
   return (
@@ -106,6 +117,15 @@ const PrivatePage = (props) => {
               Decrease Inventory
             </Button>
           </Box>
+          <Box
+            component="form"
+            onSubmit={handleStoreInventory}
+            sx={{ mt: 1 }}
+          >
+            <Button type="submit" fullWidth variant="contained" color="success">
+              Store Inventory
+            </Button>
+          </Box>
         </header>
       </Grid>
     </Grid>
@@ -127,4 +147,5 @@ export default connect(mapStateToProps, {
   getInventory,
   addInventory,
   decreaseInventory,
+  storeInventory
 })(PrivatePage);

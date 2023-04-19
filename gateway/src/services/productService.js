@@ -38,6 +38,8 @@ export const getProductById = (id) => {
 export const createProduct = (product) => {
   return new Promise((resolve, reject) => {
     productClient.CreateProduct(product, (err, result) => {
+      console.log(err);
+      console.log(result);
       err ? reject(err) : resolve(result);
     });
   });

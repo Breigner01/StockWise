@@ -16,7 +16,7 @@ import {
   MenuItem
 } from "@mui/material";
 
-const ProductForm = (props) => {
+const CreateProductForm = (props) => {
     const { onClose } = props;
 
     const emptyProduct = {
@@ -160,7 +160,7 @@ const ProductForm = (props) => {
   );
 }
 
-ProductForm.propTypes = {
+CreateProductForm.propTypes = {
   addProduct: PropTypes.func.isRequired,
   categories: PropTypes.array.isRequired,
 };
@@ -171,4 +171,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { getCategories, addProduct })(ProductForm);
+export default connect(mapStateToProps, { getCategories, addProduct })(CreateProductForm);

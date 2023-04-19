@@ -36,7 +36,7 @@ const InventoryDialog = (props) => {
         <DialogContent
           align="center"
         >
-            <InventoryTable onClose={onClose} sku={sku}/>
+            <InventoryTable sku={sku}/>
         </DialogContent>
     </Dialog>
   );

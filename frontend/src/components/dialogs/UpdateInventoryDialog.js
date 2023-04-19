@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import AddIcon from '@mui/icons-material/Add';
+import CategoryIcon from '@mui/icons-material/Category';
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Dialog,
@@ -12,15 +12,15 @@ import {
   Typography
 } from "@mui/material";
 
-import CreateProductForm from "../forms/CreateProductForm";
+import UpdateInventoryForm from "../forms/UpdateInventoryForm";
 
-const CreateProductDialog = (props) => {
-    const { open, onClose } = props;
+const UpdateInventoryDialog = (props) => {
+    const { sku, open, onClose } = props;
 
   return (
       <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
         <DialogTitle sx={{ bgcolor: "#212121", color: "#fff" }}>
-          Create Product Form
+          Update Inventory #{sku}
           <IconButton
             edge="start"
             color="inherit"
@@ -38,19 +38,19 @@ const CreateProductDialog = (props) => {
         <DialogContent
           align="center"
         >
-            <Avatar sx={{ mt: 3, bgcolor: "success.main" }}>
-                <AddIcon />
+            <Avatar sx={{ mt: 3, bgcolor: "error.main" }}>
+                <CategoryIcon />
             </Avatar>
           
-            <Typography component="div" align="center" variant="h5">
-                Product
+            <Typography component="div" align="center" variant="h5" marginBottom={1}>
+                Inventory Management
             </Typography>
 
-            <CreateProductForm onClose={onClose}/>
+            <UpdateInventoryForm sku={sku} onClose={onClose}/>
             
         </DialogContent>
     </Dialog>
   );
 }
 
-export default CreateProductDialog;
+export default UpdateInventoryDialog;
