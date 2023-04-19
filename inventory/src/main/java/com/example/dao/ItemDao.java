@@ -28,9 +28,9 @@ public class ItemDao {
 
         @NotNull
         @NotBlank
-        private final String sku;
+        private final int sku;
 
-        public ItemPK(String ownerId, String sku) {
+        public ItemPK(String ownerId, int sku) {
             this.ownerId = ownerId;
             this.sku = sku;
         }
@@ -39,7 +39,7 @@ public class ItemDao {
             return ownerId;
         }
 
-        public String getSku() {
+        public int getSku() {
             return sku;
         }
 
@@ -48,7 +48,7 @@ public class ItemDao {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             ItemPK itemPK = (ItemPK) o;
-            return ownerId.equals(itemPK.ownerId) && sku.equals(itemPK.sku);
+            return ownerId.equals(itemPK.ownerId) && sku == itemPK.sku;
         }
 
         @Override
@@ -57,14 +57,14 @@ public class ItemDao {
         }
     }
 
-    public ItemDao(String ownerId, String sku, int quantity, int available, int inTransit) {
+    public ItemDao(String ownerId, int sku, int quantity, int available, int inTransit) {
         this.itemPK = new ItemPK(ownerId, sku);
         this.quantity = quantity;
         this.available = available;
         this.inTransit = inTransit;
     }
 
-    public ItemDao(String ownerId, String sku) {
+    public ItemDao(String ownerId, int sku) {
         this.itemPK = new ItemPK(ownerId, sku);
     }
 
@@ -87,7 +87,7 @@ public class ItemDao {
         return itemPK.getOwnerId();
     }
 
-    public String getSku() {
+    public int getSku() {
         return itemPK.getSku();
     }
 
@@ -124,7 +124,7 @@ public class ItemDao {
         this.available += quantity;
         this.inTransit -= quantity;
     }
-    
+
     public void insertInTransit(int quantity) {
         this.inTransit += quantity;
         this.quantity += quantity;
@@ -139,5 +139,5 @@ public class ItemDao {
                 .setInTransit(this.inTransit)
                 .build();
     }
-    
+
 }

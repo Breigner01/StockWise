@@ -16,3 +16,12 @@ func (s *Server) GetProductById(ctx context.Context, input *product.Id) (*produc
 	}
 	return p, nil
 }
+
+func (s *Server) GetAllProducts(ctx context.Context, input *product.NoParam) (*product.Products, error) {
+	products, err := productService.GetAllProducts(s.conf)
+
+	if err != nil {
+		return nil, err
+	}
+	return products, nil
+}

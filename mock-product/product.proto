@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+// package product;
+
+// // option go_package = "./";
+
+service ProductService {
+
+    rpc CreateProduct(Product) returns (Status);
+
+    rpc GetProductById(Id) returns (Product);
+    
+    // returns list of products
+    rpc SearchProductByName(Name) returns (Products);
+    rpc SearchProductByBrand(Brand) returns (Products);
+    rpc SearchProductByPrice(Price) returns (Products);
+
+    rpc UpdateProduct(Product) returns (Status);
+    // need to specify id
+    // frontend can implement -> "are you sure u want to update?" (display before and after data)
+
+    rpc DeleteProduct(Id) returns (Status);
+}
+
+
+
+message Product {
+    int32 id = 1;
+    string name = 2;
+    string brand = 3;
+    string description = 4;
+    double price = 5;
+    string category = 6;
+}
+
+message Products {
+    repeated Product productsFound = 1;
+}
+
+message Status {
+    string statusMessage = 1;
+}
+
+message Id {
+    int32 id = 1;
+}
+
+message Name {
+    string name = 1;
+}
+
+message Brand {
+    string brand = 1;
+}
+
+message Price {
+    double price = 1;
+}
+
+
+
+
+
+
+
+// to create the 2 pb files, run cmd:
+// $ protoc --go_out=. --go-grpc_out=. product.proto
+
+// go_out and go-grpc_out create in current dir and location of proto file
+
+// then to get missing packages, run cmd:
+// $ go mod tidy
+
+
+
+
+// proto file is in proto folder so tell protoc to look for it there
+//                                          with go_out param, tell protoc to use grpc plugins to generate go code and store in proto folder
+// $ protoc --proto_path=proto proto/*.proto --go_out=plugins=grpc:proto
+
+
+
+// from gRPC.io
+// $ go get github.com/golang/protobuf/
+// $ go get github.com/golang/protobuf/proto
+// $ export PATH="$PATH:$(go env GOPATH)/bin"
+
+
+//  go get -u google.golang.org\grpc

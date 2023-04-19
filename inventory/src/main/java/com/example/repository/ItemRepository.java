@@ -9,11 +9,13 @@ import io.micronaut.data.repository.CrudRepository;
 public interface ItemRepository extends CrudRepository<ItemDao, ItemDao.ItemPK> {
     ItemDao findByItemPK(ItemDao.ItemPK itemPK);
 
-    Iterable<String> findOwnerIdBySku(String sku);
+    Iterable<String> findOwnerIdBySku(int sku);
 
     void updateByItemPK(ItemDao.ItemPK itemPK, ItemDao itemDao);
 
-    Iterable<ItemDao> findAllBySku(String sku);
+    Iterable<ItemDao> findAllBySku(int sku);
 
     void deleteByOwnerIdIn(Iterable<String> ownerIds);
+
+    void deleteBySku(int sku);
 }

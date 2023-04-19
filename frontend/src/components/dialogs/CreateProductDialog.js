@@ -12,7 +12,7 @@ import {
   Typography
 } from "@mui/material";
 
-import ProductForm from "../forms/ProductForm";
+import CreateProductForm from "../forms/CreateProductForm";
 
 const CreateProductDialog = (props) => {
     const { open, onClose } = props;
@@ -46,7 +46,7 @@ const CreateProductDialog = (props) => {
                 Product
             </Typography>
 
-            <ProductForm onClose={onClose}/>
+            <CreateProductForm onClose={onClose}/>
             
         </DialogContent>
     </Dialog>

@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import InventoryIcon from '@mui/icons-material/Inventory';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Dialog,
@@ -12,15 +12,15 @@ import {
   Typography
 } from "@mui/material";
 
-import InventoryForm from "../forms/InventoryForm";
+import UpdateProductForm from "../forms/UpdateProductForm";
 
-const CreateInventoryDialog = (props) => {
-    const { open, onClose } = props;
+const UpdateProductDialog = (props) => {
+    const { sku, open, onClose } = props;
 
   return (
       <Dialog fullWidth maxWidth="lg" open={open} onClose={onClose}>
         <DialogTitle sx={{ bgcolor: "#212121", color: "#fff" }}>
-          Create Inventory Form
+          Update Product Form
           <IconButton
             edge="start"
             color="inherit"
@@ -39,18 +39,18 @@ const CreateInventoryDialog = (props) => {
           align="center"
         >
             <Avatar sx={{ mt: 3, bgcolor: "success.main" }}>
-                <InventoryIcon />
+                <ChangeCircleIcon />
             </Avatar>
           
             <Typography component="div" align="center" variant="h5">
-                Inventory
+                Product
             </Typography>
 
-            <InventoryForm onClose={onClose}/>
+            <UpdateProductForm sku={sku} onClose={onClose}/>
             
         </DialogContent>
     </Dialog>
   );
 }
 
-export default CreateInventoryDialog;
+export default UpdateProductDialog;

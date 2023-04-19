@@ -11,6 +11,8 @@ func GetProductByID(conf config.Config, id int) (*product.Product, error) {
 	p, err := productDB.GetProductByID(conf.DB, id)
 	if err != nil {
 		return nil, err
+	} else if p == nil {
+		return nil, nil
 	}
 
 	return &product.Product{
@@ -20,5 +22,30 @@ func GetProductByID(conf config.Config, id int) (*product.Product, error) {
 		Price:       p.Price,
 		Brand:       p.Edges.Brand.Name,
 		Category:    p.Edges.Category.Name,
+	}, nil
+}
+
+func GetAllProducts(conf config.Config) (*product.Products, error) {
+
+	products, err := productDB.GetAllProducts(conf.DB)
+	if err != nil {
+		return nil, err
+	}
+
+	var productsResponse []*product.Product
+
+	for _, p := range products {
+		productsResponse = append(productsResponse, &product.Product{
+			Id:          int32(p.ID),
+			Name:        p.Name,
+			Description: p.Description,
+			Price:       p.Price,
+			Brand:       p.Edges.Brand.Name,
+			Category:    p.Edges.Category.Name,
+		})
+	}
+
+	return &product.Products{
+		ProductsFound: productsResponse,
 	}, nil
 }

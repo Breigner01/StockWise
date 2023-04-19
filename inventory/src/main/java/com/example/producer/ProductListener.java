@@ -1,10 +1,12 @@
 package com.example.producer;
 
 import com.example.repository.ItemRepository;
+import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.KafkaListener;
 import io.micronaut.configuration.kafka.annotation.OffsetReset;
 import io.micronaut.configuration.kafka.annotation.Topic;
 import jakarta.inject.Inject;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -19,7 +21,10 @@ public class ProductListener {
     MessageBroker messageBroker;
 
     @Topic("remove-item")
-    void removeItem(String sku) {
+    void removeItem(@KafkaKey String id, String message) {
+        JSONObject request = new JSONObject(message);
+        final int sku = Integer.parseInt(id);
+
         final ArrayList<String> ownerIds = StreamSupport
                 .stream(itemRepository.findOwnerIdBySku(sku).spliterator(), false)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -28,7 +33,7 @@ public class ProductListener {
             messageBroker.sendItemDeletedMessage(sku, MessageBroker.createDeleteProductMessage(ownerIds));
         }
 
-        itemRepository.deleteByOwnerIdIn(ownerIds);
+        itemRepository.deleteBySku(sku);
     }
 
 }

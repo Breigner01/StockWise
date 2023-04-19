@@ -25,7 +25,7 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
 
     @Override
     public void viewInventory(InventoryRequest request, StreamObserver<InventoryReply> responseObserver) {
-        final String sku = request.getSku();
+        final int sku = request.getSku();
         final ArrayList<Item> items = new ArrayList<>();
         itemRepository.findAllBySku(sku).forEach(itemDao -> items.add(itemDao.toItem()));
 
@@ -148,7 +148,6 @@ public class ItemEndpoint extends InventoryServiceGrpc.InventoryServiceImplBase 
     public void addInventory(ItemRequest request, StreamObserver<ItemReply> responseObserver) {
         final OwnerDto ownerDto = new OwnerDto(request.getOwnerId());
         final ItemDto itemDto = new ItemDto(request.getSku(), request.getQuantity());
-
         try {
             final ItemDao itemDao = itemRepository.findByItemPK(new ItemDao.ItemPK(ownerDto.getId(), itemDto.getSku()));
 

@@ -4,7 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { Provider } from "react-redux";
+import { ApolloProvider } from '@apollo/client';
+import client from "./Apollo";
+
+import { Provider as ReduxProvider } from "react-redux";
 import store from "./redux/store";
 
 import { loadUser } from "./redux/actions/authActions";
@@ -15,11 +18,13 @@ const Root = () => {
     }, []);
 
     return (
-      <Provider store={store}>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </Provider>
+      <ApolloProvider client={client}>
+        <ReduxProvider store={store}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </ReduxProvider>
+      </ApolloProvider>
     );
 };
 
