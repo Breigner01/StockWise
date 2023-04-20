@@ -8,6 +8,7 @@ import io.micronaut.data.repository.CrudRepository;
 @JdbcRepository(dialect = Dialect.MYSQL)
 public interface ItemRepository extends CrudRepository<ItemDao, ItemDao.ItemPK> {
     ItemDao findByItemPK(ItemDao.ItemPK itemPK);
+    ItemDao findByOwnerIdAndSku(String ownerId, int sku);
 
     Iterable<String> findOwnerIdBySku(int sku);
 

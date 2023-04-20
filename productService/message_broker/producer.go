@@ -28,7 +28,7 @@ type PrductDeletionMessage struct {
 
 func KafkaProducer() *Writer {
 	writer := &kafka.Writer{
-		Addr: kafka.TCP("localhost:9092"),
+		Addr: kafka.TCP("broker:9092"),
 	}
 
 	return &Writer{
