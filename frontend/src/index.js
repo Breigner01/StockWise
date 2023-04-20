@@ -6,13 +6,21 @@ import reportWebVitals from './reportWebVitals';
 
 import { ApolloProvider } from '@apollo/client';
 import client from "./Apollo";
-
 import { Provider as ReduxProvider } from "react-redux";
 import store from "./redux/store";
+
+import { Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+import AuthAlerts from './components/layout/AuthAlerts';
 
 import { loadUser } from "./redux/actions/authActions";
 
 const Root = () => {
+    const alertOptions = {
+      timeout: 3000,
+      position: "top center"
+    };
+
     useEffect(() => {
       store.dispatch(loadUser());
     }, []);
@@ -20,9 +28,12 @@ const Root = () => {
     return (
       <ApolloProvider client={client}>
         <ReduxProvider store={store}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <React.StrictMode>
+              <AuthAlerts />
+              <App />
+            </React.StrictMode>
+          </AlertProvider>
         </ReduxProvider>
       </ApolloProvider>
     );

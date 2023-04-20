@@ -19,7 +19,7 @@ export const getCategories = (userId) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -42,7 +42,7 @@ export const getProducts = (userId) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -65,7 +65,7 @@ export const getProduct = (userId, sku) => (dispatch) => {
         });
     }).catch((err) => {
         if (err){
-            console.log(err);
+            dispatch(returnErrors(err));
         }
     });
     
@@ -84,13 +84,16 @@ export const addProduct = (userId, product) => (dispatch) => {
             }
         }`,
     }).then((res) => {
+        dispatch(createMessage({
+            productCreated: 'Product Created'
+        }));
         dispatch({
             type: ADD_PRODUCT,
             payload: res.data.createProduct
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }
@@ -107,13 +110,16 @@ export const updateProduct = (userId, product) => (dispatch) => {
         }`,
         variables: {userId, product: product}
     }).then((res) => {
+        dispatch(createMessage({
+            productUpdated: 'Product Updated'
+        }));
         dispatch({
             type: UPDATE_PRODUCT,
             payload: res.data.updateProduct
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
    
@@ -133,13 +139,16 @@ export const deleteProduct = (userId, productId) => (dispatch) => {
         `,
         variables: {userId, productId: productId}
     }).then((res) => {
+        dispatch(createMessage({
+            productDeleted: 'Product Deleted'
+        }));
         dispatch({
             type: DELETE_PRODUCT,
             payload: productId
         });
     }).catch((err) => {
         if (err){
-            console.log({err});
+            dispatch(returnErrors(err));
         }
     });
 }
