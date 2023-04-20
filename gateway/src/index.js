@@ -5,7 +5,11 @@ import cors from "cors";
 import { Schema } from "./graphql/schemas.js";
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 //app.use(authMiddleware);
 app.use(
   "/graphql",

@@ -1,5 +1,3 @@
-// const ip = require("ip");
-
 const { default: axios } = require("axios");
 const { Kafka, logLevel } = require("kafkajs");
 
@@ -64,7 +62,11 @@ const sendSingleOwnerMessage = async (message) => {
       Authorization: "Basic cGhpbGlwcGU6cGFzc3dvcmQ=",
       "Content-Type": "application/json",
     }),
-  }).catch((e) => console.log(e.message));
+  }).catch((e) => {
+    console.error(e);
+    console.table(e);
+    console.log(e.message);
+  });
 };
 
 const sendMultipleOwnerMessage = async (message) => {
@@ -76,7 +78,11 @@ const sendMultipleOwnerMessage = async (message) => {
       Authorization: "Basic cGhpbGlwcGU6cGFzc3dvcmQ=",
       "Content-Type": "application/json",
     }),
-  }).catch((e) => console.log(e.message));
+  }).catch((e) => {
+    console.error(e);
+    console.table(e);
+    console.log(e.message);
+  });
 };
 
 const sendAllOwnerMessage = async (message) => {
@@ -89,7 +95,11 @@ const sendAllOwnerMessage = async (message) => {
       Authorization: "Basic cGhpbGlwcGU6cGFzc3dvcmQ=",
       "Content-Type": "application/json",
     }),
-  }).catch((e) => console.log(e.message));
+  }).catch((e) => {
+    console.error(e);
+    console.table(e);
+    console.log(e.message);
+  });
 };
 
 const createNewProductMessage = (sku, message) => {

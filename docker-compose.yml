@@ -33,6 +33,7 @@ services:
     restart: on-failure
     networks:
       - message-broker
+      - broker-notif-service
     depends_on:
       - broker
 
@@ -42,30 +43,30 @@ services:
     restart: always
     environment:
       PRODUCT_SERVICE_POSTGRES_USER: postgres
-      PRODUCT_SERVICE_POSTGRES_PASSWORD: password
+      PRODUCT_SERVICE_POSTGRES_PASSWORD: tXPT9vjFXvg5aTRT55kl
       PRODUCT_SERVICE_POSTGRES_DB: railway
-      PRODUCT_SERVICE_POSTGRES_HOST: product-service-database
-      PRODUCT_SERVICE_POSTGRES_PORT: 5432
+      PRODUCT_SERVICE_POSTGRES_HOST: containers-us-west-112.railway.app
+      PRODUCT_SERVICE_POSTGRES_PORT: 8028
       PRODUCT_SERVICE_POSTGRES_SSLMODE: disable
       PRODUCT_SERVICE_PORT: 5001
     ports:
       - "5001:5001"
     networks:
       - message-broker
-      - gateway-product-service
+      - gateway-network
       - product-service-db
 
-  product-service-database:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: railway
-    volumes:
-      - product-service-database-data:/var/lib/postgresql/data
-    networks:
-      - product-service-db
+  # product-service-database:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: railway
+  #   volumes:
+  #     - product-service-database-data:/var/lib/postgresql/data
+  #   networks:
+  #     - product-service-db
 
   notif-service:
     image: soen487-project3/notif-service
@@ -86,7 +87,6 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - message-broker
       - broker-notif-service
       - notif-service-db
 
@@ -97,6 +97,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
+    ports:
+      - "5432:5432"
     volumes:
       - notif-service-database-data:/var/lib/postgresql/data
     networks:
@@ -136,7 +138,7 @@ services:
       NODE_ENV: production
       FIREBASE_AUTH: ${FIREBASE_AUTH}
     ports:
-      - "8080:8080"
+      - "8080:80"
     networks:
       - gateway-network
 
@@ -147,7 +149,6 @@ volumes:
 networks:
   message-broker:
     driver: bridge
-  gateway-product-service:
   inventory-network:
     driver: bridge
   product-service-db:
